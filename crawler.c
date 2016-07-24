@@ -13,7 +13,7 @@
 int crawl(char* seedURL){
 	// bag_t* bag = bag_new(free);
 
-	char* toAdd = assertp(malloc(sizeof(char*)), "toAdd messed up...\n");
+	char* toAdd = assertp(malloc(strlen(seedURL) + 1), "toAdd messed up...\n");
 	strcpy(toAdd, seedURL);
 
 	printf("%s\n", toAdd);
