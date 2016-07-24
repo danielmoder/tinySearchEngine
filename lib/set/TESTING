@@ -1,0 +1,31 @@
+TESTING for set.c
+Daniel Moder, July 2016
+
+
+
+Annotated output for settest.c:
+
+### Testing set_insert() with int
+inserting int 99 with key 'ninety-nine'
+
+### and char*
+inserting string 'abcdefghi' with key 'alphabet part'
+
+
+
+### Testing set_find()
+found 'abcdefghi' searching for key 'alphabet part'
+found 99 searching for key 'ninety-nine'
+
+
+
+### Testing set_insert() with duplicate key/data pair
+insert returned NULL correctly
+
+
+
+### Testing set_delete()
+deleting set
+
+
+### (no memory leaks)

@@ -1,0 +1,35 @@
+TESTING for hashtable.c
+Daniel Moder, July 2016
+
+Annotated output of hashtabletest.c:
+
+### Testing hashtable_new()
+making new hashtable
+
+
+### Testing hashtable_insert()
+inserting 1 with key 'one'
+inserting 2 with key 'two'
+inserting 3 with key 'three'
+inserting 4 with key 'four'
+inserting 5 with key 'five'
+
+
+### Testing hashtable_find()
+found 1 when searching for key one
+found 2 when searching for key two
+found 3 when searching for key three
+found 4 when searching for key four
+found 5 when searching for key five
+
+
+### Inserting duplicate item
+insert returned false correctly
+
+
+### Finding nonexistent key
+searching for key 'notAKey'...
+find returned NULL correctly
+
+
+### (deleted)

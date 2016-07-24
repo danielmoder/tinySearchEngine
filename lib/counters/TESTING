@@ -1,0 +1,31 @@
+TESTING for counters.c
+Daniel Moder, July 2016
+
+Annotated output of counterstest.c:
+
+### Testing counters_new()
+making new counter
+
+### Testing counters_add()
+adding key 4 five times
+adding key 3 once
+
+### Testing counters_get()
+### for initialized keys
+got 1 for key 3
+got 5 for key 4
+
+### for empty keys
+got 0 for key 555
+
+### Testing counters_delete()
+deleted
+
+
+### Testing some more...
+
+making new counter
+adding key 2 once
+got 5 for key 2
+got 0 for key 555
+deleted

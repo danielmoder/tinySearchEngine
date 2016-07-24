@@ -1,0 +1,24 @@
+README for set.c
+Daniel Moder, July 2016
+
+(see Makefile for compiling)
+
+Usage:
+/* set.c - create and manipulate a set data structure
+
+usage: insertion, and search of data/key pairs
+
+
+Daniel Moder, July 2016
+*/
+
+
+Assumptions:
+
+- user must check the returns from functions set_insert() and
+  set_find() for NULL pointers; likewise, user must have the
+  sense not to call functions on set_delete()'d sets
+
+Non-Assumptions:
+
+- user can use any type pointer for the data to be stored

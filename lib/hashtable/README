@@ -1,0 +1,24 @@
+README for hashtable.c
+Daniel Moder, July 2016
+
+(see Makefile for compiling)
+
+Usage:
+/*
+hashtable.c - create and manipulate a hashtable data structure
+
+usage: insert and find string/data pairs
+
+
+Daniel Moder, July 2016
+*/
+
+
+Assumptions:
+- user must check the returns from functions hashtable_insert() and
+  hashtable_find() for NULL pointers; likewise, user must have the
+  sense not to call functions on hashtable_delete()'d hashtables
+
+
+Non-assumptions:
+- user can use any type pointer for the data to be stored

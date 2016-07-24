@@ -17,17 +17,19 @@ $(PROG): $(OBJS) $(LLIBS)
 	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
 
 # crawler source dependencies; add others as needed
-crawler.o: web.h 
+crawler.o: web.h
 web.o: web.h
+
 
 # build the library
 lib/cs50ds.a: 
 	cd lib; $(MAKE)
 
 .PHONY: clean
-	
+
 clean:
 	rm -f *~
 	rm -f *.o
 	rm -f $(PROG)
+	rm -f lab3/bag/bag.o
 	cd lib; $(MAKE) clean

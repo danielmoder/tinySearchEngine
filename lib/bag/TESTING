@@ -1,0 +1,33 @@
+TESTING for bag.c
+Daniel Moder, July 2016
+
+Annotated output from bagtest.c:
+
+
+### testing bag_insert() for int
+inserting 8
+
+### testing bag_insert() for char*
+inserting abg
+
+
+
+### testing bag_extract()
+extracting
+extracting
+
+abg (local) == abg (extracted)
+8 (local) == 8 (extracted)
+
+### ...on an empty bag
+trying to extract again...
+bag_extract() from empty bag returned NULL
+
+
+
+### testing bag_delete()
+inserting 8
+inserting abg
+deleting bag
+
+### (no memory leaks)

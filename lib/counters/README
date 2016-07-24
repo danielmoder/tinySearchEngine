@@ -1,0 +1,18 @@
+README for counters.c
+Daniel Moder, July 2016
+
+(see Makefile for compiling)
+
+Usage:
+/* counters.c - create and manipulate a counters data structure
+
+usage: add (increment), get, and delete counter objects from the counters struct
+
+
+Daniel Moder, July 2016
+*/
+
+
+Assumptions:
+
+- user must use integer keys >= 0

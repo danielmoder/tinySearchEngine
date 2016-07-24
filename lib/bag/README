@@ -1,0 +1,25 @@
+README for bag.c
+Daniel Moder, July 2016
+
+(see Makefile for compiling)
+
+Usage:
+/* bag.c - create and manipulate a bag data structure
+
+usage: insertion, and extraction of data
+
+
+Daniel Moder, July 2016
+*/
+
+
+Assumptions:
+
+- user must handle extracted items generically if
+  multiple data types are used, as the bag_extract()
+  function returns an indistinguishable item from
+  the bag
+
+Non-Assumptions:
+
+- user may use any data type, with the above stipulations
