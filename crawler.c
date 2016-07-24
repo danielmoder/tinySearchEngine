@@ -52,7 +52,7 @@ int crawl(char* seedURL){
 	int pos = 0;
 	char* result;
 
-
+	free(page);
 
 
 	// while ((pos = GetNextURL(HTML, pos, URL, &result)) > 0){
