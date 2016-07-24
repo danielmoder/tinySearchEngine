@@ -11,37 +11,46 @@
 
 
 int crawl(char* seedURL){
-	// bag_t* bag = bag_new(free);
+	bag_t* bag = bag_new(free);
+
+	char** beenSearched = assertp(malloc(sizeof(char*) * 100), "beenSearched\n");
+	int index = 0;
 
 	char* toAdd = assertp(malloc(strlen(seedURL) + 1), "toAdd messed up...\n");
 	strcpy(toAdd, seedURL);
 
-	printf("%s\n", toAdd);
-
-	char** beenSearched = assertp(malloc(sizeof(char*) * 100), "beenSearched\n");
-
 	beenSearched[0] = toAdd;
 
+
+	char* test = "testing\n";
+	toAdd = assertp(malloc(strlen(seedURL) + 1), "toAdd messed up...\n");
+	strcpy(toAdd, test);
+	
+
+	beenSearched[1] = toAdd;
+
+	printf("%s, %s\n", beenSearched[0], beenSearched[1]);
+
 	count_free(beenSearched[0]);
+	count_free(beenSearched[1]);
 	count_free(beenSearched);
 
-	// free(beenSearched[0]);
 
 
 
-		// bag_delete(bag);
+	bag_delete(bag);
 
-	// // Setting up seedPage
-	// WebPage* page = malloc(sizeof(WebPage));
-	// page->url = seedURL;
-	// page->html = NULL;
-	// GetWebPage(page);
+	// Setting up seedPage
+	WebPage* page = malloc(sizeof(WebPage));
+	page->url = seedURL;
+	page->html = NULL;
+	GetWebPage(page);
 
-	// // Setting up GetNextURL while loop
-	// char* HTML = page->html;
-	// char* URL = seedURL;
-	// int pos = 0;
-	// char* result;
+	// Setting up GetNextURL while loop
+	char* HTML = page->html;
+	char* URL = seedURL;
+	int pos = 0;
+	char* result;
 
 
 
