@@ -41,16 +41,16 @@ int crawl(char* seedURL){
 	bag_delete(bag);
 
 	// Setting up seedPage
-	WebPage* page = malloc(sizeof(WebPage));
-	page->url = seedURL;
-	page->html = NULL;
-	GetWebPage(page);
+		WebPage* page = malloc(sizeof(WebPage));
+	//page->url = seedURL;
+	//	page->html = NULL;
+	//	GetWebPage(page);
 
 	// Setting up GetNextURL while loop
-	char* HTML = page->html;
-	char* URL = seedURL;
-	int pos = 0;
-	char* result;
+	//	char* HTML = page->html;
+	//	char* URL = seedURL;
+	//	int pos = 0;
+	//	char* result;
 
 	free(page);
 
