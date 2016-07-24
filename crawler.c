@@ -15,6 +15,7 @@ int crawl(char* seedURL){
 	toAdd = seedURL;
 	set_insert(beenSearched, toAdd, NULL);
 
+	free(toAdd);
 	set_delete(beenSearched);
 	bag_delete(bag);
 
