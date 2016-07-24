@@ -1,23 +1,35 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
 #include "web.h"
 #include "lib/bag/bag.h"
 #include "lib/set/set.h"
 #include "lib/memory/memory.h"
 
 
+
+
 int crawl(char* seedURL){
-	bag_t* bag = bag_new(free);
-	set_t* beenSearched = set_new(free);
+	// bag_t* bag = bag_new(free);
 
-	// Set struct used to keep track of already-searched URLs
 	char* toAdd = assertp(malloc(sizeof(char*)), "toAdd messed up...\n");
-	toAdd = seedURL;
-	set_insert(beenSearched, toAdd, NULL);
+	strcpy(toAdd, seedURL);
 
-	free(toAdd);
-	set_delete(beenSearched);
-	bag_delete(bag);
+	printf("%s\n", toAdd);
+
+	char** beenSearched = assertp(malloc(sizeof(char*) * 100), "beenSearched\n");
+
+	beenSearched[0] = toAdd;
+
+	count_free(beenSearched[0]);
+	count_free(beenSearched);
+
+	// free(beenSearched[0]);
+
+
+
+		// bag_delete(bag);
 
 	// // Setting up seedPage
 	// WebPage* page = malloc(sizeof(WebPage));
