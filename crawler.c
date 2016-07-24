@@ -14,7 +14,9 @@ int crawl(char* seedURL){
 	char* toAdd = assertp(malloc(sizeof(char*)), "toAdd messed up...\n");
 	toAdd = seedURL;
 	set_insert(beenSearched, toAdd, NULL);
+
 	set_delete(beenSearched);
+	bag_delete(bag);
 
 	// // Setting up seedPage
 	// WebPage* page = malloc(sizeof(WebPage));
