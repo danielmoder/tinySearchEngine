@@ -72,10 +72,10 @@ int crawl(char* seedURL){
 		int pos = 0;
 		char* result = NULL;
 
-		printf("crawling URL: %s\n\n", URL);
+		// printf("crawling URL: %s\n\n", URL);
 
 		while ((pos = GetNextURL(HTML, pos, URL, &result)) > 0){
-			printf("Found URL: %s\n", result);
+			// printf("Found URL: %s\n", result);
 
 			if ( (! arraySearch(beenSearched, index, result)) && (IsInternalURL(result)) ){
 
@@ -86,7 +86,7 @@ int crawl(char* seedURL){
 				page->url = assertp(malloc(strlen(result) + 1), "new url\n");
 				strcpy(page->url, result);
 
-				printf("newPage url = %s, adding to bag\n", page->url);
+				// printf("newPage url = %s, adding to bag\n", page->url);
 
 				page->html = NULL;
 				page->depth = depth + 1;
@@ -105,7 +105,7 @@ int crawl(char* seedURL){
 		
 	// finding next page to crawl ---- must be non-NULL and have depth <= maxDepth	
 		while ((rootPage = bag_extract(bag)) != NULL) {
-			printf("\nextracted: %s. Depth = %d\n\n", rootPage->url, rootPage->depth);
+			// printf("\nextracted: %s. Depth = %d\n\n", rootPage->url, rootPage->depth);
 			if (rootPage->depth > maxDepth){
 				continue;
 			}
