@@ -81,8 +81,10 @@ int crawl(char* seedURL){
 
 				beenSearched[index] = assertp(malloc(strlen(result) + 1), "beenSearched\n");
 				strcpy(beenSearched[index], result);
+				index++;
 
 				WebPage* page = assertp(malloc(sizeof(WebPage)), "new page\n");
+
 				page->url = assertp(malloc(strlen(result) + 1), "new url\n");
 				strcpy(page->url, result);
 
@@ -93,9 +95,8 @@ int crawl(char* seedURL){
 				if (GetWebPage(page)){
 					bag_insert(bag, page);
 				}
-
-				index++;
 			}
+
 			free(result);
 		}
 
@@ -103,6 +104,8 @@ int crawl(char* seedURL){
 		count_free(rootPage->html);
 		count_free(rootPage);
 		
+		if (index > 20){break;};
+
 	// finding next page to crawl ---- must be non-NULL and have depth <= maxDepth	
 		while ((rootPage = bag_extract(bag)) != NULL) {
 
@@ -125,9 +128,10 @@ int crawl(char* seedURL){
 
 
 	// clean up array
-	
+	printf("index = %d\n", index);
+
 	for (int i = 0; i < index; i++){
-		printf("%s\n", beenSearched[index]);
+		printf("%s\n", beenSearched[i]);
 		count_free(beenSearched[i]);
 	}
 	count_free(beenSearched);
