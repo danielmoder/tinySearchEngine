@@ -51,10 +51,10 @@ int crawl(char* seedURL){
 
 	char** beenSearched = assertp(malloc(sizeof(char*) * 1000), "beenSearched\n");
 
-	char* toAdd = assertp(malloc(strlen(seedURL) + 1), "toAdd\n");
-	strcpy(toAdd, seedURL);
+	beenSearched[0] = assertp(malloc(strlen(seedURL) + 1), "toAdd\n");
+	strcpy(beenSearched[0], seedURL);
 
-	beenSearched[0] = toAdd;
+	
 
 	int index = 1;
 
@@ -94,6 +94,9 @@ int crawl(char* seedURL){
 				page->depth = depth + 1;
 				if (GetWebPage(page)){
 					bag_insert(bag, page);
+				} else {
+					count_free(page->url);
+					count_free(page);
 				}
 			}
 
@@ -104,7 +107,6 @@ int crawl(char* seedURL){
 		count_free(rootPage->html);
 		count_free(rootPage);
 		
-		if (index > 20){break;};
 
 	// finding next page to crawl ---- must be non-NULL and have depth <= maxDepth	
 		while ((rootPage = bag_extract(bag)) != NULL) {
