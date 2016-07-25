@@ -49,7 +49,7 @@ int crawl(char* seedURL){
 
 	bag_t* bag = bag_new(free);
 
-	char** beenSearched = assertp(malloc(sizeof(char*) * 100), "beenSearched\n");
+	char** beenSearched = assertp(malloc(sizeof(char*) * 1000), "beenSearched\n");
 
 	char* toAdd = assertp(malloc(strlen(seedURL) + 1), "toAdd\n");
 	strcpy(toAdd, seedURL);
@@ -77,7 +77,7 @@ int crawl(char* seedURL){
 		while ((pos = GetNextURL(HTML, pos, URL, &result)) > 0){
 			printf("Found URL: %s\n", result);
 
-			if (! arraySearch(beenSearched, index, result)){
+			if ( (! arraySearch(beenSearched, index, result)) && (IsInternalURL(result)) ){
 
 				beenSearched[index] = assertp(malloc(strlen(result) + 1), "beenSearched\n");
 				strcpy(beenSearched[index], result);
