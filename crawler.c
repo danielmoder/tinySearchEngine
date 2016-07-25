@@ -160,14 +160,16 @@ int main(int argc, char* argv[]){
     }
     
     int MAX_DEPTH = 2;
-    int depth = argv[3];
-    if (! isdigit(depth) ){
+    char* depth = argv[3];
+    if (! isdigit(depth[0]) ){
         printf("Error: depth must be an integer\n");
         return 1;
     } else if ( (depth < 0) || (depth > MAX_DEPTH) ){
         printf("Error: depth must be between %d and 0\n", MAX_DEPTH);
         return 1;
 	}
+	
 	crawl(seedURL, directory, depth);
+	
 	return 0;
 }
