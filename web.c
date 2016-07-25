@@ -10,6 +10,9 @@
  * Updated by: David Kotz
  * Date: April 2016
  *
+ * Updated by: Xia Zhou
+ * Date: July 2016
+ *
  * These functions are provided for the students to simplify the html parsing
  * and web retrieval.
  * ========================================================================= */
@@ -136,6 +139,7 @@ bool GetWebPage(WebPage* page)
 
     // cleanup curl stuff
     curl_easy_cleanup(curl_handle);
+    curl_global_cleanup();
 
     return status;
 }
@@ -169,6 +173,7 @@ int GetNextURL(char *html, int pos, char *base_url, char **result)
     char *href;                              // href in a tag
     char *end;                               // end of hyperlink tag or url
     char *ptr;                               // absolute vs. relative
+    char *hash;                              // hash mark character
 
     // make sure we have text and base url
     if (!html || !base_url) return -1;
@@ -219,6 +224,12 @@ int GetNextURL(char *html, int pos, char *base_url, char **result)
                                              // since we've stripped whitespace
                                              // this could mangle things like:
                                              // <a ... href=url name=val>
+        }
+
+        // if there is a # before the end of the url, exclude the #fragment
+        hash = strchr(href, '#');
+        if (hash && hash < end) {
+                end = hash;
         }
 
         // if we don't know where to end the url, continue
