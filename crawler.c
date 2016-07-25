@@ -1,10 +1,11 @@
 //Assumes maxDepth > 0
 
-
+#include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 #include "web.h"
 #include "lib/bag/bag.h"
@@ -31,9 +32,8 @@ bool arraySearch (char** array, int index, char* key)
 }
 
 
-int crawl(char* seedURL){
-	int maxDepth = 1;
-
+int crawl(char* seedURL, char* directory, int maxDepth)
+{
 	// Setting up seedPage
 	WebPage* rootPage = assertp(malloc(sizeof(WebPage)), "making seedPage\n");
 
@@ -148,7 +148,7 @@ int main(int argc, char* argv[]){
     }
     
     char* seedURL = argv[1];
-    if ( !( (isInternalURL(seedURL)) && (NormalizeURL(seedURL)) )){
+    if ( !( (IsInternalURL(seedURL)) && (NormalizeURL(seedURL)) )){
         printf("Error: invalid seedURL\n");
         return 1;
     }
