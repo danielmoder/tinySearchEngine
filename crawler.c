@@ -105,10 +105,16 @@ int crawl(char* seedURL){
 		
 	// finding next page to crawl ---- must be non-NULL and have depth <= maxDepth	
 		while ((rootPage = bag_extract(bag)) != NULL) {
-			// printf("\nextracted: %s. Depth = %d\n\n", rootPage->url, rootPage->depth);
+
+
+			// if depth > max, clean page and move on to next extracted page
 			if (rootPage->depth > maxDepth){
+				count_free(rootPage->url);
+				count_free(rootPage->html);
+				count_free(rootPage);
 				continue;
 			}
+			// if null or valid-depth page, test next loop of outer while loop
 			break;
 		}
 	}
@@ -121,9 +127,9 @@ int crawl(char* seedURL){
 	// clean up array
 	
 	for (int i = 0; i < index; i++){
-	  count_free(beenSearched[i]);
+		printf("%s\n", beenSearched[index]);
+		count_free(beenSearched[i]);
 	}
-	
 	count_free(beenSearched);
 	return 0;
 }
