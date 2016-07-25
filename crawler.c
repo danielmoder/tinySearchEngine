@@ -95,6 +95,7 @@ int crawl(char* seedURL){
 				if (GetWebPage(page)){
 					bag_insert(bag, page);
 				} else {
+					count_free(page->html);
 					count_free(page->url);
 					count_free(page);
 				}
