@@ -46,48 +46,63 @@ int crawl(char* seedURL){
 	
 	WebPage* page = assertp(malloc(sizeof(WebPage)), "making seedPage\n");
 	page->url = seedURL;
+	printf("%s\n", seedURL);
 	page->html = NULL;
-	GetWebPage(page);
+	if (! GetWebPage(page)){ return 99; };
 
 	// Setting up GetNextURL while loop
 	char* HTML = page->html;
+
+	count_free(page->html);
+	count_free(page);
+	
 	char* URL = seedURL;
 	int pos = 0;
-	char* result;
+	char* result = NULL;
 
-	free(page);
-
+	
 
 	while ((pos = GetNextURL(HTML, pos, URL, &result)) > 0){
 		printf("Found URL: %s\n", result);
 
 
 		if (! arraySearch(beenSearched, index, result)){
-			WebPage* page = assertp(malloc(sizeof(WebPage)), "making a page\n");
-			page->url = result;
-			page->html = NULL;
-			GetWebPage(page);
+		  //			WebPage* page = assertp(malloc(sizeof(WebPage)), "making a page\n");
+		  //	page->url = result;
+		  //	page->html = NULL;
+		  //	GetWebPage(page);
 
-			bag_insert(bag, page);
+		  //	bag_insert(bag, page);
 
-			toAdd = assertp(malloc(strlen(result) + 1), "toAdd messed up...\n");
-			strcpy(toAdd, result);
-			beenSearched[index] = toAdd;
+			beenSearched[index] = assertp(malloc(strlen(result) + 1), "toAdd messed up...\n");
+			strcpy(beenSearched[index], result);
+			free(result);
 			index++;
 		}
 	}
+	
 
+
+	
 
 	bag_delete(bag);
 
 
+
+
+
+	
+	printf("%d\n", index);
 	for (int i = 0; i < index; i++){
-		count_free(beenSearched[i]);
+	  count_free(beenSearched[i]);
 	}
+	
 	count_free(beenSearched);
 	return 0;
 }
 
 int main(int argc, char* argv[]){
-	return crawl("http://old-www.cs.dartmouth.edu/~cs50/index.html");
+  char* url = "http://old-www.cs.dartmouth.edu/~cs50/index.html";
+
+	return crawl(url);
 }
