@@ -164,12 +164,12 @@ int main(int argc, char* argv[]){
     if (! isdigit(depth[0]) ){
         printf("Error: depth must be an integer\n");
         return 1;
-    } else if ( (depth < 0) || (depth > MAX_DEPTH) ){
+    } else if ( (atoi(depth) < 0) || (atoi(depth) > MAX_DEPTH) ){
         printf("Error: depth must be between %d and 0\n", MAX_DEPTH);
         return 1;
-	}
+    }
 	
-	crawl(seedURL, directory, depth);
+    crawl(seedURL, directory, atoi(depth));
 	
-	return 0;
+    return 0;
 }
