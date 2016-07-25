@@ -142,7 +142,32 @@ int crawl(char* seedURL){
 }
 
 int main(int argc, char* argv[]){
-  char* url = "http://old-www.cs.dartmouth.edu/~cs50/index.html";
-
-	return crawl(url);
+    if (argc != 4){
+        printf("Error: crawler must receive exactly three arguments\n");
+        return 1;
+    }
+    
+    char* seedURL = argv[1];
+    if ( !( (isInternalURL(seedURL)) && (NormalizeURL(seedURL)) )){
+        printf("Error: invalid seedURL\n");
+        return 1;
+    }
+    
+    char* directory = argv[2];
+    if ( (access (directory, W_OK)) == -1){
+        printf("Error: cannot write to directory %s\n", directory);
+        return 1;
+    }
+    
+    int MAX_DEPTH = 2;
+    int depth = argv[3];
+    if (! isdigit(depth) ){
+        printf("Error: depth must be an integer\n");
+        return 1;
+    } else if ( (depth < 0) || (depth > MAX_DEPTH) ){
+        printf("Error: depth must be between %d and 0\n", MAX_DEPTH);
+        return 1;
+	}
+	crawl(seedURL, directory, depth);
+	return 0;
 }
