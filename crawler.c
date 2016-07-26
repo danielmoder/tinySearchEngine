@@ -31,6 +31,22 @@ bool arraySearch (char** array, int index, char* key)
 	return false;
 }
 
+void toFile(char* path, WebPage* web, int fileID)
+{
+  printf("in toFile\n");
+  char filename[strlen(path)+5];
+  sprintf(filename, "%s/%d", path, fileID);
+  FILE* fp = NULL;
+  if ( (fp = fopen(filename, "w")) == NULL){
+    printf("could not write file\n");
+    return;
+  }
+  
+  fprintf(fp, "%s\n%d\n%s\n", web->url, web->depth, web->html);
+  fclose(fp);
+  printf("out toFile\n");
+}
+
 
 int crawl(char* seedURL, char* directory, int maxDepth)
 {
@@ -46,7 +62,6 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		return 2;
 	}
 
-
 	bag_t* bag = bag_new(free);
 
 	char** beenSearched = assertp(malloc(sizeof(char*) * 1000), "beenSearched\n");
@@ -55,7 +70,7 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 	strcpy(beenSearched[0], seedURL);
 
 	
-
+	int fileID = 0;
 	int index = 1;
 
 	// char* test = "testing\n";
@@ -72,34 +87,36 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		int pos = 0;
 		char* result = NULL;
 
-		// printf("crawling URL: %s\n\n", URL);
+		toFile(directory, rootPage, fileID++);
 
 		while ((pos = GetNextURL(HTML, pos, URL, &result)) > 0){
-			// printf("Found URL: %s\n", result);
+		  if (depth >= maxDepth){
+		    free(result);
+		    break;
+		  }
 
-			if ( (! arraySearch(beenSearched, index, result)) && (IsInternalURL(result)) ){
+		  // printf("Found URL: %s\n", result);
+		  if ( (! arraySearch(beenSearched, index, result)) && (IsInternalURL(result)) && (NormalizeURL(result) ) ) {
 
-				beenSearched[index] = assertp(malloc(strlen(result) + 1), "beenSearched\n");
-				strcpy(beenSearched[index], result);
-				index++;
+			beenSearched[index] = assertp(malloc(strlen(result) + 1), "beenSearched\n");
+			strcpy(beenSearched[index], result);
+			index++;
 
-				WebPage* page = assertp(malloc(sizeof(WebPage)), "new page\n");
+			WebPage* page = assertp(malloc(sizeof(WebPage)), "new page\n");
+			page->url = assertp(malloc(strlen(result) + 1), "new url\n");
+			strcpy(page->url, result);
 
-				page->url = assertp(malloc(strlen(result) + 1), "new url\n");
-				strcpy(page->url, result);
+			page->html = NULL;
+			page->depth = depth + 1;
 
-				// printf("newPage url = %s, adding to bag\n", page->url);
-
-				page->html = NULL;
-				page->depth = depth + 1;
-				if (GetWebPage(page)){
-					bag_insert(bag, page);
-				} else {
-					count_free(page->html);
-					count_free(page->url);
-					count_free(page);
-				}
+			if (GetWebPage(page)){
+				bag_insert(bag, page);
+			} else {
+				count_free(page->html);
+				count_free(page->url);
+				count_free(page);
 			}
+		  }
 
 			free(result);
 		}
@@ -107,22 +124,8 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		count_free(rootPage->url);
 		count_free(rootPage->html);
 		count_free(rootPage);
-		
 
-	// finding next page to crawl ---- must be non-NULL and have depth <= maxDepth	
-		while ((rootPage = bag_extract(bag)) != NULL) {
-
-
-			// if depth > max, clean page and move on to next extracted page
-			if (rootPage->depth > maxDepth){
-				count_free(rootPage->url);
-				count_free(rootPage->html);
-				count_free(rootPage);
-				continue;
-			}
-			// if null or valid-depth page, test next loop of outer while loop
-			break;
-		}
+		rootPage = bag_extract(bag);
 	}
 
 	// clean up bag
