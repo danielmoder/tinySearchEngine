@@ -133,7 +133,12 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		int depth = rootPage->depth;
 		int pos = 0;
 		char* result = NULL;
-		
+	
+	    if (! GetWebPage(page)){
+		    logr("FAILED", depth, result);
+			webDelete(page);
+		}
+			
 	    logr("Fetched", depth, URL);
 
 		toFile(directory, rootPage, fileID++);
@@ -160,17 +165,12 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 			page->html = NULL;
 			page->depth = depth + 1;
 
-			if (GetWebPage(page)){
-				bag_insert(bag, page);
-			} else {
-			    logr("FAILED", depth, result);
-				webDelete(page);
-			}
-		  }
-		  
-            if (! IsInternalURL(result)){
-                logr("EXTERNAL", depth, result);
+			bag_insert(bag, page);
             }
+            
+        if (! IsInternalURL(result)){
+            logr("EXTERNAL", depth, result);
+        }
                 
 			free(result);
 		}
