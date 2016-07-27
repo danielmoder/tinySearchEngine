@@ -47,7 +47,7 @@ void toFile(char* path, WebPage* web, int fileID)
 }
 
 
-void crawl(char* seedURL, char* directory, int maxDepth)
+int crawl(char* seedURL, char* directory, int maxDepth)
 {
 	// Setting up seedPage
 	WebPage* rootPage = assertp(malloc(sizeof(WebPage)), "making seedPage\n");
@@ -121,7 +121,7 @@ void crawl(char* seedURL, char* directory, int maxDepth)
 			}
 		  }
 		  
-            if (! IsInternal(result)){
+            if (! IsInternalURL(result)){
                 logr("EXTERNAL", depth, result);
             }
                 
