@@ -82,14 +82,16 @@ Assumptions: web, web->url, and web->html must have been allocated
 void webDelete(WebPage* web)
 {
     if (web != NULL){
-        printf("web!= NULL in webDelete\n");
         if (web->url != NULL){
             count_free(web->url);
+            printf("freed url in webDelete\n");
         }
         if (web->html != NULL){
             count_free(web->html);
+            printf("freed html in webDelete\n");
         }
         count_free(web);
+        printf("freed web in webDelete\n");
     }
 }
 
@@ -155,6 +157,7 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 
 		  if ( (! arraySearch(beenSearched, index, result)) && \
 		        (IsInternalURL(result)) && (NormalizeURL(result) ) ) {
+		        
             logr("Added", depth, result);
             
 			beenSearched[index] = assertp(malloc(strlen(result) + 1), "url\n");
@@ -171,9 +174,9 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 			bag_insert(bag, page);
             }
             
-        if (! IsInternalURL(result)){
-            logr("EXTERNAL", depth, result);
-        }
+            if (! IsInternalURL(result)){
+                logr("EXTERNAL", depth, result);
+            }
                 
 			free(result);
 		}
