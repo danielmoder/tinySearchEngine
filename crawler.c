@@ -8,7 +8,6 @@ This file contains source for a web crawler. It includes functions:
     crawl
 */
 
-
 #include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -118,7 +117,7 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 
 	bag_t* bag = bag_new(free);
 
-	char** beenSearched = assertp(malloc(sizeof(char*) * 1000), "beenSearched\n");
+	char** beenSearched = assertp(malloc(sizeof(char*) * 1000), "array\n");
 
 	beenSearched[0] = assertp(malloc(strlen(seedURL) + 1), "toAdd\n");
 	strcpy(beenSearched[0], seedURL);
@@ -146,15 +145,16 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		    break;
 		  }
 
-		  if ( (! arraySearch(beenSearched, index, result)) && (IsInternalURL(result)) && (NormalizeURL(result) ) ) {
+		  if ( (! arraySearch(beenSearched, index, result)) && \
+		        (IsInternalURL(result)) && (NormalizeURL(result) ) ) {
             logr("Added", depth, result);
             
-			beenSearched[index] = assertp(malloc(strlen(result) + 1), "beenSearched\n");
+			beenSearched[index] = assertp(malloc(strlen(result) + 1), "url\n");
 			strcpy(beenSearched[index], result);
 			index++;
 
-			WebPage* page = assertp(malloc(sizeof(WebPage)), "new page\n");
-			page->url = assertp(malloc(strlen(result) + 1), "new url\n");
+			WebPage* page = assertp(malloc(sizeof(WebPage)), "webpage\n");
+			page->url = assertp(malloc(strlen(result) + 1), "url\n");
 			strcpy(page->url, result);
 
 			page->html = NULL;
