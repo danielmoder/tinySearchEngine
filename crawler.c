@@ -64,7 +64,7 @@ void toFile(char* path, WebPage* web, int fileID)
   
   FILE* fp = NULL;
   if ( (fp = fopen(filename, "w")) == NULL){
-    logr("FAILED", depth, result);
+    logr("FAILED", web->depth, web->url);
     return;
   }
   
