@@ -1,4 +1,13 @@
-//Assumes maxDepth > 0
+/*
+crawler.c       Daniel Moder        July, 2016
+This file contains source for a web crawler. It includes functions:
+    logr: formats and prints messages to track progress
+    arraySearch
+    toFile: writes HTML to a file in the specified directory
+    webDelete: deletes a WebPage object
+    crawl
+*/
+
 
 #include <ctype.h>
 #include <stdlib.h>
@@ -12,12 +21,25 @@
 #include "lib/set/set.h"
 #include "lib/memory/memory.h"
 
-inline static void logr(const char *word, const int depth, const char *url)
+/*
+Function: format and print messages to track changes
+Parameters: const char* word, the action word to be printed with the message
+            const int depth, the depth of the current crawl
+            const char *url, the target url
+Returns: (void)
+*/
+inline static void logr(const char* word, const int depth, const char *url)
 {
   printf("%2d %*s%9s: %s\n", depth, depth, "", word, url);
 }
 
-
+/*
+Function: Determines if a string is in an array of strings
+Parameters: char** array, the array to be searched
+            int index, the first free slot in the array
+            char* key, the string to be searched for
+Returns: true if the array contains the key, else false
+*/
 //returns true if array DOES contain the given key
 bool arraySearch (char** array, int index, char* key)
 {
@@ -29,9 +51,16 @@ bool arraySearch (char** array, int index, char* key)
 	return false;
 }
 
+/*
+Function: write the html of a webpage to a file in a given directory
+Parameters: char* path, the path of the directory to write into
+            WebPage* web, the target WebPage object
+            int fileID, the name of the file to be written
+Returns: (void)
+*/
 void toFile(char* path, WebPage* web, int fileID)
 {
-  char filename[strlen(path)+5];
+  char filename[strlen(path)+6]; // 4 digit max for fileID (*** assumption)
   sprintf(filename, "%s/%d", path, fileID);
   
   FILE* fp = NULL;
@@ -44,6 +73,13 @@ void toFile(char* path, WebPage* web, int fileID)
   fclose(fp);
 }
 
+/*
+Function: free a WebPage object and its contents
+Parameters: WebPage* web
+Returns: (void)
+Assumptions: web, web->url, and web->html must have been allocated
+                (or GetWebPage must have been called, allocating html)            
+*/
 void webDelete(WebPage* web)
 {
     if (web != NULL){
@@ -57,6 +93,14 @@ void webDelete(WebPage* web)
     }
 }
 
+/*
+Function: crawl pages starting from seedURL to a specified depth, and write
+            html to directory
+Parameters: char* seedURL, the url from which to start the crawl
+            char* directory, the directory into which to write the html files
+            int maxDepth, the max depth to crawl
+Returns: 0 upon success, 1 if seedURL is not accessible 
+*/
 int crawl(char* seedURL, char* directory, int maxDepth)
 {
 	// Setting up seedPage
@@ -68,7 +112,8 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 	rootPage->html = NULL;
 	rootPage->depth = 0;
 	if (! GetWebPage(rootPage)){
-		return 2;
+	    printf("Error: bad seedURL\n");
+		return 1;
 	}
 
 	bag_t* bag = bag_new(free);
@@ -131,17 +176,13 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		}
 
 		webDelete(rootPage);
-
 		rootPage = bag_extract(bag);
 	}
-
-	// clean up bag
 
 	bag_delete(bag);
 
 
 	// clean up array
-
 	for (int i = 0; i < index; i++){
 		count_free(beenSearched[i]);
 	}
@@ -181,7 +222,9 @@ int main(int argc, char* argv[]){
         return 1;
     }
     
-    crawl(seedURL, directory, atoi(depth));
-	
+    if (crawl(seedURL, directory, atoi(depth)) == 1){
+        return 1;
+    }
+    
     return 0;
 }
