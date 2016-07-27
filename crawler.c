@@ -113,13 +113,13 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 
 	rootPage->html = NULL;
 	rootPage->depth = 0;
+	
 //	if (! GetWebPage(rootPage)){
 //	    printf("Error: bad seedURL\n");
 //		return 1;
 //	}
 
 	bag_t* bag = bag_new(free);
-	
 	bag_insert(bag, rootPage);
 
 	char** beenSearched = assertp(malloc(sizeof(char*) * 1000), "array\n");
@@ -133,11 +133,7 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 
 	while ((rootPage = bag_extract(bag)) != NULL){
 		// Setting up GetNextURL while loop
-		char* HTML = rootPage->html;
-		char* URL = rootPage->url;
-		int depth = rootPage->depth;
-		int pos = 0;
-		char* result = NULL;
+
 	
 	    if (! GetWebPage(rootPage)){
 		    logr("FAILED", depth, URL);
@@ -145,6 +141,12 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 //			rootPage = bag_extract(bag);
 			continue;
 		}
+		
+		char* HTML = rootPage->html;
+		char* URL = rootPage->url;
+		int depth = rootPage->depth;
+		int pos = 0;
+		char* result = NULL;
 			
 	    logr("Fetched", depth, URL);
 
