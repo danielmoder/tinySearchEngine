@@ -82,6 +82,7 @@ Assumptions: web, web->url, and web->html must have been allocated
 void webDelete(WebPage* web)
 {
     if (web != NULL){
+        printf("web!= NULL in webDelete\n");
         if (web->url != NULL){
             count_free(web->url);
         }
