@@ -140,7 +140,7 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 	    if (! GetWebPage(rootPage)){
 		    logr("FAILED", depth, URL);
 			webDelete(rootPage);
-		//	rootPage = bag_extract(bag);
+			rootPage = bag_extract(bag);
 			continue;
 		}
 			
