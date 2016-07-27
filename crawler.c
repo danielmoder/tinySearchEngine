@@ -44,6 +44,18 @@ void toFile(char* path, WebPage* web, int fileID)
   fclose(fp);
 }
 
+void webDelete(WebPage* web)
+{
+    if (web != NULL){
+        if (web->url != NULL){
+            count_free(web->url);
+        }
+        if (web->html != NULL){
+            count_free(web->html);
+        }
+        count_free(web);
+    }
+}
 
 int crawl(char* seedURL, char* directory, int maxDepth)
 {
@@ -66,14 +78,8 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 	beenSearched[0] = assertp(malloc(strlen(seedURL) + 1), "toAdd\n");
 	strcpy(beenSearched[0], seedURL);
 
-	
 	int fileID = 0;
 	int index = 1;
-
-	// char* test = "testing\n";
-	// toAdd = assertp(malloc(strlen(seedURL) + 1), "toAdd messed up...\n");
-	// strcpy(toAdd, test);
-
 
 
 	while (rootPage != NULL){
@@ -87,7 +93,7 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 	    logr("Fetched", depth, URL);
 
 		toFile(directory, rootPage, fileID++);
-		logr("Added", depth, URL);
+		logr("Saved", depth, URL);
 
 		while ((pos = GetNextURL(HTML, pos, URL, &result)) > 0){
 		  if (depth >= maxDepth){
@@ -113,9 +119,7 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 				bag_insert(bag, page);
 			} else {
 			    logr("FAILED", depth, result);
-				count_free(page->html);
-				count_free(page->url);
-				count_free(page);
+				webDelete(page);
 			}
 		  }
 		  
@@ -126,9 +130,7 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 			free(result);
 		}
 
-		count_free(rootPage->url);
-		count_free(rootPage->html);
-		count_free(rootPage);
+		webDelete(rootPage);
 
 		rootPage = bag_extract(bag);
 	}
