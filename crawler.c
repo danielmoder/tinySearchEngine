@@ -212,7 +212,7 @@ int main(int argc, char* argv[]){
         return 1;
     }
     
-    int MAX_DEPTH = 2;
+    int MAX_DEPTH = 3;
     char* depth = argv[3];
     if (! isdigit(depth[0]) ){
         printf("Error: depth must be an integer\n");
