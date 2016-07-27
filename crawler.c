@@ -184,7 +184,8 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 
 	bag_delete(bag);
 
-
+    
+    printf("freeing array\n");
 	// clean up array
 	for (int i = 0; i < index; i++){
 		count_free(beenSearched[i]);
