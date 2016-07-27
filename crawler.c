@@ -12,13 +12,11 @@
 #include "lib/set/set.h"
 #include "lib/memory/memory.h"
 
-// return true if page is non-NULL and has depth less than maxDepth, else returns false
-bool isValid(WebPage* page, int maxDepth)
+inline static void logr(const char *word, const int depth, const char *url)
 {
-	if ( (page == NULL) || (page->depth > maxDepth) ){
-		return false;
-	} return true;
+  printf("%2d %*s%9s: %s\n", depth, depth, "", word, url);
 }
+
 
 //returns true if array DOES contain the given key
 bool arraySearch (char** array, int index, char* key)
@@ -36,6 +34,7 @@ void toFile(char* path, WebPage* web, int fileID)
   printf("in toFile\n");
   char filename[strlen(path)+5];
   sprintf(filename, "%s/%d", path, fileID);
+  
   FILE* fp = NULL;
   if ( (fp = fopen(filename, "w")) == NULL){
     printf("could not write file\n");
@@ -48,7 +47,7 @@ void toFile(char* path, WebPage* web, int fileID)
 }
 
 
-int crawl(char* seedURL, char* directory, int maxDepth)
+void crawl(char* seedURL, char* directory, int maxDepth)
 {
 	// Setting up seedPage
 	WebPage* rootPage = assertp(malloc(sizeof(WebPage)), "making seedPage\n");
@@ -86,8 +85,11 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		int depth = rootPage->depth;
 		int pos = 0;
 		char* result = NULL;
+		
+	    logr("Fetched", depth, URL);
 
 		toFile(directory, rootPage, fileID++);
+		logr("Added", depth, URL);
 
 		while ((pos = GetNextURL(HTML, pos, URL, &result)) > 0){
 		  if (depth >= maxDepth){
@@ -95,9 +97,9 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		    break;
 		  }
 
-		  // printf("Found URL: %s\n", result);
 		  if ( (! arraySearch(beenSearched, index, result)) && (IsInternalURL(result)) && (NormalizeURL(result) ) ) {
-
+            logr("Added", depth, result);
+            
 			beenSearched[index] = assertp(malloc(strlen(result) + 1), "beenSearched\n");
 			strcpy(beenSearched[index], result);
 			index++;
@@ -112,12 +114,17 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 			if (GetWebPage(page)){
 				bag_insert(bag, page);
 			} else {
+			    logr("FAILED", depth, result);
 				count_free(page->html);
 				count_free(page->url);
 				count_free(page);
 			}
 		  }
-
+		  
+            if (! IsInternal(result)){
+                logr("EXTERNAL", depth, result);
+            }
+                
 			free(result);
 		}
 
@@ -144,7 +151,11 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 	return 0;
 }
 
+
+
 int main(int argc, char* argv[]){
+
+    // Parse arguments
     if (argc != 4){
         printf("Error: crawler must receive exactly three arguments\n");
         return 1;
@@ -171,7 +182,7 @@ int main(int argc, char* argv[]){
         printf("Error: depth must be between %d and 0\n", MAX_DEPTH);
         return 1;
     }
-	
+    
     crawl(seedURL, directory, atoi(depth));
 	
     return 0;
