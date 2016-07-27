@@ -31,7 +31,6 @@ bool arraySearch (char** array, int index, char* key)
 
 void toFile(char* path, WebPage* web, int fileID)
 {
-  printf("in toFile\n");
   char filename[strlen(path)+5];
   sprintf(filename, "%s/%d", path, fileID);
   
@@ -43,7 +42,6 @@ void toFile(char* path, WebPage* web, int fileID)
   
   fprintf(fp, "%s\n%d\n%s\n", web->url, web->depth, web->html);
   fclose(fp);
-  printf("out toFile\n");
 }
 
 
@@ -141,10 +139,8 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 
 
 	// clean up array
-	printf("index = %d\n", index);
 
 	for (int i = 0; i < index; i++){
-		printf("%s\n", beenSearched[i]);
 		count_free(beenSearched[i]);
 	}
 	count_free(beenSearched);
