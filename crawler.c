@@ -36,7 +36,7 @@ void toFile(char* path, WebPage* web, int fileID)
   
   FILE* fp = NULL;
   if ( (fp = fopen(filename, "w")) == NULL){
-    printf("could not write file\n");
+    logr("FAILED", depth, result);
     return;
   }
   
