@@ -134,9 +134,9 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		int pos = 0;
 		char* result = NULL;
 	
-	    if (! GetWebPage(page)){
+	    if (! GetWebPage(rootPage)){
 		    logr("FAILED", depth, result);
-			webDelete(page);
+			webDelete(rootPage);
 		}
 			
 	    logr("Fetched", depth, URL);
