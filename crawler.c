@@ -90,14 +90,11 @@ void webDelete(WebPage* web)
     if (web != NULL){
         if (web->url != NULL){
             count_free(web->url);
-            printf("freed url in webDelete\n");
         }
         if (web->html != NULL){
             count_free(web->html);
-            printf("freed html in webDelete\n");
         }
         count_free(web);
-        printf("freed web in webDelete\n");
     }
 }
 
@@ -200,7 +197,6 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 	bag_delete(bag);
 
     
-    printf("freeing array\n");
 	// clean up array
 	for (int i = 0; i < index; i++){
 		count_free(beenSearched[i]);
