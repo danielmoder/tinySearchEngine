@@ -27,10 +27,12 @@ Parameters: const char* word, the action word to be printed with the message
             const char *url, the target url
 Returns: (void)
 */
+
 inline static void logr(const char* word, const int depth, const char *url)
 {
   printf("%2d %*s%9s: %s\n", depth, depth, "", word, url);
 }
+
 
 /*
 Function: Determines if a string is in an array of strings
@@ -39,7 +41,7 @@ Parameters: char** array, the array to be searched
             char* key, the string to be searched for
 Returns: true if the array contains the key, else false
 */
-//returns true if array DOES contain the given key
+
 bool arraySearch (char** array, int index, char* key)
 {
 	for (int i = 0; i < index; i++){
@@ -50,6 +52,7 @@ bool arraySearch (char** array, int index, char* key)
 	return false;
 }
 
+
 /*
 Function: write the html of a webpage to a file in a given directory
 Parameters: char* path, the path of the directory to write into
@@ -57,6 +60,7 @@ Parameters: char* path, the path of the directory to write into
             int fileID, the name of the file to be written
 Returns: (void)
 */
+
 void toFile(char* path, WebPage* web, int fileID)
 {
   char filename[strlen(path)+6]; // 4 digit max for fileID (*** assumption)
@@ -72,6 +76,7 @@ void toFile(char* path, WebPage* web, int fileID)
   fclose(fp);
 }
 
+
 /*
 Function: free a WebPage object and its contents
 Parameters: WebPage* web
@@ -79,6 +84,7 @@ Returns: (void)
 Assumptions: web, web->url, and web->html must have been allocated
                 (or GetWebPage must have been called, allocating html)            
 */
+
 void webDelete(WebPage* web)
 {
     if (web != NULL){
@@ -95,6 +101,15 @@ void webDelete(WebPage* web)
     }
 }
 
+WebPage* pageNew(char* url)
+{
+    WebPage* newPage = assertp(malloc(sizeof(WebPage)), "newPage\n");
+    newPage->url = assertp(malloc(strlen(url) + 1), "newURL\n");
+    strncpy(newPage->url, url, strlen(url) + 1);
+    return newPage;
+}
+
+
 /*
 Function: crawl pages starting from seedURL to a specified depth, and write
             html to directory
@@ -103,21 +118,16 @@ Parameters: char* seedURL, the url from which to start the crawl
             int maxDepth, the max depth to crawl
 Returns: 0 upon success, 1 if seedURL is not accessible 
 */
+
 int crawl(char* seedURL, char* directory, int maxDepth)
 {
 	// Setting up seedPage
 	WebPage* rootPage = assertp(malloc(sizeof(WebPage)), "making seedPage\n");
-
 	rootPage->url = assertp(malloc(strlen(seedURL) + 1), "new URL\n");
 	strcpy(rootPage->url, seedURL);
 
 	rootPage->html = NULL;
 	rootPage->depth = 0;
-	
-//	if (! GetWebPage(rootPage)){
-//	    printf("Error: bad seedURL\n");
-//		return 1;
-//	}
 
 	bag_t* bag = bag_new(free);
 	bag_insert(bag, rootPage);
@@ -138,7 +148,6 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 	    if (! GetWebPage(rootPage)){
 		    logr("FAILED", rootPage->depth, rootPage->url);
 			webDelete(rootPage);
-//			rootPage = bag_extract(bag);
 			continue;
 		}
 		
@@ -186,7 +195,6 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		}
 
 		webDelete(rootPage);
-//		rootPage = bag_extract(bag);
 	}
 
 	bag_delete(bag);
