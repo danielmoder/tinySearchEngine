@@ -22,7 +22,7 @@ web.o: web.h
 
 
 # build the library
-lib/cs50ds.a: 
+lib/cs50ds.a:
 	cd lib; $(MAKE)
 
 .PHONY: clean
@@ -31,5 +31,4 @@ clean:
 	rm -f *~
 	rm -f *.o
 	rm -f $(PROG)
-	rm -f lab3/bag/bag.o
 	cd lib; $(MAKE) clean

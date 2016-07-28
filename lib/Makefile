@@ -19,9 +19,13 @@ $(LIB): $(OBJS)
 memory/memory.o: memory/memory.c memory/memory.h
 	cd memory; $(MAKE) memory.o
 bag/bag.o: bag/bag.c bag/bag.h
+	cd bag; $(MAKE) bag.o
 set/set.o: set/set.c set/set.h
+	cd set; $(MAKE) set.o
 counters/counters.o: counters/counters.c counters/counters.h
+	cd counters; $(MAKE) counters.o
 hashtable.o: hashtable/hashtable.c hashtable/hashtable.h hashtable/jhash.c hashtable/jhash.h set/set.c set/set.h
+	cd hashtable; $(MAKE) hashtable.o
 
 
 # add cleanup commands for other subdirectories
