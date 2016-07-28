@@ -21,7 +21,7 @@ memory/memory.o: memory/memory.c memory/memory.h
 bag/bag.o: bag/bag.c bag/bag.h
 set/set.o: set/set.c set/set.h
 counters/counters.o: counters/counters.c counters/counters.h
-hashtable.o: hashtable/hashtable.c hashtable/hashtable.h hashtable/jhash.c hashtable/jhash.h set/set.c set/set.c
+hashtable.o: hashtable/hashtable.c hashtable/hashtable.h hashtable/jhash.c hashtable/jhash.h set/set.c set/set.h
 
 
 # add cleanup commands for other subdirectories

@@ -30,7 +30,7 @@ Returns: (void)
 
 inline static void logr(const char* word, const int depth, const char *url)
 {
-  printf("%2d %*s%9s: %s\n", depth, depth, "", word, url);
+  printf("- %2d %*s%9s: %s\n", depth, depth, "", word, url);
 }
 
 
