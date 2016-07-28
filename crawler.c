@@ -147,7 +147,7 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 			webDelete(rootPage);
 			continue;
 		}
-		logr("Fetched", depth, URL);
+		logr("Fetched", rootPage->depth, rootPage->url);
 		
 		char* HTML = rootPage->html;
 		char* URL = rootPage->url;
