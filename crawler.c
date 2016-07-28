@@ -98,13 +98,20 @@ void webDelete(WebPage* web)
     }
 }
 
-WebPage* pageNew(char* url)
+
+
+WebPage* pageNew(char* url, int depth)
 {
     WebPage* newPage = assertp(malloc(sizeof(WebPage)), "newPage\n");
     newPage->url = assertp(malloc(strlen(url) + 1), "newURL\n");
     strncpy(newPage->url, url, strlen(url) + 1);
+    
+    newPage->html = NULL;
+    newPage->depth = depth;
+    
     return newPage;
 }
+
 
 
 /*
@@ -118,53 +125,53 @@ Returns: 0 upon success, 1 if seedURL is not accessible
 
 int crawl(char* seedURL, char* directory, int maxDepth)
 {
-	// Setting up seedPage
-	WebPage* rootPage = assertp(malloc(sizeof(WebPage)), "making seedPage\n");
-	rootPage->url = assertp(malloc(strlen(seedURL) + 1), "new URL\n");
-	strcpy(rootPage->url, seedURL);
+	// seedPage
+	WebPage* rootPage = pageNew(seedURL, 0);
 
-	rootPage->html = NULL;
-	rootPage->depth = 0;
-
+    // bag
 	bag_t* bag = bag_new(free);
 	bag_insert(bag, rootPage);
 
+    // array
 	char** beenSearched = assertp(malloc(sizeof(char*) * 1000), "array\n");
-
 	beenSearched[0] = assertp(malloc(strlen(seedURL) + 1), "toAdd\n");
 	strcpy(beenSearched[0], seedURL);
 
 	int fileID = 0;
 	int index = 1;
 
-
 	while ((rootPage = bag_extract(bag)) != NULL){
-		// Setting up GetNextURL while loop
-
 	
 	    if (! GetWebPage(rootPage)){
 		    logr("FAILED", rootPage->depth, rootPage->url);
 			webDelete(rootPage);
 			continue;
 		}
+		logr("Fetched", depth, URL);
 		
 		char* HTML = rootPage->html;
 		char* URL = rootPage->url;
 		int depth = rootPage->depth;
-		int pos = 0;
-		char* result = NULL;
-			
-	    logr("Fetched", depth, URL);
+		
+
 
 		toFile(directory, rootPage, fileID++);
 		logr("Saved", depth, URL);
-
+		
+		if (depth >= maxDepth){
+		    webDelete(rootPage);
+		    continue;
+		}
+		
+		int pos = 0;
+		char* result = NULL;
+		
 		while ((pos = GetNextURL(HTML, pos, URL, &result)) > 0){
 		  if (depth >= maxDepth){
 		    free(result);
 		    break;
 		  }
-
+		  
 		  if ( (! arraySearch(beenSearched, index, result)) && \
 		        (IsInternalURL(result)) && (NormalizeURL(result) ) ) {
 		        
@@ -173,16 +180,11 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 			beenSearched[index] = assertp(malloc(strlen(result) + 1), "url\n");
 			strcpy(beenSearched[index], result);
 			index++;
-
-			WebPage* page = assertp(malloc(sizeof(WebPage)), "webpage\n");
-			page->url = assertp(malloc(strlen(result) + 1), "url\n");
-			strcpy(page->url, result);
-
-			page->html = NULL;
-			page->depth = depth + 1;
+            
+			WebPage* page = pageNew(result, depth+1);
 
 			bag_insert(bag, page);
-            }
+          }
             
             if (! IsInternalURL(result)){
                 logr("EXTERNAL", depth, result);
