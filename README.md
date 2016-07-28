@@ -7,9 +7,11 @@
 
 This crawler is designed to automatically navigate the web and save the html
 of the pages it visits. 
-It takes 3 arguments: the seed url, the page at which to start the crawl
-                      the output directory, to which it will write the html, and
-                      the max depth of the crawl, starting at 0
+
+It takes 3 arguments: 
+1. the seed url, the page at which to start the crawl
+2. the output directory, to which it will write the html, and
+3. the max depth of the crawl, starting at 0
 
 ---
 
