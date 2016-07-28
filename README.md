@@ -5,7 +5,11 @@
 
 **1. Functionality:**
 
-This program blah blah blah
+This crawler is designed to automatically navigate the web and save the html
+of the pages it visits. 
+It takes 3 arguments: the seed url, the page at which to start the crawl
+                      the output directory, to which it will write the html, and
+                      the max depth of the crawl, starting at 0
 
 ---
 
