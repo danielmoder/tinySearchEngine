@@ -55,6 +55,8 @@ void index_page(index_t* index, WebPage* page, int fileID)
 
 void index_build(index_t* index, char* pageDirectory)
 {
+    printf("in index_build\n");
+
     WebPage* page;
     int fileID = 0;
     
@@ -71,17 +73,12 @@ int main(int argc, char* argv[]){
   int NUMSLOTS = 4;
   
   parse(argc, argv);
-  
-  
-  
 
   char* pd = argv[1];
   char* fn = argv[2];
-
-
   
   index_t* index = index_new(NUMSLOTS, count_free);
-  index_build(index, "~/cs50/labs/tse/data/output");
+  index_build(index, "/net/tahoe3/dmoder/cs50/labs/tse/data/output");
   
   printf("iterating through index\n");
   hashtable_iterate(index, setFunc, NULL);
