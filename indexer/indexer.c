@@ -61,7 +61,9 @@ void index_build(index_t* index, char* pageDirectory)
     int fileID = 0;
     
     while ( (page = webpage_load(pageDirectory, fileID)) != NULL){
+        printf("html = %s\n", page->html);
         index_page(index, page, fileID);
+        
         webpage_delete(page);
         fileID++;
     }
