@@ -41,6 +41,7 @@ void index_page(index_t* index, WebPage* page, int fileID)
     
     while ( (pos = GetNextWord(page->html, pos, &word)) != 0){
         printf("1\n");
+        if (word == NULL){return;}
         counters_t* ctr = index_find(index, word);
         
         if (ctr == NULL){
