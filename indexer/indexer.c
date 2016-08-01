@@ -28,7 +28,6 @@ void setFunc(void *arg, const char *key, void *data)
 
 bool parse(int argc, char* argv[])
 {
-  printf("parsed\n");
   return true;
 }
 
@@ -60,7 +59,6 @@ void index_build(index_t* index, char* pageDirectory)
     while ( (page = webpage_load(pageDirectory, fileID)) != NULL){
         index_page(index, page, fileID);
         
-        printf("finished indexing, now to delete\n");
         webpage_delete(page);
         fileID++;
     }
