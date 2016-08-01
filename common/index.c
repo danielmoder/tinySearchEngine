@@ -8,6 +8,8 @@
 
 /*  write your implementation of the functions exposed in index.h   */
 
+#include <index.h>
+
 index_t* index_new(numSlots, void (*destructor)(void*))
 {
     index_t* new = hashtable_new(numSlots, destructor);
