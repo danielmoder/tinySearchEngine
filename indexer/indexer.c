@@ -34,13 +34,10 @@ bool parse(int argc, char* argv[])
 
 void index_page(index_t* index, WebPage* page, int fileID)
 {
-    printf("in index_page\n");
-    
     char* word = NULL;
     int pos = 0;
     
     while ( (pos = GetNextWord(page->html, pos, &word)) != 0){
-        printf("1\n");
         if (word == NULL){return;}
         counters_t* ctr = index_find(index, word);
         
@@ -56,13 +53,11 @@ void index_page(index_t* index, WebPage* page, int fileID)
 
 void index_build(index_t* index, char* pageDirectory)
 {
-    printf("in index_build\n");
 
     WebPage* page;
     int fileID = 0;
     
     while ( (page = webpage_load(pageDirectory, fileID)) != NULL){
-        printf("html = %s\n", page->html);
         index_page(index, page, fileID);
         
         printf("finished indexing, now to delete\n");
@@ -84,7 +79,6 @@ int main(int argc, char* argv[]){
   index_t* index = index_new(NUMSLOTS, count_free);
   index_build(index, "/net/tahoe3/dmoder/cs50/labs/tse/data/output");
   
-  printf("iterating through index\n");
   hashtable_iterate(index, setFunc, NULL);
   
   count_free(index);  
