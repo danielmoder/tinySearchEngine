@@ -156,6 +156,7 @@ void set_iterate(set_t *set,
 	setNode_t* temp = NULL; 
 
 	while (node != NULL){
+	    printf("in set_iter\n");
 		temp = node->next;
 		
 		itemfunc(arg, node->key, node->data);
