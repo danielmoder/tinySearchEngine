@@ -152,6 +152,7 @@ void set_iterate(set_t *set,
 		  void (*itemfunc)(void *arg, const char *key, void *data),
 		  void *arg)
 {
+    printf("outside set_iter\n");
 	setNode_t* node = set->head;
 	setNode_t* temp = NULL; 
 
