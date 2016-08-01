@@ -179,7 +179,7 @@ void counters_iterate(counters_t *ctrs,
 
 	while (node != NULL){
 	    temp = node->next;
-	    itemfunc(node, node->key, node->count);
+	    itemfunc(arg, node->key, node->count);
 	    
 	    node = temp;
 	}
