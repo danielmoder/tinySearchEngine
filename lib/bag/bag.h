@@ -14,5 +14,8 @@ void* bag_extract(bag_t* bag);
 
 void bag_delete(bag_t* bag);
 
+void bag_iterate(bag_t *bag,
+		 void (*itemfunc)(void *arg, void *data),
+		 void *arg);
 
 #endif // __SET_H
