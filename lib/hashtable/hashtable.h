@@ -16,5 +16,9 @@ void* hashtable_find(hashtable_t* hash, char* key);
 
 void hashtable_delete(hashtable_t* hash);
 
+void hashtable_iterate(hashtable_t *ht, 
+		       void (*itemfunc)(void *arg, const char *key,void *data),
+		       void *arg);
+
 #endif // __HASHTABLE_H
 
