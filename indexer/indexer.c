@@ -64,6 +64,7 @@ void index_build(index_t* index, char* pageDirectory)
         printf("html = %s\n", page->html);
         index_page(index, page, fileID);
         
+        printf("finished indexing, now to delete\n");
         webpage_delete(page);
         fileID++;
     }
