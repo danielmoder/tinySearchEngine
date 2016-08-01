@@ -80,7 +80,7 @@ int main(int argc, char* argv[]){
   index_build(index, "~/cs50/labs/tse/data/output");
   
   printf("iterating through index\n");
-  hashtable_iterate(index, hashFunc, NULL);
+  hashtable_iterate(index, setFunc, NULL);
   
   count_free(index);  
 
