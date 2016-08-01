@@ -22,6 +22,11 @@
 typedef hashtable_t index_t;
 
 /********** add function prototypes here *********/
+index_t* index_new(numSlots, void (*destructor)(void*));
+void index_insert(index_t* index, counters_t* ctr);
+counters_t* index_find(index_t* index, char* keyword);
+index_delete(index_t* index);
+
 
 
 #endif // __INDEX_H
