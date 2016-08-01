@@ -16,4 +16,9 @@ bool set_insert(set_t* set, char* key, void* data);
 
 void set_delete(set_t* set);
 
+void set_iterate(set_t *set,
+		  void (*itemfunc)(void *arg, const char *key, void *data),
+		  void *arg);
+
+
 #endif // __SET_H
