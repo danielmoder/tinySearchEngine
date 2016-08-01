@@ -119,3 +119,23 @@ void bag_delete(bag_t* bag)
 	}
 	free(bag);
 }
+
+/* Iterate over all items in bag (in undefined order):
+ * call itemfunc for each item, passing (arg, data).
+ */
+void bag_iterate(bag_t *bag,
+		 void (*itemfunc)(void *arg, void *data),
+		 void *arg)
+{
+    bagNode_t* node = bag->head;
+	bagNode_t* temp = NULL;
+
+	while (node != NULL){
+		temp = node->next;
+		
+		itemfunc(arg, node->data);
+		
+		node = temp;
+	}
+}
+
