@@ -31,18 +31,6 @@ bool parse(int argc, char* argv[])
   return true;
 }
 
-index_t* index_build(index_t* index, char* pageDirectory)
-{
-    WebPage* page;
-    int fileID = 0;
-    
-    while ( (page = webpage_load(pageDirectory, fileID)) != NULL){
-        index_page(index, page, fileID);
-        webpage_delete(page);
-        fileID++;
-    }
-}
-
 void index_page(index_t* index, WebPage* page, int fileID)
 {
     char* word = NULL;
@@ -60,6 +48,20 @@ void index_page(index_t* index, WebPage* page, int fileID)
         free(word);
     }
 }
+
+void index_build(index_t* index, char* pageDirectory)
+{
+    WebPage* page;
+    int fileID = 0;
+    
+    while ( (page = webpage_load(pageDirectory, fileID)) != NULL){
+        index_page(index, page, fileID);
+        webpage_delete(page);
+        fileID++;
+    }
+    
+}
+
 
 int main(int argc, char* argv[]){
   int NUMSLOTS = 4;
