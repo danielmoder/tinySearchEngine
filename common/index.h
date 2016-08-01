@@ -13,8 +13,8 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-#include "hashtable/hashtable.h"
-#include "counters/counters.h"
+#include "../lib/hashtable/hashtable.h"
+#include "../lib/counters/counters.h"
 
 /**************** global types ****************/
 
@@ -22,10 +22,10 @@
 typedef hashtable_t index_t;
 
 /********** add function prototypes here *********/
-index_t* index_new(numSlots, void (*destructor)(void*));
-void index_insert(index_t* index, counters_t* ctr);
+index_t* index_new(int numSlots, void (*destructor)(void*));
+void index_insert(index_t* index, char* keyword, counters_t* ctr);
 counters_t* index_find(index_t* index, char* keyword);
-index_delete(index_t* index);
+void index_delete(index_t* index);
 
 
 
