@@ -11,6 +11,7 @@
 #include "../common/webpage.h"
 #include "../common/word.h"
 #include "../lib/memory/memory.h"
+#include "../lib/hashtable/hashtable.h"
 
 
 
