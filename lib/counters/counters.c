@@ -154,8 +154,8 @@ void counters_delete(counters_t* ctrs)
 void counters_set(counters_t *ctrs, int key, int count)
 {
     if (ctrs == NULL){return;}
+    countersNode_t* node = NULL;
     
-    countersNode_t* node = NULL
     if ( (node = nodeSearch(ctrs, key)) != NULL){
         node->count = count;   
     } else {
