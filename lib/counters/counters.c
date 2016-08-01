@@ -178,7 +178,10 @@ void counters_iterate(counters_t *ctrs,
 	countersNode_t* temp = NULL; 
 
 	while (node != NULL){
-	    itemfunc(arg, key, count);
+	    itemfunc(node, node->key, node->count);
+	    
+	    temp = node;
+	    node = node->next;
 	}
 }
 
