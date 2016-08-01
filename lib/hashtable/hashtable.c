@@ -124,6 +124,7 @@ void hashtable_iterate(hashtable_t *ht,
 		       void *arg)
 {
     for (int i = 0; i < ht->numSlots; i++){
+        printf("in hash_iter\n");
         set_iterate(ht->array[i], itemfunc, arg);
     }
 }
