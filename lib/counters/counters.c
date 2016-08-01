@@ -144,3 +144,43 @@ void counters_delete(counters_t* ctrs)
 
 	free(ctrs);
 }
+
+
+/* Set value of the counter indicated by key.
+ * If the key does not yet exist, create a counter for it
+ * and initialize its counter value to 'count'.
+ * NULL counters is ignored.
+ */
+void counters_set(counters_t *ctrs, int key, int count)
+{
+    if (ctrs == NULL){return;}
+    
+    countersNode_t* node = NULL
+    if ( (node = nodeSearch(ctrs, key)) != NULL){
+        node->count = count;   
+    } else {
+        node = countersNode_new(key);                   // Make new node
+        node->count = count;                            // set count
+        
+		node->next = ctrs->head;                        // link up
+		ctrs->head = node;
+    }
+}
+
+/* Iterate over all counters in the set (in undefined order):
+ * call itemfunc for each item, with (arg, key, count).
+ */
+void counters_iterate(counters_t *ctrs,
+            void (*itemfunc)(void *arg, const int key, int count),
+		    void *arg)
+{
+	countersNode_t* node = ctrs->head;
+	countersNode_t* temp = NULL; 
+
+	while (node != NULL){
+	    itemfunc(arg, key, count);
+	}
+}
+
+
+
