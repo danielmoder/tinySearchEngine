@@ -26,7 +26,7 @@ void setFunc(void *arg, const char *key, void *data)
     fprintf(arg, "%s ", key);
     // printf("iterating through counters: %s\n", key);
     counters_iterate(data, ctrFunc, arg);
-    fprintf(arg, "\n", key);
+    fprintf(arg, "\n");
 }
 
 bool parse(int argc, char* argv[])
@@ -71,8 +71,8 @@ void index_build(index_t* index, char* pageDirectory)
 void index_save(index_t* index, char* fileName)
 {
     FILE* fp = NULL;
-    if ( (fp = fopen(filename, "w")) == NULL){
-        printf("Error: could not open file %s\n", fileName);
+    if ( (fp = fopen(fp, "w")) == NULL){
+        printf("Error: could not open file %s\n", fp);
         return;
     }
     hashtable_iterate(index, setFunc, fp);
