@@ -69,7 +69,7 @@ void index_build(index_t* index, char* pageDirectory)
     
 }
 
-void index_save(index_t* index, char* fileName)
+void index_save(index_t* index, char* fileName, void (*setFunc)(void*) )
 {
     FILE* fp = NULL;
     if ( (fp = fopen(fileName, "w")) == NULL){
