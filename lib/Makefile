@@ -3,11 +3,17 @@
 #
 # David Kotz, April 2016
 # updated by Xia Zhou, July 2016
+H = hashtable
+S = set
+C = counters
+B = bag
+M = memory
 
-OBJS = memory/memory.o bag/bag.o counters/counters.o set/set.o hashtable/hashtable.o
+
+OBJS = $M/memory.o $B/bag.o $C/counters.o $S/set.o $H/hashtable.o
 LIB = cs50ds.a
 
-CFLAGS = -Wall -pedantic -std=c11 -ggdb
+CFLAGS = -Wall -pedantic -std=c11 -ggdb -I$H -I$S -I$C -I$B -I$M
 CC = gcc
 MAKE = make
 
@@ -16,15 +22,16 @@ $(LIB): $(OBJS)
 
 # add other targets for the other .o files
 
-memory/memory.o: memory/memory.c memory/memory.h
-	cd memory; $(MAKE) memory.o
-bag/bag.o: bag/bag.c bag/bag.h
+
+memory.o: memory.h
+	cd memory; $(MAKE) ../memory.o
+bag.o: bag.h
 	cd bag; $(MAKE) bag.o
-set/set.o: set/set.c set/set.h
+set.o: set.h
 	cd set; $(MAKE) set.o
-counters/counters.o: counters/counters.c counters/counters.h
+counters.o: counters.h
 	cd counters; $(MAKE) counters.o
-hashtable.o: hashtable/hashtable.c hashtable/hashtable.h hashtable/jhash.c hashtable/jhash.h set/set.c set/set.h
+hashtable.o: hashtable.h jhash.h set.h
 	cd hashtable; $(MAKE) hashtable.o
 
 

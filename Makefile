@@ -1,12 +1,15 @@
-make:
-	cd common; $(MAKE)
-	cd lib; $(MAKE)
-	cd crawler; $(MAKE)
-	cd indexer; $(MAKE)
+	MAKE = make -C
 
-clean:
-	cd common; $(MAKE) $@
-	cd lib; $(MAKE) $@
-	cd crawler; $(MAKE) $@
-	cd indexer; $(MAKE) $@
+all:
+	$(MAKE) crawler
+	$(MAKE) indexer
+	$(MAKE) lib
+	$(MAKE) common
+
+clean: 
+	cd crawler; make $@
+	cd indexer; make $@
+	cd lib; make $@
+	cd common; make $@
+
 
