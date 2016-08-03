@@ -4,7 +4,7 @@
  * 
  * Name, Summer 2016
  */
-
+#include <strings.h>
 #include "index.h"
 
 // Adapted from stackoverflow.com
@@ -46,27 +46,35 @@ char* readFile(FILE* file)
     char* word = NULL; // will be either keyword, docID, or count
     int pos = 0;
     
+    char* keyword = NULL
+    int fileID = -1;
+    int count = -1;
+    
     while ( (pos = GetNextWord(indexString, pos, &word)) != 0){ // to handle the keyWORDS
         printf("in GetNextWord loop \n");
+
         if (word == NULL){
             free(indexString);
             fclose(fp);
             return index;
         }
+        if (keyword == NULL){
+            keyword = strdup(word);
+        } else if (fileID = -1){
+            fileID = atoi(word);
+        } else {
+            count = atoi(word);
+        }
         
-        char fileID;
-        char count;
-        while ( (fileID = fgetc(fp)) != '\n') {
-            count = fgetc(fp);
-            
-            // will need to make a new counter for each line
+        if ( (keyword != NULL) && (fileID != -1) && (count != -1)){
             counters_t* ctr = counters_new();
             counters_set(ctr, (int)fileID, (int)count);
             index_insert(index, word, ctr);
             
-            pos+=4;                 // keep track!
+            keyword = NULL;
+            fileID = -1;
+            count = -1;
         }
-        pos++;
         free(word);
     }
     return NULL; //error -- should not reach this
