@@ -75,7 +75,7 @@ int main(int argc, char* argv[]){
   char* fn = argv[2];
   
   index_t* index = index_new(NUMSLOTS, count_free);
-  index_build(index, "/net/tahoe3/dmoder/cs50/labs/tse/data/output");
+  index_build(index, "../data/output");
   
   hashtable_iterate(index, setFunc, NULL);
   
