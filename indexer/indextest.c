@@ -60,8 +60,8 @@ char* readFile(FILE* file)
     int pos = 0;
     
     char* keyword = NULL;
-    int fileID = -1;
-    int count = -1;
+    char* fileID = NULL;
+    char* count = NULL;
     
     while ( (pos = GetNextWord(indexString, pos, &word)) != 0){ // to handle the keyWORDS
         printf("in GetNextWord loop \n");
@@ -75,19 +75,23 @@ char* readFile(FILE* file)
         if (keyword == NULL){
             keyword = strdup(word);
         } else if (fileID == -1){
-            fileID = atoi(word);
+            fileID = strdup(word);
         } else {
-            count = atoi(word);
+            count = strdup(word);
         }
         
-        if ( (keyword != NULL) && (fileID != -1) && (count != -1)){
+        if ( (keyword != NULL) && (fileID != NULL) && (count != NULL)){
             counters_t* ctr = counters_new();
             counters_set(ctr, (int)fileID, (int)count);
             index_insert(index, word, ctr);
             
+            free(keyword);
+            free(fileID);
+            free(count);
+            
             keyword = NULL;
-            fileID = -1;
-            count = -1;
+            fileID = NULL;
+            count = NULL;
         }
         free(word);
     }
