@@ -75,6 +75,7 @@ char* readFile(FILE* file)
         if (keyword == NULL){
             keyword = strdup(word);
         } else if (fileID == NULL){
+            printf("setting fileID to %s\n", word);
             fileID = strdup(word);
         } else {
             count = strdup(word);
