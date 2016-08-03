@@ -87,7 +87,7 @@ int main(int argc, char* argv[]){
   char* pageDirectory = argv[1];
   char* fileName = argv[2];
   
-  void (*)(void *) cd = counters_delete;
+  void (* cd)(void *) = counters_delete;
   index_t* index = index_new(NUMSLOTS, cd);
   index_build(index, "../data/output");
 
