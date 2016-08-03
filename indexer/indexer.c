@@ -92,10 +92,9 @@ int main(int argc, char* argv[]){
 
   index_save(index, "indexFile.txt");
   
-  count_free(index);  
-
+  index_delete(index);
+  
   return 0;
-
 }
 
 
