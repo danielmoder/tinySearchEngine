@@ -5,7 +5,7 @@
  * Name, Summer 2016
  */
 
-#include "indexer.c"
+#include "index.c"
 
 // Adapted from stackoverflow.com
 char* readFile(FILE* file)
@@ -13,14 +13,14 @@ char* readFile(FILE* file)
     char *buffer = NULL;
     size_t size = 0;
     
-    fseek(fp, 0, SEEK_END);
-    size = ftell(fp);
+    fseek(file, 0, SEEK_END);
+    size = ftell(file);
 
-    rewind(fp);
+    rewind(file);
 
     buffer = malloc((size + 1) * sizeof(*buffer)); 
     
-    fread(buffer, size, 1, fp);
+    fread(buffer, size, 1, file);
     
     buffer[size] = '\0';
 
@@ -34,11 +34,11 @@ char* readFile(FILE* file)
     FILE* fp = NULL;
     if ( (fp = fopen(indexFileName, "r")) == NULL){
         printf("Error: could not open file %s\n", indexFileName);
-        return;
+        return NULL;
     }
     char* indexString = readFile(fp);    
     
-    NUMSLOTS = 4;
+    int NUMSLOTS = 4;
     index_t* index = index_new(NUMSLOTS, (void (*)(void*))counters_delete); // put the fPointer cast in index_new (it will be that for every index)
     
     char* word = NULL; // will be either keyword, docID, or count
@@ -48,18 +48,17 @@ char* readFile(FILE* file)
         if (word == NULL){
             free(indexString);
             fclose(fp);
-            return;
+            return index;
         }
         
         int fileID = 0;
         int count = 0;
-        char in;
-        while ( (strcmp( (fileID = (int)fgetc(fp)) , "\n") != 0)){
+        while ( (strcmp( (fileID = (char*)fgetc(fp)) , "\n") != 0)){
             count = (int)fgetc(fp);
             
             // will need to make a new counter for each line
-            ctr = counters_new();
-            counters_set(ctr, fileID);
+            counters_t* ctr = counters_new();
+            counters_set(ctr, (int)fileID, count);
             index_insert(index, word, ctr);
             
             pos+=4;                 // keep track!
