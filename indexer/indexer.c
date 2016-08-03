@@ -92,9 +92,7 @@ int main(int argc, char* argv[]){
     counters_t* b;
   }
   
-  void* ctr_del = counters_delete.a
-  
-  
+  void* ctr_del = counters_delete.a;
   
   index_t* index = index_new(NUMSLOTS, cd);
   index_build(index, "../data/output");
