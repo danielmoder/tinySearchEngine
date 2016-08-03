@@ -17,6 +17,21 @@
 #include "word.h"
 #include "web.h"
 
+// assumes arg is an _open_ FILE*
+static void ctrFunc(void *arg, const int key, int count)
+{
+    fprintf(arg, "%d %d ", key, count);
+}
+
+// assumes arg is an _open_ FILE*
+static void setFunc(void *arg, const char *key, void *data)
+{
+    fprintf(arg, "%s ", key);
+    // printf("iterating through counters: %s\n", key);
+    counters_iterate(data, ctrFunc, arg);
+    fprintf(arg, "\n");
+}
+
 index_t* index_new(int numSlots, void (*destructor)(void*))
 {
     index_t* new = hashtable_new(numSlots, destructor);
@@ -74,8 +89,7 @@ void index_build(index_t* index, char* pageDirectory)
     
 }
 
-void index_save(index_t* index, char* fileName, \
-                void (*setFunc)(void *, const char *, void *) )
+void index_save(index_t* index, char* fileName)
 {
     FILE* fp = NULL;
     if ( (fp = fopen(fileName, "w")) == NULL){
