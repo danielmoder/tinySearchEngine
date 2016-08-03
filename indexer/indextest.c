@@ -74,7 +74,7 @@ char* readFile(FILE* file)
         }
         if (keyword == NULL){
             keyword = strdup(word);
-        } else if (fileID == -1){
+        } else if (fileID == NULL){
             fileID = strdup(word);
         } else {
             count = strdup(word);
@@ -82,7 +82,7 @@ char* readFile(FILE* file)
         
         if ( (keyword != NULL) && (fileID != NULL) && (count != NULL)){
             counters_t* ctr = counters_new();
-            counters_set(ctr, (int)fileID, (int)count);
+            counters_set(ctr, atoi(fileID), atoi(count));
             index_insert(index, word, ctr);
             
             free(keyword);
