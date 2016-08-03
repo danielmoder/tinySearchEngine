@@ -1,7 +1,7 @@
 L = ../lib
 C = ../common
 
-PROG = indexer # indextest
+PROGS = indexer indextest
 OBJS = indexer.o ../lib/hashtable/hashtable.o ../lib/hashtable/jhash.o ../lib/set/set.h ../lib/memory/memory.o ../common/index.o ../common/webpage.o ../common/word.o
 LIBS = 
 LLIBS = $L/cs50ds.a $C/common.a
@@ -10,7 +10,7 @@ CFLAGS = -Wall -pedantic -std=c11 -ggdb -I$L/hashtable -I$L/set -I$L/counters  -
 CC = gcc
 MAKE = make
 
-#all: indexer indextest
+all: $(PROGS)
 
 # build the indexer
 indexer: $(OBJS) $(LLIBS)
@@ -20,7 +20,9 @@ indexer: $(OBJS) $(LLIBS)
 indexer.o: $L/hashtable/hashtable.h $L/hashtable/jhash.h $L/memory/memory.h
 indexer.o: $C/index.h $C/webpage.h $C/word.h
 
-#indextest.o: 
+
+indextest.o: $L/hashtable/hashtable.h $L/hashtable/jhash.h $L/memory/memory.h
+indextest.o: $C/index.h $C/webpage.h $C/word.h
 
 
 hashtable/hashtable.o: $L/hashtable/hashtable.h $L/hashtable/jhash.h $L/set/set.h
