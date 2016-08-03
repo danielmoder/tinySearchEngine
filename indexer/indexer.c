@@ -90,6 +90,7 @@ int main(int argc, char* argv[]){
   index_t* index = index_new(NUMSLOTS, count_free);
   index_build(index, "../data/output");
 
+  index_save(index, "indexFile.txt");
   
   count_free(index);  
 
