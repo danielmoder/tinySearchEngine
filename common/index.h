@@ -26,7 +26,9 @@ index_t* index_new(int numSlots, void (*destructor)(void*));
 void index_insert(index_t* index, char* keyword, counters_t* ctr);
 counters_t* index_find(index_t* index, char* keyword);
 void index_delete(index_t* index);
-
+void index_page(index_t* index, WebPage* page, int fileID);
+void index_build(index_t* index, char* pageDirectory);
+void index_save(index_t* index, char* fileName, void (*setFunc)(void*) );
 
 
 #endif // __INDEX_H
