@@ -51,14 +51,14 @@ char* readFile(FILE* file)
             return index;
         }
         
-        int fileID = 0;
-        int count = 0;
+        char fileID;
+        char count;
         while ( (strcmp( (fileID = fgetc(fp)) , "\n") != 0)){
-            count = (int)fgetc(fp);
+            count = fgetc(fp);
             
             // will need to make a new counter for each line
             counters_t* ctr = counters_new();
-            counters_set(ctr, (int)fileID, count);
+            counters_set(ctr, (int)fileID, (int)count);
             index_insert(index, word, ctr);
             
             pos+=4;                 // keep track!
