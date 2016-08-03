@@ -64,7 +64,7 @@ char* readFile(FILE* file)
     char* count = NULL;
     
     while ( (pos = GetNextWord(indexString, pos, &word)) != 0){ // to handle the keyWORDS
-        printf("in GetNextWord loop \n");
+         printf("reading %s\n", word);
 
         if (word == NULL){
             free(indexString);
@@ -75,7 +75,7 @@ char* readFile(FILE* file)
         if (keyword == NULL){
             keyword = strdup(word);
         } else if (fileID == NULL){
-            printf("setting fileID to %s\n", word);
+           
             fileID = strdup(word);
         } else {
             count = strdup(word);
