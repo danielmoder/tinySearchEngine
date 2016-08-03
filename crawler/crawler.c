@@ -132,8 +132,8 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 	bag_t* bag = bag_new(free);
 	bag_insert(bag, rootPage);
 
-    // array
-	char** beenSearched = assertp(malloc(sizeof(char*) * 10000), "array\n");
+    // array --- This is so horrible. please, for the love of god, fix this.
+	char** beenSearched = assertp(malloc(sizeof(char*) * 20000), "array\n");
 	beenSearched[0] = assertp(malloc(strlen(seedURL) + 1), "toAdd\n");
 	strcpy(beenSearched[0], seedURL);
 
