@@ -11,6 +11,7 @@
 #include "index.h"
 #include "webpage.h"
 #include "word.h"
+#include "web.h"
 
 index_t* index_new(int numSlots, void (*destructor)(void*))
 {
@@ -69,7 +70,8 @@ void index_build(index_t* index, char* pageDirectory)
     
 }
 
-void index_save(index_t* index, char* fileName, void (*setFunc)(void*) )
+void index_save(index_t* index, char* fileName, \
+                void (*setFunc)(void *, const char *, void *) )
 {
     FILE* fp = NULL;
     if ( (fp = fopen(fileName, "w")) == NULL){
