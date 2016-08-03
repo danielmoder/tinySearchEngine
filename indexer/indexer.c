@@ -71,8 +71,8 @@ void index_build(index_t* index, char* pageDirectory)
 void index_save(index_t* index, char* fileName)
 {
     FILE* fp = NULL;
-    if ( (fp = fopen(fp, "w")) == NULL){
-        printf("Error: could not open file %s\n", fp);
+    if ( (fp = fopen(fileName, "w")) == NULL){
+        printf("Error: could not open file %s\n", fileName);
         return;
     }
     hashtable_iterate(index, setFunc, fp);
