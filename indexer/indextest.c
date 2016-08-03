@@ -4,7 +4,7 @@
  * 
  * Name, Summer 2016
  */
-#include <strings.h>
+#include <string.h>
 #include "index.h"
 
 // Adapted from stackoverflow.com
@@ -46,7 +46,7 @@ char* readFile(FILE* file)
     char* word = NULL; // will be either keyword, docID, or count
     int pos = 0;
     
-    char* keyword = NULL
+    char* keyword = NULL;
     int fileID = -1;
     int count = -1;
     
