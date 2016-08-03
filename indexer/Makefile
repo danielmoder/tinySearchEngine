@@ -1,8 +1,8 @@
-LIB=../lib
-COMMON=../common
+L = ../lib
+C = ../common
 
-PROG = indexer
-OBJS = indexer.o ../lib/hashtable/hashtable.o ../lib/hashtable/jhash.o ../lib/set/set.h ../lib/memory/memory.o ../common/index.o ../common/webpage.o ../common/word.o
+PROG = indexer # indextest
+# OBJS = indexer.o ../lib/hashtable/hashtable.o ../lib/hashtable/jhash.o ../lib/set/set.h ../lib/memory/memory.o ../common/index.o ../common/webpage.o ../common/word.o
 LIBS = 
 LLIBS = ../lib/cs50ds.a ../common/common.a
 
@@ -10,18 +10,19 @@ CFLAGS = -Wall -pedantic -std=c11 -ggdb
 CC = gcc
 MAKE = make
 
+#all: indexer indextest
+
 # build the indexer
-$(PROG): $(OBJS) $(LLIBS)
+$(PROG): indexer.o $(LLIBS)
 	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
 
 # indexer source dependencies; add others as needed
-../lib/hashtable/hashtable.o: ../lib/hashtable/hashtable.h ../lib/hashtable/jhash.h ../lib/set/set.h
-../lib/hashtable/jhash.o:
-../lib/set/set.h:
-../lib/memory/memory.o:
-../common/index.o:
-../common/webpage.o:
-../common/word.o:
+hashtable/hashtable.o: $L/hashtable/hashtable.h $L/hashtable/jhash.h $L/set/set.h
+$L/hashtable/jhash.o:
+$L/memory/memory.o:
+$C/index.o:
+$C/webpage.o:
+$C/word.o:
 
 
 
