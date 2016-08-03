@@ -5,6 +5,8 @@
  * Name, Summer 2016
  */
 
+#include "indexer.c"
+
 // Adapted from stackoverflow.com
 char* readFile(FILE* file)
 {
@@ -71,6 +73,8 @@ char* readFile(FILE* file)
  {
     char* indexFileName = "indexFile.txt";
     index_t* index = index_load(indexFileName);
+    
+    index_save(index, "newFile.txt");
     index_delete(index);
     return 0;
  }
