@@ -4,9 +4,21 @@ indextest - load an index, and save it, to test those functions
 Name, Summer 2016
 */
  
-#include <stdlib.h> 
-#include <string.h>
+
 #include "index.h"
+
+// Copied from http://cboard.cprogramming.com
+char* strdup(char *str)
+{
+    int n = strlen(str) + 1;
+    char *dup = malloc(n);
+    if(dup)
+    {
+        strcpy(dup, str);
+    }
+    return dup;
+}
+
 
 // Adapted from stackoverflow.com
 char* readFile(FILE* file)
