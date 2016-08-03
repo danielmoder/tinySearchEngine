@@ -30,13 +30,15 @@ char* readFile(FILE* file)
 
 // index_t returned must be free'd by another function
  index_t* index_load(char* indexFileName)
- {
+ { 
+    printf("in load\n");
     FILE* fp = NULL;
     if ( (fp = fopen(indexFileName, "r")) == NULL){
         printf("Error: could not open file %s\n", indexFileName);
         return NULL;
     }
     char* indexString = readFile(fp);    
+    printf("read file\n");
     
     int NUMSLOTS = 4;
     index_t* index = index_new(NUMSLOTS, (void (*)(void*))counters_delete); // put the fPointer cast in index_new (it will be that for every index)
@@ -45,6 +47,7 @@ char* readFile(FILE* file)
     int pos = 0;
     
     while ( (pos = GetNextWord(indexString, pos, &word)) != 0){ // to handle the keyWORDS
+        printf("in GetNextWord loop \n");
         if (word == NULL){
             free(indexString);
             fclose(fp);
