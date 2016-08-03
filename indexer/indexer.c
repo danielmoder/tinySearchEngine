@@ -87,14 +87,7 @@ int main(int argc, char* argv[]){
   char* pageDirectory = argv[1];
   char* fileName = argv[2];
   
-  union{
-    void (*)(void*) a;
-    void (*)(counters_t*) b;
-  }
-  
-  void (*ctr_del)(void*) = counters_delete.a;
-  
-  index_t* index = index_new(NUMSLOTS, cd);
+  index_t* index = index_new(NUMSLOTS, (void (*)(void*))counters_delete);
   index_build(index, "../data/output");
 
   index_save(index, "indexFile.txt");
