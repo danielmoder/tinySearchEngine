@@ -5,6 +5,7 @@
  * Name, Summer 2016
  */
 #include <string.h>
+
 #include "index.h"
 
 // Adapted from stackoverflow.com
@@ -55,12 +56,13 @@ char* readFile(FILE* file)
 
         if (word == NULL){
             free(indexString);
+            free(keyword);
             fclose(fp);
             return index;
         }
         if (keyword == NULL){
             keyword = strdup(word);
-        } else if (fileID = -1){
+        } else if (fileID == -1){
             fileID = atoi(word);
         } else {
             count = atoi(word);
