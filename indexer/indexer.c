@@ -87,7 +87,7 @@ int main(int argc, char* argv[]){
   char* pageDirectory = argv[1];
   char* fileName = argv[2];
   
-  index_t* index = index_new(NUMSLOTS, count_free);
+  index_t* index = index_new(NUMSLOTS, counters_delete);
   index_build(index, "../data/output");
 
   index_save(index, "indexFile.txt");
