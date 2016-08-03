@@ -16,6 +16,11 @@
 #include "../lib/hashtable/hashtable.h"
 #include "../lib/counters/counters.h"
 
+#include "index.h"
+#include "webpage.h"
+#include "word.h"
+#include "web.h"
+
 /**************** global types ****************/
 
 // The index is actually a hashtable. 
