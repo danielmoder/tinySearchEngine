@@ -133,7 +133,7 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 	bag_insert(bag, rootPage);
 
     // array
-	char** beenSearched = assertp(malloc(sizeof(char*) * 1000), "array\n");
+	char** beenSearched = assertp(malloc(sizeof(char*) * 10000), "array\n");
 	beenSearched[0] = assertp(malloc(strlen(seedURL) + 1), "toAdd\n");
 	strcpy(beenSearched[0], seedURL);
 
