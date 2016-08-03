@@ -33,8 +33,7 @@ counters_t* index_find(index_t* index, char* keyword);
 void index_delete(index_t* index);
 void index_page(index_t* index, WebPage* page, int fileID);
 void index_build(index_t* index, char* pageDirectory);
-void index_save(index_t* index, char* fileName, \
-                void (*setFunc)(void *, const char *, void *) );
+void index_save(index_t* index, char* fileName);
 
 
 #endif // __INDEX_H
