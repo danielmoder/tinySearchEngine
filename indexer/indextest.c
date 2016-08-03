@@ -53,7 +53,7 @@ char* readFile(FILE* file)
         
         int fileID = 0;
         int count = 0;
-        while ( (strcmp( ((char*)fileID = fgetc(fp)) , "\n") != 0)){
+        while ( (strcmp( (fileID = fgetc(fp)) , "\n") != 0)){
             count = (int)fgetc(fp);
             
             // will need to make a new counter for each line
