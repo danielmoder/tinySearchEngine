@@ -92,7 +92,7 @@ int main(int argc, char* argv[]){
   index_t* index = index_new(NUMSLOTS, (void (*)(void*))counters_delete);
   index_build(index, "../data/output");
 
-  index_save(index, "indexFile.txt");
+  index_save(index, "indexFile.txt", setFunc);
   
   index_delete(index);
 
