@@ -73,6 +73,7 @@ char* readFile(FILE* file)
  {
     char* indexFileName = "indexFile.txt";
     index_t* index = index_load(indexFileName);
+    printf("made index.. right??\n");
     
     index_save(index, "newFile.txt");
     index_delete(index);
