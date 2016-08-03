@@ -7,6 +7,10 @@
  */
 
 /*  write your implementation of the functions exposed in index.h   */
+#include <stdio.h>
+#include <stdbool.h>
+#include "../lib/hashtable/hashtable.h"
+#include "../lib/counters/counters.h"
 
 #include "index.h"
 #include "webpage.h"
