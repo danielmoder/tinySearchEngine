@@ -88,11 +88,11 @@ int main(int argc, char* argv[]){
   char* fileName = argv[2];
   
   union{
-    void* a;
-    counters_t* b;
+    void (*)(void*) a;
+    void (*)(counters_t*) b;
   }
   
-  void* ctr_del = counters_delete.a;
+  void (*ctr_del)(void*) = counters_delete.a;
   
   index_t* index = index_new(NUMSLOTS, cd);
   index_build(index, "../data/output");
