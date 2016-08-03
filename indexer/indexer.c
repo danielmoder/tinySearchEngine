@@ -14,16 +14,19 @@
 #include "../lib/hashtable/hashtable.h"
 
 
-
+// assumes arg is an _open_ FILE*
 void ctrFunc(void *arg, const int key, int count)
 {
-    printf("key: %d, count: %d\n", key, count);
+    fprintf(arg, "%d %d ", key, count);
 }
 
+// assumes arg is an _open_ FILE*
 void setFunc(void *arg, const char *key, void *data)
 {
-    printf("iterating through counters: %s\n", key);
-    counters_iterate(data, ctrFunc, NULL);
+    fprintf(arg, "%s ", key);
+    // printf("iterating through counters: %s\n", key);
+    counters_iterate(data, ctrFunc, arg);
+    fprintf(arg, "\n", key);
 }
 
 bool parse(int argc, char* argv[])
@@ -65,19 +68,28 @@ void index_build(index_t* index, char* pageDirectory)
     
 }
 
+void index_save(index_t* index, char* fileName)
+{
+    FILE* fp = NULL;
+    if ( (fp = fopen(filename, "w")) == NULL){
+        printf("Error: could not open file %s\n", fileName);
+        return;
+    }
+    hashtable_iterate(index, setFunc, fp);
+    fclose(fp);
+}
 
 int main(int argc, char* argv[]){
   int NUMSLOTS = 4;
   
   parse(argc, argv);
 
-  char* pd = argv[1];
-  char* fn = argv[2];
+  char* pageDirectory = argv[1];
+  char* fileName = argv[2];
   
   index_t* index = index_new(NUMSLOTS, count_free);
   index_build(index, "../data/output");
-  
-  hashtable_iterate(index, setFunc, NULL);
+
   
   count_free(index);  
 
