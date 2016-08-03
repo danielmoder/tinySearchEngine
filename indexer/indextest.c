@@ -1,11 +1,11 @@
-/* 
- * indextest - load an index, and save it, to test those functions
- *
- * 
- * Name, Summer 2016
- */
-#include <string.h>
+/ 
+indextest - load an index, and save it, to test those functions
 
+Name, Summer 2016
+*/
+ 
+ 
+#include <string.h>
 #include "index.h"
 
 // Adapted from stackoverflow.com
