@@ -5,7 +5,7 @@
  * Name, Summer 2016
  */
 
-#include "index.c"
+#include "index.h"
 
 // Adapted from stackoverflow.com
 char* readFile(FILE* file)
