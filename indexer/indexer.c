@@ -35,7 +35,7 @@ bool parse(int argc, char* argv[])
 {
   return true;
 }
-
+/*
 void index_page(index_t* index, WebPage* page, int fileID)
 {
     char* word = NULL;
@@ -80,7 +80,7 @@ void index_save(index_t* index, char* fileName)
     hashtable_iterate(index, setFunc, fp);
     fclose(fp);
 }
-
+*/
 int main(int argc, char* argv[]){
   int NUMSLOTS = 4;
   
