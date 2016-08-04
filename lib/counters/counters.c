@@ -124,7 +124,6 @@ void counters_add(counters_t* ctrs, int key)
 		else prevP->next = new;
 		
 	}else{
-	    printf("found existing key %d\n", key);
 		node->count++;
 	}
 }
