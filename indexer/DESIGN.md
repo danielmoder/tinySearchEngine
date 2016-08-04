@@ -1,3 +1,8 @@
+### DESIGN.md for indexer and indextest
+*Daniel Moder, August 2016*
+
+#Requirement Specs
+
 The indexer shall:
 - execute from a command line with usage syntax:
 `./indexer pageDirectory indexFilename`
