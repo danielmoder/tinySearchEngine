@@ -104,6 +104,7 @@ void counters_add(counters_t* ctrs, int key)
 	countersNode_t* temp = NULL; 
 
 	while (node != NULL){
+	    printf("\t\t in loop for %d\n", key);
 		if (node->key == key){
 			break;
 		}
