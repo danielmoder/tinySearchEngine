@@ -78,7 +78,8 @@ void index_save(index_t* index, char* fileName)
 int main(int argc, char* argv[]){
 
   
-  parse(argc, argv);
+  if (! parse(argc, argv)) return -1;
+  
   char* dataDirectory = argv[1];
   char* outFile = argv[2];
 
