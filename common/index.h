@@ -34,6 +34,9 @@ void index_delete(index_t* index);
 void index_page(index_t* index, WebPage* page, int fileID);
 void index_build(index_t* index, char* pageDirectory);
 void index_save(index_t* index, char* fileName);
+index_t* index_load(char* indexFileName);
+
+
 
 
 #endif // __INDEX_H
