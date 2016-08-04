@@ -25,8 +25,9 @@ char* strdup(char *str)
 char* strndup(char* str, int len)
 {
     char* ret = malloc(len);
-
-    for (int i = 0; i <= len; i++){
+    if (! ret) return NULL;
+    
+    for (int i = 0; i < len; i++){
         ret[i] = str[i];
     }
     ret[len-1] = '\0';
