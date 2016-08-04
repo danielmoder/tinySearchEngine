@@ -10,7 +10,7 @@ Name, Summer 2016
 
 // index_t returned must be free'd by another function
  index_t* index_load(char* indexFileName)
- { 
+{ 
     FILE* fp = NULL;
     if ( (fp = fopen(indexFileName, "r")) == NULL){
         printf("Error: could not open file %s\n", indexFileName);
@@ -38,6 +38,7 @@ Name, Summer 2016
         }
     }
     fclose(fp);
+    return index;    
 }
     
  
