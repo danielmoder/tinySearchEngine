@@ -21,13 +21,18 @@ bool parse(int argc, char* argv[])
   if (argc != 3){
     printf("Error: indexer takes exactly 2 arguments\n");
     return false;
+    
   } else if ( access(argv[1], R_OK) == -1){
     printf("Error: could not find readble directory: %s\n", argv[1]);
     return false;
+    
   } else if ( access(argv[2], W_OK) == -1){
-    return false;
     printf("Error: could not find writeable file: %s\n", argv[2]);
-  } else return true;
+    return false;
+
+  } else {
+    return true;
+  }
 }
 /*
 void index_page(index_t* index, WebPage* page, int fileID)
