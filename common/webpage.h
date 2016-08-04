@@ -8,6 +8,7 @@
 #define __WEBPAGE_H
 
 #include <stdio.h>
+#include "../lib/memory/memory.h"
 #include "web.h" // WebPage
 
 /**************** init_pageDirectory ****************/

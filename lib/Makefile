@@ -24,7 +24,7 @@ $(LIB): $(OBJS)
 
 
 memory.o: memory.h
-	cd memory; $(MAKE) ../memory.o
+	cd memory; $(MAKE)
 bag.o: bag.h
 	cd bag; $(MAKE) bag.o
 set.o: set.h

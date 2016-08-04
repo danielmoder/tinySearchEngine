@@ -13,7 +13,7 @@ MAKE = make
 all: $(PROGS)
 
 # build the indexer
-indexer: indexer.o $(LLIBS)
+indexer: indexer.o $(OBJS) $(LLIBS)
 	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
 
 # indexer source dependencies; add others as needed
@@ -44,6 +44,7 @@ $C/common.a:
 .PHONY: clean
 
 clean:
+	rm -f s*.txt
 	rm -f *~
 	rm -f *.o
 	rm -f $(PROGS)

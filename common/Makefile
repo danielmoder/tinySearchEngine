@@ -5,13 +5,14 @@ CFLAGS = -Wall -pedantic -std=c11 -ggdb
 CC = gcc
 MAKE = make
 
+
 $(LIB): $(OBJS)
 	ar cr $@ $^
 
 # add other targets for the other .o files
 
 file.o: file.h
-index.o: index.h
+index.o: index.h 
 web.o: web.h
 webpage.o: webpage.h
 word.o: word.h
