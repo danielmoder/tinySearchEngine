@@ -5,7 +5,7 @@ Name, Summer 2016
 */
 #include "index.h"
 
-
+/*
 // index_t returned must be free'd by another function
  index_t* index_load(char* indexFileName)
 { 
@@ -40,7 +40,7 @@ Name, Summer 2016
     fclose(fp);
     return index;    
 }
-    
+    */
  
  int main(int argc, char* argv[])
  {
