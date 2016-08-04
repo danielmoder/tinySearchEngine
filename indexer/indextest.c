@@ -24,12 +24,15 @@ char* strdup(char *str)
 
 char* strndup(char* str, int len)
 {
+    printf("in strndup\n");
     char* ret = malloc(len);
     if (! ret) return NULL;
     
     for (int i = 0; i < len; i++){
         ret[i] = str[i];
+        printf(" at index %d / %d\n", i, len);
     }
+    printf("about to set the last char...\n");
     ret[len-1] = '\0';
     
     return ret;
