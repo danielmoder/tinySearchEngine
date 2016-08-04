@@ -19,6 +19,21 @@ char* strdup(char *str)
     return dup;
 }
 
+// I wrote this one!
+// expects that len is length+1 for null
+
+char* strndup(char* str, int len)
+{
+    char* ret = malloc(len);
+
+    for (int i = 0; i <= len; i++){
+        ret[i] = str[i];
+    }
+    ret[len-1] = '\0';
+    
+    return ret;
+}
+
 
 // Adapted from stackoverflow.com
 char* readFile(FILE* file)
@@ -80,7 +95,7 @@ char* readFile(FILE* file)
         while (indexString[pos] != ' '){
             pos++;
         }
-        len = pos - end + 1;
+        len = pos - start + 1;
         fileID = strndup(start, len);
         printf("fileID in int form: %d\n", atoi(fileID));
 /*        
