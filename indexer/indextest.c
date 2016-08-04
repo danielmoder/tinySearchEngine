@@ -96,7 +96,7 @@ char* readFile(FILE* file)
             pos++;
         }
         len = pos - start + 1;
-        fileID = strndup(start, len);
+        fileID = strndup(indexString[start], len);
         printf("fileID in int form: %d\n", atoi(fileID));
 /*        
         counters_t* ctr = counters_new();
