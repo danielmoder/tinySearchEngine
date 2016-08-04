@@ -63,6 +63,8 @@ char* readFile(FILE* file)
     char* fileID = NULL;
     char* count = NULL;
     
+    int start, len;
+    
     // Ignores numbers! how convenient...
     while ( (pos = GetNextWord(indexString, pos, &word)) != 0){
         printf("just got word: %s... pos = %d\n", word, pos);
@@ -74,6 +76,13 @@ char* readFile(FILE* file)
         }
         keyword = strdup(word);
         
+        start = ++pos; // points to first digit of fileID
+        while (indexString[pos] != ' '){
+            pos++;
+        }
+        len = pos - end + 1;
+        fileID = strndup(start, len);
+        printf("fileID in int form: %d\n", atoi(fileID));
 /*        
         counters_t* ctr = counters_new();
         counters_set(ctr, atoi(fileID), atoi(count));
