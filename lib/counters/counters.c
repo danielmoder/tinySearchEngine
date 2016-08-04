@@ -96,19 +96,21 @@ Parameters: counters_t* ctrs, the target counters
             int key, the key for the new counter
 Returns: (void)
 */
+
 void counters_add(counters_t* ctrs, int key)
 {
     countersNode_t* prevP = NULL;
 	countersNode_t* node = ctrs->head;
-	countersNode_t* nextP = NULL; 
+	countersNode_t* temp = NULL; 
 
 	while (node != NULL){
 		if (node->key == key){
 			break;
 		}
 		prevP = node;
-		nextP = node->next;
-		node = nextP;
+		
+		temp = node->next;
+		node = temp;
 	}
 	// At the end of this loop, node will either be NULL or the desired node
 	// if node==NULL, prevP points to the LAST -- this is where to insert new
