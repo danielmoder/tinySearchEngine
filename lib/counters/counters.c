@@ -99,7 +99,7 @@ Returns: (void)
 
 void counters_add(counters_t* ctrs, int key)
 {
-    countersNode_t* prevP = NULL;
+    countersNode_t* prevP = ctrs->head;
 	countersNode_t* node = ctrs->head;
 	countersNode_t* temp = NULL; 
 
