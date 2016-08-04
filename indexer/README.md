@@ -35,6 +35,6 @@
 
 ---
 #### Assumptions
-1. The first argument to indexer must be a directory created by the crawler, and must have files in the specified format
-2. The first argument to indextest must have only lines with the specified format
+1. The first argument to `indexer` must be a directory created by the crawler, and must have files in the specified format
+2. The first argument to `indextest` must have only lines with the specified format
 
