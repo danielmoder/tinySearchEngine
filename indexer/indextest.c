@@ -79,6 +79,7 @@ char* readFile(FILE* file)
     char* count = NULL;
     
     int start, len;
+    char* valP = NULL
     
     // Ignores numbers! how convenient...
     while ( (pos = GetNextWord(indexString, pos, &word)) != 0){
@@ -96,7 +97,8 @@ char* readFile(FILE* file)
             pos++;
         }
         len = pos - start + 1;
-        fileID = strndup(indexString[start], len);
+        valP = indexString[start];
+        fileID = strndup(valP, len);
         printf("fileID in int form: %d\n", atoi(fileID));
 /*        
         counters_t* ctr = counters_new();
