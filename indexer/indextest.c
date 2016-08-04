@@ -79,7 +79,7 @@ char* readFile(FILE* file)
     char* count = NULL;
     
     int start, len;
-    char* valP = NULL
+    char* valP = NULL;
     
     // Ignores numbers! how convenient...
     while ( (pos = GetNextWord(indexString, pos, &word)) != 0){
