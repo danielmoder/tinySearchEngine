@@ -3,10 +3,9 @@
  * 
  * See index.h for interface descriptions.
  * 
- * Name, Summer 2016
+ * Daniel Moder, Summer 2016
  */
 
-/*  write your implementation of the functions exposed in index.h   */
 #include <stdio.h>
 #include <stdbool.h>
 #include "../lib/hashtable/hashtable.h"
@@ -17,13 +16,25 @@
 #include "word.h"
 #include "web.h"
 
-// assumes arg is an _open_ FILE*
+/*
+Function: format counterNode data and write to a file
+Parameters: void *arg, an opened FILE*
+            const int key, the fileID of the counter
+            int count, the number of occurrences of the word
+Return: (void)
+*/
 static void ctrFunc(void *arg, const int key, int count)
 {
     fprintf(arg, "%d %d ", key, count);
 }
 
-// assumes arg is an _open_ FILE*
+/*
+Function: format setNode data and write to a file
+Parameters: void *arg, an opened FILE*
+            const char *key, the keyword of the setNode
+            void *data, the counters_t object
+Return: (void)
+*/
 static void setFunc(void *arg, const char *key, void *data)
 {
     fprintf(arg, "%s ", key);
@@ -32,29 +43,59 @@ static void setFunc(void *arg, const char *key, void *data)
     fprintf(arg, "\n");
 }
 
+/*
+Function: make a new index
+Parameters: int numSlots, the number of slots in the hashtable
+            void (*destructor)(void*), a function to free the counters
+Return: pointer to new index
+*/
 index_t* index_new(int numSlots, void (*destructor)(void*))
 {
     index_t* new = hashtable_new(numSlots, destructor);
     return new;
 }
 
+/*
+Function: insert a counter to the index
+Parameters: index_t* index, 
+            char* keyword, 
+            counters_t* ctr
+Return: (void)
+*/
 void index_insert(index_t* index, char* keyword, counters_t* ctr)
 {
   hashtable_insert(index, keyword, ctr);
 }
 
+/*
+Function: find a counters_t object in an index, if it exists
+Parameters: index_t* index, 
+            char* keyword
+Return: a pointer to the counters_t object
+*/
 counters_t* index_find(index_t* index, char* keyword)
 {
     counters_t* ret = hashtable_find(index, keyword);
     return ret;
 }
 
+/*
+Function: delete the index
+Parameters: index_t* index
+Return: (void)
+*/
 void index_delete(index_t* index)
 {
     hashtable_delete(index);
 }
 
-
+/*
+Function: index all of the words on a page
+Parameters: index_t* index, 
+            WebPage* page, webpage object from the crawler file
+            int fileID, number corresponding to the file
+Return: (void)
+*/
 void index_page(index_t* index, WebPage* page, int fileID)
 {
     char* word = NULL;
@@ -76,6 +117,12 @@ void index_page(index_t* index, WebPage* page, int fileID)
     }
 }
 
+/*
+Function: build an index from a directory of crawler webFiles
+Parameters: index_t* index, 
+            char* pageDirectory
+Return: (void)
+*/
 void index_build(index_t* index, char* pageDirectory)
 {
 
@@ -91,6 +138,12 @@ void index_build(index_t* index, char* pageDirectory)
     
 }
 
+/*
+Function: write the indexFile
+Parameters: index_t* index, 
+            char* fileName
+Return: (void)
+*/
 void index_save(index_t* index, char* fileName)
 {
     FILE* fp = NULL;
@@ -102,8 +155,12 @@ void index_save(index_t* index, char* fileName)
     fclose(fp);
 }
 
-// index_t returned must be free'd by another function
- index_t* index_load(char* indexFileName)
+/*
+Function: loads and builds an index object from a text indexFile
+Parameters: char* indexFileName
+Return: a pointer to the index
+*/
+index_t* index_load(char* indexFileName)
 { 
     FILE* fp = NULL;
     if ( (fp = fopen(indexFileName, "r")) == NULL){
@@ -112,7 +169,7 @@ void index_save(index_t* index, char* fileName)
     }
     
     int NUMSLOTS = 4;
-    index_t* index = index_new(NUMSLOTS, (void (*)(void*))counters_delete); // put the fPointer cast in index_new (it will be that for every index)
+    index_t* index = index_new(NUMSLOTS, (void (*)(void*))counters_delete); 
     
     char keyword[256];
     char dummy;
@@ -124,13 +181,7 @@ void index_save(index_t* index, char* fileName)
         while (fscanf(fp, "%d %d%c", &fileID, &count, &dummy) == 3){
             counters_set(ctr, fileID, count);
             index_insert(index, keyword, ctr);
-            
-// WHY DON'T I NEED THIS?
-//            if (dummy == '\n'){
-  //              // Free()s necessary? I guess we'll see...
-    //            printf("hey look its a new liiiine. oh shit waddup\n");
-      //          break;
-        //    }
+
         }
     }
     fclose(fp);
