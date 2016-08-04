@@ -25,18 +25,16 @@ Name, Summer 2016
     int fileID, count;
     
     while (fscanf(fp, "%s", keyword) == 1){ // found keyword
-        printf("Gettin Keywords MOFO\n");
         counters_t* ctr = counters_new();
         
         while (fscanf(fp, "%d %d%c", &fileID, &count, &dummy) == 3){
-            printf("adding dem counterz\n");
             counters_set(ctr, fileID, count);
             index_insert(index, keyword, ctr);
             
-            if (dummy == '\n'){
-                // Free()s necessary? I guess we'll see...
-                printf("hey look its a new liiiine. oh shit waddup\n");
-                break;
+//            if (dummy == '\n'){
+  //              // Free()s necessary? I guess we'll see...
+    //            printf("hey look its a new liiiine. oh shit waddup\n");
+      //          break;
             }
         }
     }
@@ -49,8 +47,7 @@ Name, Summer 2016
  {
     char* indexFileName = "indexFile.txt";
     index_t* index = index_load(indexFileName);
-    printf("made index.. right??\n");
-    
+
     index_save(index, "newFile.txt");
     index_delete(index);
     return 0;
