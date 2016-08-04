@@ -99,12 +99,11 @@ Returns: (void)
 
 void counters_add(counters_t* ctrs, int key)
 {
-    countersNode_t* prevP = ctrs->head;
+    countersNode_t* prevP = NULL;
 	countersNode_t* node = ctrs->head;
 	countersNode_t* temp = NULL; 
 
 	while (node != NULL){
-	    printf("\t\t in loop for %d\n", key);
 		if (node->key == key){
 			break;
 		}
@@ -115,16 +114,19 @@ void counters_add(counters_t* ctrs, int key)
 	}
 	// At the end of this loop, node will either be NULL or the desired node
 	// if node==NULL, prevP points to the LAST -- this is where to insert new
+	//                                  `-- or NULL (make it ctrs->head)
 	
 	if (node == NULL){
 		countersNode_t* new = countersNode_new(key);
 		new->next = NULL;
 		
-		if (prevP == ctrs->head) prevP = new;
+		if (prevP == NULL) ctrs->head = new;
 		else prevP->next = new;
 		
 	}else{
-		node->count++;
+	    printf("found existing key %d\n", key);
+	    printf("count is %d, becoming %d\n", node->count++, node->count);
+//		node->count++;
 	}
 }
 
