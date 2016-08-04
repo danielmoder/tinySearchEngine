@@ -20,16 +20,16 @@ Name, Summer 2016
     int NUMSLOTS = 4;
     index_t* index = index_new(NUMSLOTS, (void (*)(void*))counters_delete); // put the fPointer cast in index_new (it will be that for every index)
     
-    char string[256];
+    char keyword[256];
     char dummy;    
     int fileID, count;
     
-    while (fscanf(fp, "%s", string) != 0){ // found keyword
+    while (fscanf(fp, "%s", keyword) != 0){ // found keyword
         counters_t* ctr = counters_new();
         
         while (fscanf(fp, "%d %d%c", &fileID, &count, &dummy) == 3){
             counters_set(ctr, fileID, count);
-            index_insert(index, word, ctr);
+            index_insert(index, keyword, ctr);
             
             if (dummy == '\n'){
                 // Free()s necessary? I guess we'll see...
