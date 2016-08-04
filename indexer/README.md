@@ -13,10 +13,10 @@
 > > 
 > > ... 
 >
-> and outputs an indexfile of lines in the following output:
+> and outputs an indexfile of lines in the following format:
 > > keyword docID1 count1 docID2 count2 ...
 > 
-> according to the words found in each page
+> according to the words found in each page.
 > 
 > **indextest.c** takes the indexfile from indexer, reconstructs the index, and outputs to another indexfile
 
