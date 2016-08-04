@@ -34,6 +34,13 @@ char* strndup(char* str, int len)
     return ret;
 }
 
+// consistent with (indexString, pos) values available
+static void parseNums(char* string, int start)
+{
+    fileID(
+
+
+}
 
 // Adapted from stackoverflow.com
 char* readFile(FILE* file)
@@ -64,64 +71,32 @@ char* readFile(FILE* file)
         printf("Error: could not open file %s\n", indexFileName);
         return NULL;
     }
-    char* indexString = readFile(fp);    
-
+    
     int NUMSLOTS = 4;
     index_t* index = index_new(NUMSLOTS, (void (*)(void*))counters_delete); // put the fPointer cast in index_new (it will be that for every index)
     
-    char* word = NULL; // will be either keyword, docID, or count
-    int pos = 0;
+    char string[256];
     
-    char* keyword = NULL;
-    char* fileID = NULL;
-    char* count = NULL;
+    char dummy;    
+    char fileID[64];
+    char count[64];
     
-    int start, len;
-    char* valP = NULL;
-    
-    // Ignores numbers! how convenient...
-    while ( (pos = GetNextWord(indexString, pos, &word)) != 0){
-        if (word == NULL){
-            free(indexString);
-            free(keyword);
-            fclose(fp);
-            return index;
-        }
-        keyword = strdup(word);
-
-        start = ++pos; // points to first digit of fileID
-        while (indexString[pos] != ' '){
-            pos++;
-        } 
-        len = pos - start + 1;
-        valP = indexString+start;
-        
-        fileID = strndup(valP, len);
-        
-        start = ++pos;
-        while (indexString[pos] != '\n'){
-            pos++;
-        }
-        len = pos - start + 1;
-        valP = indexString+start;
-        
-        count = strndup(valP, len);
-        
+    while (fscanf(fp, "%s", string) != 0){ found
         counters_t* ctr = counters_new();
-        counters_set(ctr, atoi(fileID), atoi(count));
-        index_insert(index, word, ctr);
-                
-        free(keyword);
-//        free(fileID);
-     //   free(count);
-                
-        keyword = NULL;
-        fileID = NULL;
-        count = NULL;
+        
+        while (fscanf(fp, "%d %d%c", &fileID, &count, &dummy) == 3){
+            counters_set(ctr, atoi(fileID), atoi(count));
+            index_insert(index, word, ctr);
+            
+            if (dummy == '\n'){
+                // Free()s necessary? I guess we'll see...
+                break;
+            }
+        }
     }
-    free(word);
-    return NULL; //error -- should not reach this
- }
+    fclose(fp);
+}
+    
  
  int main(int argc, char* argv[])
  {
