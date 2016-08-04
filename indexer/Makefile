@@ -2,7 +2,7 @@ L = ../lib
 C = ../common
 
 PROGS = indexer indextest
-OBJS = ../lib/hashtable/hashtable.o ../lib/hashtable/jhash.o ../lib/set/set.h ../lib/memory/memory.o ../common/index.o ../common/webpage.o ../common/word.o
+OBJS = $L/hashtable/hashtable.o $L/hashtable/jhash.o $L/set/set.h $L/memory/memory.o $L/counters/counters.o $C/index.o $C/webpage.o $C/word.o 
 LIBS =
 LLIBS = $L/cs50ds.a $C/common.a
 
@@ -30,6 +30,7 @@ indextest.o: $C/index.h $C/webpage.h $C/word.h
 hashtable/hashtable.o: $L/hashtable/hashtable.h $L/hashtable/jhash.h $L/set/set.h
 hashtable/jhash.o:
 memory/memory.o:
+counters.o:
 index.o:
 webpage.o:
 word.o:
