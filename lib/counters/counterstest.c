@@ -11,9 +11,7 @@ int main(){
 
   printf("adding to key 4 five times\n");
   counters_add(new, 4);
-  printf("just added once\n");
   counters_add(new, 4);
-  printf("added a second time!\n");
   counters_add(new, 4);
   counters_add(new, 4);
   counters_add(new, 4);
