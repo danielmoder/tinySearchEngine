@@ -13,7 +13,7 @@ MAKE = make
 all: $(PROGS)
 
 # build the indexer
-indexer: indexer.o $(OBJS) $(LLIBS)
+indexer: indexer.o $(LLIBS)
 	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
 
 # indexer source dependencies; add others as needed
