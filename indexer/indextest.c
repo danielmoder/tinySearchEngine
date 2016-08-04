@@ -63,39 +63,31 @@ char* readFile(FILE* file)
     char* fileID = NULL;
     char* count = NULL;
     
-    while ( (pos = GetNextWord(indexString, pos, &word)) != 0){ // to handle the keyWORDS
-         printf("reading %s\n", word);
-
+    // Ignores numbers! how convenient...
+    while ( (pos = GetNextWord(indexString, pos, &word)) != 0){
+        printf("just got word: %s... pos = %d\n", word, pos);
         if (word == NULL){
             free(indexString);
             free(keyword);
             fclose(fp);
             return index;
         }
-        if (keyword == NULL){
-            keyword = strdup(word);
-        } else if (fileID == NULL){
-           
-            fileID = strdup(word);
-        } else {
-            count = strdup(word);
-        }
+        keyword = strdup(word);
         
-        if ( (keyword != NULL) && (fileID != NULL) && (count != NULL)){
-            counters_t* ctr = counters_new();
-            counters_set(ctr, atoi(fileID), atoi(count));
-            index_insert(index, word, ctr);
-            
-            free(keyword);
-            free(fileID);
-            free(count);
-            
-            keyword = NULL;
-            fileID = NULL;
-            count = NULL;
-        }
-        free(word);
+/*        
+        counters_t* ctr = counters_new();
+        counters_set(ctr, atoi(fileID), atoi(count));
+        index_insert(index, word, ctr);
+                
+        free(keyword);
+        free(fileID);
+        free(count);
+                
+        keyword = NULL;
+        fileID = NULL;
+        count = NULL;*/
     }
+    free(word);
     return NULL; //error -- should not reach this
  }
  
