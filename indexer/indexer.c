@@ -15,25 +15,15 @@
 #include "../lib/memory/memory.h"
 #include "../lib/hashtable/hashtable.h"
 
-
-// assumes arg is an _open_ FILE*
-void ctrFunc(void *arg, const int key, int count)
-{
-    fprintf(arg, "%d %d ", key, count);
-}
-
-// assumes arg is an _open_ FILE*
-void setFunc(void *arg, const char *key, void *data)
-{
-    fprintf(arg, "%s ", key);
-    // printf("iterating through counters: %s\n", key);
-    counters_iterate(data, ctrFunc, arg);
-    fprintf(arg, "\n");
-}
-
 bool parse(int argc, char* argv[])
 {
-  return true;
+  if (argc != 3){
+    printf("Error: indexer takes exactly 2 arguments\n");
+  } else if ( access(argv[1], R_OK) == -1){
+    printf("Error: could not find readble directory: %s\n", argv[1]);
+  } else if ( access(argv[2], W_OK) == -1){
+    printf("Error: could not find writeable file: %s\n", argv[2];
+  } else true;
 }
 /*
 void index_page(index_t* index, WebPage* page, int fileID)
@@ -82,18 +72,17 @@ void index_save(index_t* index, char* fileName)
 }
 */
 int main(int argc, char* argv[]){
-  int NUMSLOTS = 4;
+
   
   parse(argc, argv);
+  char* dataDirectory = argv[1];
+  char* outFile = argv[2];
 
-  char* pageDirectory = argv[1];
-  char* fileName = argv[2];
-  
+  int NUMSLOTS = 4;  
   index_t* index = index_new(NUMSLOTS, (void (*)(void*))counters_delete);
-  index_build(index, "../data/output");
+  index_build(index, dataDirectory);
 
-  index_save(index, "indexFile.txt");
-  
+  index_save(index, outFile);
   index_delete(index);
 
   return 0;
