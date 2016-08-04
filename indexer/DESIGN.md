@@ -44,6 +44,6 @@ The indexer fits into the search engine system as follows:
 
 # Testing Plan
 
-
+To test the functionality of this program, I will execute both, and compare their outputs using diff. If they are identical, it executes correctly
 
 
