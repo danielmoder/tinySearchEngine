@@ -33,3 +33,17 @@ where newIndexFilename is the name of a file into which the index should be writ
 
 The index tester may assume that
 - The content of the index file follows the format specified below; thus your code (to recreate an index structure by reading a file) need not have extensive error checking.
+
+
+# Design Specs
+
+The indexer fits into the search engine system as follows:
+- It will depend on the webpage files (html and url) as retrieved and stored by the **crawler**.
+- It will allow the **querier** to ascertain the relatedness of each page to the given query.
+
+
+# Testing Plan
+
+
+
+
