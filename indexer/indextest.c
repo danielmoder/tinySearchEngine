@@ -84,6 +84,7 @@ char* readFile(FILE* file)
     // Ignores numbers! how convenient...
     while ( (pos = GetNextWord(indexString, pos, &word)) != 0){
         printf("just got word: %s... pos = %d\n", word, pos);
+        printf("indexString[pos] = %c\n", indexString[pos]);
         if (word == NULL){
             free(indexString);
             free(keyword);
@@ -91,11 +92,12 @@ char* readFile(FILE* file)
             return index;
         }
         keyword = strdup(word);
+        printf("keyword = %s\n", keyword);
         
         start = ++pos; // points to first digit of fileID
         while (indexString[pos] != ' '){
             pos++;
-        }
+        } printf("out of fileID iteration loop\n");
         len = pos - start + 1;
         valP = indexString[start];
         fileID = strndup(valP, len);
