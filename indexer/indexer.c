@@ -16,6 +16,11 @@
 #include "../lib/memory/memory.h"
 #include "../lib/hashtable/hashtable.h"
 
+/*
+Function: determine if indexer was given valid inputs
+Parameters: (int argc, char* argv[]), from main
+Return: true if valid, false otherwise
+*/
 bool parse(int argc, char* argv[])
 {
   if (argc != 3){
@@ -35,6 +40,14 @@ bool parse(int argc, char* argv[])
   }
 }
 
+
+/*
+Function: build an index based on the html of a directory of crawler files,\
+            and write an indexFile based on that index object
+Parameters: char* dataDirectory,
+            char* outFile
+Return: 0 on success, -1 if invalid arguments
+*/
 int main(int argc, char* argv[]){
 
   
