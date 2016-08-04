@@ -4,7 +4,7 @@
 
 ---
 #### Functionality:
-> **indexer.c** takes a directory of files from the crawler in the following format:
+>   **indexer.c** takes a directory of files from the crawler in the following format:
 > > URL
 > > 
 > > Depth
@@ -18,12 +18,12 @@
 > 
 > according to the words found in each page.
 > 
-> **indextest.c** takes the indexfile from indexer, reconstructs the index, and outputs to another indexfile
+>   **indextest.c** takes the indexfile from indexer, reconstructs the index, and outputs to another indexfile
 
 ---
 
 #### Compiling:
-> Each file includes `lib/cs50ds.a` and `common.a`
+> Each file includes `lib/cs50ds.a` and `common/common.a`
 > 
 > (see Makefile for more information)
 
