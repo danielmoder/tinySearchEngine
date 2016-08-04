@@ -1,9 +1,15 @@
 /* 
 indextest - load an index, and save it, to test those functions
 
-Name, Summer 2016
+Daniel Moder, Summer 2016
 */
 #include "index.h"
+ 
+ /*
+ Function: take in an indexFile, construct a new index, and save the new one
+ Parameters: int argc, char* argv[]
+ Return: 0 on success, -1 if invalid parameters
+ */
  
  int main(int argc, char* argv[])
  {
