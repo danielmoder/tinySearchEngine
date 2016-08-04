@@ -34,52 +34,7 @@ bool parse(int argc, char* argv[])
     return true;
   }
 }
-/*
-void index_page(index_t* index, WebPage* page, int fileID)
-{
-    char* word = NULL;
-    int pos = 0;
-    
-    while ( (pos = GetNextWord(page->html, pos, &word)) != 0){
-        if (word == NULL){return;}
-        counters_t* ctr = index_find(index, word);
-        
-        if (ctr == NULL){
-            ctr = counters_new();
-            index_insert(index, word, ctr);
-        }
-        counters_add(ctr, fileID);
-        
-        free(word);
-    }
-}
 
-void index_build(index_t* index, char* pageDirectory)
-{
-
-    WebPage* page;
-    int fileID = 0;
-    
-    while ( (page = webpage_load(pageDirectory, fileID)) != NULL){
-        index_page(index, page, fileID);
-        
-        webpage_delete(page);
-        fileID++;
-    }
-    
-}
-
-void index_save(index_t* index, char* fileName)
-{
-    FILE* fp = NULL;
-    if ( (fp = fopen(fileName, "w")) == NULL){
-        printf("Error: could not open file %s\n", fileName);
-        return;
-    }
-    hashtable_iterate(index, setFunc, fp);
-    fclose(fp);
-}
-*/
 int main(int argc, char* argv[]){
 
   
