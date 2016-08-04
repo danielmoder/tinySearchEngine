@@ -103,7 +103,8 @@ char* readFile(FILE* file)
             pos++;
         } printf("out of fileID iteration loop\n");
         len = pos - start + 1;
-        valP = indexString[start];
+        valP = indexString+start;
+        
         fileID = strndup(valP, len);
         printf("fileID in int form: %d\n", atoi(fileID));
 /*        
