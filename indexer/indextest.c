@@ -21,18 +21,21 @@ Name, Summer 2016
     index_t* index = index_new(NUMSLOTS, (void (*)(void*))counters_delete); // put the fPointer cast in index_new (it will be that for every index)
     
     char keyword[256];
-    char dummy;    
+    char dummy;
     int fileID, count;
     
-    while (fscanf(fp, "%s", keyword) != 0){ // found keyword
+    while (fscanf(fp, "%s", keyword) == 1){ // found keyword
+        printf("Gettin Keywords MOFO\n");
         counters_t* ctr = counters_new();
         
         while (fscanf(fp, "%d %d%c", &fileID, &count, &dummy) == 3){
+            printf("adding dem counterz\n");
             counters_set(ctr, fileID, count);
             index_insert(index, keyword, ctr);
             
             if (dummy == '\n'){
                 // Free()s necessary? I guess we'll see...
+                printf("hey look its a new liiiine. oh shit waddup\n");
                 break;
             }
         }
