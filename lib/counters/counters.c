@@ -180,7 +180,7 @@ void counters_set(counters_t *ctrs, int key, int count)
         node->count = count;   
     } else {
         counters_add(ctrs, key);
-        node_t* node = nodeSearch(ctrs, key);
+        countersNode_t* node = nodeSearch(ctrs, key);
         node->count = count;
     }
 }
