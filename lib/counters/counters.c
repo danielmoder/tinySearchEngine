@@ -119,7 +119,10 @@ void counters_add(counters_t* ctrs, int key)
 	if (node == NULL){
 		countersNode_t* new = countersNode_new(key);
 		new->next = NULL;
-		prevP->next = new;
+		
+		if (prevP == ctrs->head) prevP = new;
+		else prevP->next = new;
+		
 	}else{
 		node->count++;
 	}
