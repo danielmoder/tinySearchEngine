@@ -9,14 +9,14 @@ int main(){
   printf("making new counter\n");
   counters_t* new = counters_new();
 
-  printf("adding key 4 five times\n");
+  printf("adding to key 4 five times\n");
   counters_add(new, 4);
   counters_add(new, 4);
   counters_add(new, 4);
   counters_add(new, 4);
   counters_add(new, 4);
 
-  printf("adding key 3 once\n");
+  printf("adding to key 3 once\n");
   counters_add(new, 3);
 
 
@@ -30,7 +30,7 @@ int main(){
   printf("\nmaking new counter\n");
   counters_t* new2 = counters_new();
 
-  printf("adding key 2 once\n");
+  printf("adding to key 2 five times\n");
   counters_add(new2, 2);
   counters_add(new2, 2);
   counters_add(new2, 2);
