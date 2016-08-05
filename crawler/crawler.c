@@ -184,7 +184,7 @@ int crawl(char* seedURL, char* directory, int maxDepth)
             
 			char* inLine = assertp(malloc(strlen(result) + 1), "url\n");
 			strcpy(inLine, result);
-			hashtable_insert(beenSearched, inLine, result);
+			hashtable_insert(beenSearched, inLine, inLine);
             
 			WebPage* page = pageNew(result, depth+1);
 
