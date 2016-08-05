@@ -4,7 +4,7 @@
 # updated by Xia Zhou, July 2016
 
 PROG = crawler
-OBJS = crawler.o ../common/web.o
+OBJS = crawler.o ../common/web.o ../lib/hashtable/hashtable.o ../lib/hashtable/jhash.o
 LIBS = -lcurl
 LLIBS = ../lib/cs50ds.a
 
@@ -19,6 +19,8 @@ $(PROG): $(OBJS) $(LLIBS)
 # crawler source dependencies; add others as needed
 crawler.o: ../common/web.h
 web.o: ../common/web.h
+hashtable.o: ../lib/hashtable/hashtable.h ../lib/hashtable/jhash.h ../lib/set/set.h
+jhash.o: ../lib/hashtable/jhash.h
 
 
 # build the library
