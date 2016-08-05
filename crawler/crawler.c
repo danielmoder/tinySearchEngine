@@ -18,6 +18,7 @@ This file contains source for a web crawler. It includes functions:
 #include "../common/web.h"
 #include "../lib/bag/bag.h"
 #include "../lib/set/set.h"
+#include "../lib/hashtable/hashtable.h"
 #include "../lib/memory/memory.h"
 
 /*
@@ -41,7 +42,7 @@ Parameters: char** array, the array to be searched
             char* key, the string to be searched for
 Returns: true if the array contains the key, else false
 */
-
+/*
 bool arraySearch (char** array, int index, char* key)
 {
 	for (int i = 0; i < index; i++){
@@ -50,7 +51,7 @@ bool arraySearch (char** array, int index, char* key)
 		}
 	}
 	return false;
-}
+}*/
 
 
 /*
@@ -128,17 +129,21 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 	// seedPage
 	WebPage* rootPage = pageNew(seedURL, 0);
 
+    hashtable_t* beenSearched = hashtable_new(free);
+    
+    
     // bag
 	bag_t* bag = bag_new(free);
 	bag_insert(bag, rootPage);
 
+/*
     // array --- This is so horrible. please, for the love of god, fix this.
 	char** beenSearched = assertp(malloc(sizeof(char*) * 20000), "array\n");
 	beenSearched[0] = assertp(malloc(strlen(seedURL) + 1), "toAdd\n");
 	strcpy(beenSearched[0], seedURL);
+*/
 
 	int fileID = 0;
-	int index = 1;
 
 	while ((rootPage = bag_extract(bag)) != NULL){
 	
@@ -172,14 +177,14 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		    break;
 		  }
 		  
-		  if ( (! arraySearch(beenSearched, index, result)) && \
+		  if ( !(hashtable_find(beenSearched, result) && \
 		        (IsInternalURL(result)) && (NormalizeURL(result) ) ) {
 		        
             logr("Added", depth, result);
             
-			beenSearched[index] = assertp(malloc(strlen(result) + 1), "url\n");
-			strcpy(beenSearched[index], result);
-			index++;
+			char* inLine = assertp(malloc(strlen(result) + 1), "url\n");
+			strcpy(inLine, result);
+			hashtable_insert(beenSearched, inLine, result);
             
 			WebPage* page = pageNew(result, depth+1);
 
@@ -197,13 +202,8 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 	}
 
 	bag_delete(bag);
-
-    
-	// clean up array
-	for (int i = 0; i < index; i++){
-		count_free(beenSearched[i]);
-	}
-	count_free(beenSearched);
+	hashtable_delete(beenSearched);
+	
 	return 0;
 }
 
