@@ -133,6 +133,10 @@ bool GetWebPage(WebPage* page)
         page->html = calloc(strlen(errbuf) + 1, sizeof(char));
         page->html_len = strlen(errbuf);;
         strcpy(page->html, errbuf);
+        
+        // ___________________________________________________________________________
+        curl_easy_cleanup(curl_handle);
+        curl_global_cleanup();
 
         status = false;                          // signal failure
     }
