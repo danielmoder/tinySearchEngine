@@ -176,7 +176,12 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		        free(result);
 		        break;
 		    }
-		  
+		    
+		    if ( (strcmp(result, "http://old-www.cs.dartmouth.edu/~cs50/examples/")) == 0){
+		        printf("FAILED + Ignored\n");
+		        free(result);
+		        continue;
+		    }
             if ( !(hashtable_find(beenSearched, result)) && \
     		        (IsInternalURL(result)) && (NormalizeURL(result) ) ) {
                 logr("Added", depth, result);
