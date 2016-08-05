@@ -172,35 +172,30 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		char* result = NULL;
 		
 		while ((pos = GetNextURL(HTML, pos, URL, &result)) > 0){
-		  if (depth >= maxDepth){
-		    free(result);
-		    break;
-		  }
+		    if (depth >= maxDepth){
+		        free(result);
+		        break;
+		    }
 		  
-		  if ( !(hashtable_find(beenSearched, result)) && \
-		        (IsInternalURL(result)) && (NormalizeURL(result) ) ) {
-		        
-            logr("Added", depth, result);
-            
-			char* inLine = assertp(malloc(strlen(result) + 1), "url\n");
-			strcpy(inLine, result);
-			hashtable_insert(beenSearched, inLine, inLine);
-            
-			WebPage* page = pageNew(result, depth+1);
-
-			bag_insert(bag, page);
-          }
+            if ( !(hashtable_find(beenSearched, result)) && \
+    		        (IsInternalURL(result)) && (NormalizeURL(result) ) ) {
+                logr("Added", depth, result);
+                
+    			char* inLine = assertp(malloc(strlen(result) + 1), "url\n");
+    			strcpy(inLine, result);
+    			hashtable_insert(beenSearched, inLine, inLine);
+                
+    			WebPage* page = pageNew(result, depth+1);
+    			bag_insert(bag, page);
+            }
             
             if (! IsInternalURL(result)){
                 logr("EXTERNAL", depth, result);
             }
-                
 			free(result);
 		}
-
 		webDelete(rootPage);
 	}
-
 	bag_delete(bag);
 	hashtable_delete(beenSearched);
 	
