@@ -129,7 +129,7 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 	// seedPage
 	WebPage* rootPage = pageNew(seedURL, 0);
 
-    hashtable_t* beenSearched = hashtable_new(free);
+    hashtable_t* beenSearched = hashtable_new(5, free);
     
     
     // bag
@@ -177,7 +177,7 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		    break;
 		  }
 		  
-		  if ( !(hashtable_find(beenSearched, result) && \
+		  if ( !(hashtable_find(beenSearched, result)) && \
 		        (IsInternalURL(result)) && (NormalizeURL(result) ) ) {
 		        
             logr("Added", depth, result);
