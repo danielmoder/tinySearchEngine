@@ -131,12 +131,8 @@ bool GetWebPage(WebPage* page)
         // we're going to return the curl error message on failure
         free(page->html);
         page->html = calloc(strlen(errbuf) + 1, sizeof(char));
-        page->html_len = strlen(errbuf);;
+        page->html_len = strlen(errbuf);
         strcpy(page->html, errbuf);
-        
-        // ___________________________________________________________________________
-        curl_easy_cleanup(curl_handle);
-        curl_global_cleanup();
 
         status = false;                          // signal failure
     }
