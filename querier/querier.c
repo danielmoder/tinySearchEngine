@@ -73,6 +73,17 @@ int main(int argc, char* argv[])
         
         //set_t* querySet = set_new(free);    // destructor will really be something like
                                             // set_iterate(counters_delete), free(set)
+
+
+
+        // check for leading/trailing and/or
+        
+        char* last = queryArray[(arrayIdx-1)];
+        if ( ((strcmp(prev, "and") == 0) || (strcmp(prev , "or") == 0) ) || \
+             ((strcmp(last, "and") == 0) || (strcmp(last, "or") == 0)) ) {
+            printf("Error: invalid query\n");
+            continue;
+        }
         
         // preliminary run-through (check for aa/ao/oa/oo)
         for (int i = 1; i < arrayIdx; i++){
@@ -82,7 +93,7 @@ int main(int argc, char* argv[])
                  ((strcmp(prev, "and") == 0) || (strcmp(prev, "or") == 0)) ) {
                 
                 printf("Error: invalid query\n");
-                return 1;
+                continue;
             }
             prev = curr;
         }
