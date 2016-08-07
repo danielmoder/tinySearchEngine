@@ -18,8 +18,8 @@ Daniel Moder, Summer 2016
 int main(int argc, char* argv[])
 {
     // Validate arguments
-    char* pageDirectory = argv[1];
-    char* indexFileName = argv[2];
+    // char* pageDirectory = argv[1];
+    // char* indexFileName = argv[2];
     
     // Load index from argv
     index_t* index = index_load(indexFileName);
@@ -34,7 +34,16 @@ int main(int argc, char* argv[])
         
         printf("%s\n", word);
         
-        while ( (word = strtok(NULL, " ")) != NULL){
+        while ( (word = strtok(NULL, " ")) != NULL){ // get all words in query
+        
+            int i = 0;
+            while (word[i]){
+                word[i] = tolower(word[i]);
+                if (word[i] < 'a' || word[i] > 'z'){
+                    printf("Error: invalid character %c\n", word[i]);
+                }
+            }
+            
             printf("%s\n", word);
         }
         
