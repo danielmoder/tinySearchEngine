@@ -80,11 +80,24 @@ int main(int argc, char* argv[])
         
         char* last = queryArray[(arrayIdx-1)];
         printf("%s\n", last);
-        if ( (strcmp(prev, "and") == 0) || (strcmp(prev, "or") == 0) || (strcmp(last, "and") == 0) || (strcmp(last, "or") == 0) ) {
-             
+        if (strcmp(prev, "and") == 0){
             printf("Error: invalid query\n");
             continue;
         }
+        if (strcmp(prev, "or") == 0){
+            printf("Error: invalid query\n");
+            continue;
+        }
+        if (strcmp(last, "and") == 0){
+            printf("Error: invalid query\n");
+            continue;
+        }
+        if (strcmp(last, "or") == 0){
+            printf("Error: invalid query\n");
+            continue;
+        }
+             
+
         
         // preliminary run-through (check for aa/ao/oa/oo)
         for (int i = 1; i < arrayIdx; i++){
