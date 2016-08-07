@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
             arrayIdx++;
         }
         
-        for (arrayIdx; arrayIdx > 0; arrayIdx--){
+        for (int i = 0; i < arrayIdx; i++){
             printf("backwords through array: %s \n", queryArray[arrayIdx]);
         }
         
