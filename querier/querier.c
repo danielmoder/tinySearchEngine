@@ -79,6 +79,7 @@ int main(int argc, char* argv[])
         // check for leading/trailing and/or
         
         char* last = queryArray[(arrayIdx-1)];
+        printf("%s\n", last);
         if ( (strcmp(prev, "and") == 0) || (strcmp(prev, "or") == 0) || 
              (strcmp(last, "and") == 0) || (strcmp(last, "or") == 0) ) {
              
