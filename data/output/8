@@ -1,0 +1,114 @@
+http://old-www.cs.dartmouth.edu/~cs50/Lectures/
+1
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>CS50 Lectures</title>
+  <meta name="description" content="In Computer Science 50 you will learn how to design & build large,  reliable, maintainable, and understandable software systems.  In the process you will learn to program in C with Unix development tools.
+">
+
+  <link rel="stylesheet" href="/~cs50/css/main.css">
+  <link rel="canonical" href="http://www.cs.dartmouth.edu/~cs50/Lectures/">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+    <a class="site-title" href="/~cs50/">CS50 Summer 2016</a>
+
+    <nav class="site-nav">
+
+      [<a href="https://canvas.dartmouth.edu/courses/15260">Canvas</a>]
+      [<a href="https://piazza.com/dartmouth/summer2016/cs50/home">Piazza</a>]
+      [<a href="https://gitlab.cs.dartmouth.edu">Gitlab</a>]
+      [<a href="/~cs50/Schedule.pdf">Schedule</a>]
+      [<a href="/~cs50/Lectures/">Lectures</a>]
+      [<a href="/~cs50/Reading/">Reading</a>]
+<!--      [<a href="/~cs50/examples/">Examples</a>]  -->
+      [<a href="/~cs50/Logistics/">Logistics</a>]
+      [<a href="/~cs50/Resources/">Resources</a>]
+      [<a href="/~cs50/Labs/">Labs</a>]
+      [<a href="/~cs50/Project/">Project</a>]
+
+   </nav>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">CS50 Lectures</h1>
+  </header>
+
+  <div class="post-content">
+    <ul>
+  <li><a href="01-gettingstarted.html">Lecture 1 - Getting started</a>.</li>
+  <li><a href="02-shell.html">Lecture 2 - The bash shell</a>.</li>
+  <li><a href="03-shellcontinued.html">Lecture 3 - The bash shell, continued</a>.</li>
+  <li><a href="04-5-shellscripts.html">Lecture 4 - 5 - Shell scripts with bash</a> - two days.</li>
+  <li><a href="06-intro2c.html">Lecture 6 - Introduction to C</a> and <a href="06x-intro2c.html">lecture extra</a></li>
+  <li><a href="07-clibs.html">Lecture 7 - More C and C Standard Libraries</a>.</li>
+  <li><a href="08-preprocessorpointers.html">Lecture 8 - C preprocessor, pointers, arrays</a>.</li>
+  <li><a href="09-memory.html">Lecture 9 - Three kinds of memory</a></li>
+  <li><a href="10-debugging/index.html">Lecture 10 - Debugging with gdb and valgrind</a> - password bug <a href="10-debugging/passwordhint.html">hint</a> and <a href="10-debugging/passwordsolution.html">solution</a></li>
+  <li><a href="11-make.html">Lecture 11 - Make</a> and lecture extras about <a href="11x-make.html">make</a>.</li>
+  <li><a href="12-modules.html">Lecture 12 - Modules in C</a>.</li>
+  <li><a href="13-git/index.html">Lecture 13 - Git and Gitlab</a> and <a href="13-git/tags.html">Git Tags</a>.</li>
+  <li><a href="14-websearch/index.html">Lecture 14 - Searching the web</a>.</li>
+  <li><a href="15-designcrawler/index.html">Lecture 15 - Software design, and crawler design</a>.</li>
+  <li><a href="16-crawler.html">Lecture 16 - Crawler design and implementation</a>.</li>
+  <li><a href="17-indexer/">Lecture 17-18 - Indexer</a></li>
+  <li><a href="19-iterators.html">Lecture 19 - Iterators</a></li>
+  <li><a href="20-testing.html">Lecture 20 - Testing and unit tests</a>
+<!-- * [Lecture 9 - Pointers, malloc, and lists](09-pointers.html) and [optional puzzle](09x-puzzle.html)! -->
+<!-- * [Lecture 17 - Memory and pointers - exercise](17-pointers.html).  -->
+<!-- * [Lecture 19 - Makefiles and directories](19-makefiles.html) -->
+<!-- * [Lecture 20 - Crawler redux](20-crawler.html) -->
+<!-- * [Lecture 22a - Expressions and precedence](22a-expressions.html) -->
+<!-- * [Lecture 23 - Bugs and Testing](23-testing.html) -->
+<!-- * [Lecture 24 - Indexer redux](24-indexer.html) -->
+<!-- * [Lecture 25 - Socket programming](25-socketprogramming) -->
+<!-- * [Lecture 26 - Processes and a concurrent server](26-fork-udp) and an  [*extra* about threads](26-fork-udp/threads.html) -->
+<!-- * [Lecture 27 - Introduction to Final Project](27-project.html) -->
+<!-- * [Lecture 29 - Sockets and select()](29a-select.html) and [More about the Final Project](29b-project.html) --></li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS50 Summer 2016 -- Dartmouth College</h2>
+
+    <p> <font size=-1> 
+    	This version of the course is based upon those designed by 
+    	Professors Kotz, Palmer, Campbell, and Balkcom. 
+	I am deeply indebted to these outstanding educators.
+    -- <a href="/~xia/">Xia Zhou</a>
+       </font> 
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
+

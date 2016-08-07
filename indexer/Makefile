@@ -44,7 +44,7 @@ $C/common.a:
 .PHONY: clean
 
 clean:
-	rm -f s*.txt
+	rm -f *.txt
 	rm -f *~
 	rm -f *.o
 	rm -f $(PROGS)

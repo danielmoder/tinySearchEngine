@@ -1,0 +1,161 @@
+http://old-www.cs.dartmouth.edu/~cs50/Project/
+1
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>CS50 Project</title>
+  <meta name="description" content="In Computer Science 50 you will learn how to design & build large,  reliable, maintainable, and understandable software systems.  In the process you will learn to program in C with Unix development tools.
+">
+
+  <link rel="stylesheet" href="/~cs50/css/main.css">
+  <link rel="canonical" href="http://www.cs.dartmouth.edu/~cs50/Project/">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+    <a class="site-title" href="/~cs50/">CS50 Summer 2016</a>
+
+    <nav class="site-nav">
+
+      [<a href="https://canvas.dartmouth.edu/courses/15260">Canvas</a>]
+      [<a href="https://piazza.com/dartmouth/summer2016/cs50/home">Piazza</a>]
+      [<a href="https://gitlab.cs.dartmouth.edu">Gitlab</a>]
+      [<a href="/~cs50/Schedule.pdf">Schedule</a>]
+      [<a href="/~cs50/Lectures/">Lectures</a>]
+      [<a href="/~cs50/Reading/">Reading</a>]
+<!--      [<a href="/~cs50/examples/">Examples</a>]  -->
+      [<a href="/~cs50/Logistics/">Logistics</a>]
+      [<a href="/~cs50/Resources/">Resources</a>]
+      [<a href="/~cs50/Labs/">Labs</a>]
+      [<a href="/~cs50/Project/">Project</a>]
+
+   </nav>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">CS50 Project</h1>
+  </header>
+
+  <div class="post-content">
+    <h1 id="meet-our-teams">Meet Our Teams!</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Team Name</th>
+      <th style="text-align: center">Members</th>
+      <th style="text-align: center">Shepherd</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td style="text-align: center">Alexander Wolf, Galen Brown, Michael Ortiz</td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td style="text-align: center">James Edwards, Theodore Bausch, Braden	Pellowski</td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td style="text-align: center">Samantha	Marciano, Acacia	Hoisington, Mauricio Esquivel	Rogel</td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td style="text-align: center">Larissa Chen, Benjamin	Littlejohn, Benjamin Hannam</td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td style="text-align: center">Morgan	Philie, Emily	Lin, Ian Whitney</td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td style="text-align: center">Deip	Kumar, Shashwat	Chaturvedi, Matthew	Kersey</td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td style="text-align: center">Yu	Liu, Alexander Sheehan, Kendall	Ernst</td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td style="text-align: center">Brian Keare, John Brady, Xu Wang</td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td style="text-align: center">Cristina	Curcelli, Robert Sayegh, Andrew	Werchniak</td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td style="text-align: center">Alexander Weinberg, Daniel	Moder, Gurkaran	Singh</td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td style="text-align: center">David Oh, Connor	Lehan, Zachary Schnell</td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td style="text-align: center">Margaret	Lawson, Helen	He, Imanol Avendano</td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td style="text-align: center">Justin	Sanders, Peter Blum, Trevor	Davis, Barry Yang</td>
+      <td style="text-align: center"> </td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS50 Summer 2016 -- Dartmouth College</h2>
+
+    <p> <font size=-1> 
+    	This version of the course is based upon those designed by 
+    	Professors Kotz, Palmer, Campbell, and Balkcom. 
+	I am deeply indebted to these outstanding educators.
+    -- <a href="/~xia/">Xia Zhou</a>
+       </font> 
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
+

@@ -1,0 +1,94 @@
+http://old-www.cs.dartmouth.edu/~cs50/Labs/Lab0-Preliminaries.html
+1
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>CS 50 Summer 2016</title>
+  <meta name="description" content="In Computer Science 50 you will learn how to design & build large,  reliable, maintainable, and understandable software systems.  In the process you will learn to program in C with Unix development tools.
+">
+
+  <link rel="stylesheet" href="/~cs50/css/main.css">
+  <link rel="canonical" href="http://www.cs.dartmouth.edu/~cs50/Labs/Lab0-Preliminaries.html">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+    <a class="site-title" href="/~cs50/">CS50 Summer 2016</a>
+
+    <nav class="site-nav">
+
+      [<a href="https://canvas.dartmouth.edu/courses/15260">Canvas</a>]
+      [<a href="https://piazza.com/dartmouth/summer2016/cs50/home">Piazza</a>]
+      [<a href="https://gitlab.cs.dartmouth.edu">Gitlab</a>]
+      [<a href="/~cs50/Schedule.pdf">Schedule</a>]
+      [<a href="/~cs50/Lectures/">Lectures</a>]
+      [<a href="/~cs50/Reading/">Reading</a>]
+<!--      [<a href="/~cs50/examples/">Examples</a>]  -->
+      [<a href="/~cs50/Logistics/">Logistics</a>]
+      [<a href="/~cs50/Resources/">Resources</a>]
+      [<a href="/~cs50/Labs/">Labs</a>]
+      [<a href="/~cs50/Project/">Project</a>]
+
+   </nav>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">CS 50 Summer 2016</h1>
+  </header>
+
+  <div class="post-content">
+    <h1 id="lab-assignment-0-preliminaries">Lab Assignment 0: Preliminaries</h1>
+
+<p>This first assignment is simple but essential.  It’s not graded, but is required for you to participate in the course.  You must complete the following two items by midnight tonight.</p>
+
+<h3 id="letting-us-to-know-you">Letting us to know you</h3>
+<p>We’d like to learn a little more about your programming background and the computer you will use for this course. 
+Fill out the <a href="http://goo.gl/forms/jtXcaQCxFNqJ2lcc2">form</a> and let us know.
+If you’re not officially enrolled in the course, this form is how you get on the waitlist.</p>
+
+<h3 id="signing-up-for-sections">Signing up for sections</h3>
+<p>Each student will select a section to meet once weekly with their section leader. Please go to Canvas, click ‘People’ on the left menu, then click ‘Groups’, and choose a section.</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS50 Summer 2016 -- Dartmouth College</h2>
+
+    <p> <font size=-1> 
+    	This version of the course is based upon those designed by 
+    	Professors Kotz, Palmer, Campbell, and Balkcom. 
+	I am deeply indebted to these outstanding educators.
+    -- <a href="/~xia/">Xia Zhou</a>
+       </font> 
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
+
