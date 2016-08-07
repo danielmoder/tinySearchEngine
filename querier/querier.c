@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
                 word[i] = tolower(word[i]);
                 
                 if (word[i] < 'a' || word[i] > 'z'){
-                    printf("Error: invalid character %c\n", word[i]);
+                    printf("Error: invalid character " %c "\n", word[i]);
                     return 1;
                 }
                 i++;
