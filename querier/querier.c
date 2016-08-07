@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
     // char* indexFileName = argv[2];
     
     // Load index from argv
-    // index_t* index = index_load(indexFileName);
+    index_t* index = index_load("../indexer/indexFile");
 
 // ASSUMPTION: inLine cannot be greater than 100 characters
 //              (this would also solve the array size problem for tokened input)
@@ -114,10 +114,10 @@ int main(int argc, char* argv[])
         // set_iterate { (counters_delete); free(set); }
         
         set_t* andSet = set_new((void(*)(void *))counters_delete);
-        set_add(querySet, andSet);
+        set_insert(querySet, andSet);
         
         
-        char* word;
+        char* word = NULL;
         
         for (int i = 0; i < arrayIdx; i++){
             word = queryArray[i];
