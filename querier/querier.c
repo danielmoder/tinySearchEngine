@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
         char* word = strtok(inLine, " ");
         queryArray[0] = word;
         
-        while ( (word = strtok(NULL, " ")) != NULL){ // get all words in query
+        while ( word != NULL){ // get all words in query
         
             int i = 0;
             while ( (word[i] != '\0') && (word[i] != '\n') ){
@@ -53,14 +53,14 @@ int main(int argc, char* argv[])
             }
             queryArray[arrayIdx] = word;
             arrayIdx++;
+            
+            word = strtok(NULL, " ");
         }
         
         for (int i = 0; i < arrayIdx; i++){
-            printf("backwords through array: %s \n", queryArray[i]);
+            printf("through array: %s \n", queryArray[i]);
         }
-        
-    
-        // clean
+
         // parse        (set of 'and' sequence sets -- implied 'or' b/t sets)
         // validDocs    (documents that satisfy the query)
         // rank         (?)
