@@ -19,7 +19,8 @@ Daniel Moder, Summer 2016
 int cleanQuery(char* queryLine, char** queryArray); 
             // will return number of items in array
 
-set_t* parseQuery(char** queryArray, int numWords);
+set_t* parseQuery(char** queryArray, int arrayIdx);
+
 
 //
 
@@ -41,7 +42,7 @@ int main(int argc, char* argv[])
         const int arraySize = 50;
         char* queryArray[arraySize];
         
-// CLEAN ________________________________________
+// CLEAN________________________________________
         int arrayIdx = 0;
         char* word = strtok(queryLine, " ");
         
@@ -65,22 +66,17 @@ int main(int argc, char* argv[])
             word = strtok(NULL, " ");
         }
         // return (arrayIdx);
-// endCLEAN ________________________________________
+        
+        if (arrayIdx == 0){
+            continue;
+        }
 
-
-// PARSE ________________________________________
+// CHECKLINE________________________________________
         char* prev = queryArray[0];
         char* curr;
-        
-        //set_t* querySet = set_new(free);    // destructor will really be something like
-                                            // set_iterate(counters_delete), free(set)
-
-
 
         // check for leading/trailing and/or
-        
         char* last = queryArray[(arrayIdx-1)];
-        printf("%s\n", last);
         if (strcmp(prev, "and") == 0){
             printf("Error: invalid query\n");
             continue;
@@ -97,8 +93,6 @@ int main(int argc, char* argv[])
             printf("Error: invalid query\n");
             continue;
         }
-             
-
         
         // preliminary run-through (check for aa/ao/oa/oo)
         for (int i = 1; i < arrayIdx; i++){
@@ -114,10 +108,39 @@ int main(int argc, char* argv[])
         }
         
         
+// PARSE__________________________________________________________(index, query array, query index) -> querySet
+        set_t* querySet = set_new(free);    
+        // destructor will really be something like
+        // set_iterate { (counters_delete); free(set); }
+        
+        set_t* andSet = set_new((void(*)(void *))counters_delete);
+        set_add(querySet, andSet);
+        
+        
+        char* word;
+        
+        for (int i = 0; i < arrayIdx; i++){
+            word = queryArray[i];
+            if (strcmp(word, "or") == 0){
+                andSet = set_new((void(*)(void *))counters_delete);
+                continue;
+            } else if (strcmp(word, "and") == 0){
+                continue;
+            }
+            
+            // what if index does not have value for word?
+            // check if ctr == null in RANK (if so, = 0)
+            counters_t* ctr = index_find(index, word);
+            if (ctr != NULL){
+                set_insert(andSet, word, ctr);
+            } 
+        }
 
-        // parse        (set of 'and' sequence sets -- implied 'or' b/t sets)
-        // validDocs    (documents that satisfy the query)
-        // rank         (?)
+// VALIDDOCS____________________________________________________________________ (querySet) -> 
+        // validDocs/rank    (documents that satisfy the query)
+
+
+
         // output       
     
     }
