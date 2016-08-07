@@ -79,8 +79,9 @@ int main(int argc, char* argv[])
         // check for leading/trailing and/or
         
         char* last = queryArray[(arrayIdx-1)];
-        if ( ((strcmp(prev, "and") == 0) || (strcmp(prev , "or") == 0) ) || \
-             ((strcmp(last, "and") == 0) || (strcmp(last, "or") == 0)) ) {
+        if ( (strcmp(prev, "and") == 0) || (strcmp(prev, "or") == 0) || \
+             (strcmp(last, "and") == 0) || (strcmp(last, "or") == 0) ) {
+             
             printf("Error: invalid query\n");
             continue;
         }
