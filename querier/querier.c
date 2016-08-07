@@ -4,8 +4,8 @@ A search engine query program
 Daniel Moder, Summer 2016
 */
 
-#include "common.a"
-#include "cs50ds.a"
+#include <stdio.h>
+#include "index.h"
 
 
 // Declare functions here:
