@@ -32,7 +32,7 @@ set.o: set.h
 counters.o: counters.h
 	cd counters; $(MAKE) counters.o
 hashtable.o: hashtable.h jhash.h set.h
-	cd hashtable; $(MAKE) hashtable.o
+	cd hashtable; $(MAKE) hashtable.o jhash.o set.o
 
 
 # add cleanup commands for other subdirectories
