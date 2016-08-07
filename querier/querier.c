@@ -6,6 +6,7 @@ Daniel Moder, Summer 2016
 
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "../common/index.h"
 
@@ -22,7 +23,7 @@ int main(int argc, char* argv[])
     // char* indexFileName = argv[2];
     
     // Load index from argv
-    index_t* index = index_load(indexFileName);
+    // index_t* index = index_load(indexFileName);
 
 // ASSUMPTION: inLine cannot be greater than 100 characters
 //              (this would also solve the array size problem for tokened input)
