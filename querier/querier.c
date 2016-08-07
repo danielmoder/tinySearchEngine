@@ -10,7 +10,7 @@ Daniel Moder, Summer 2016
 
 #include "../common/index.h"
 #include "../lib/hashtable/hashtable.h"
-#include "../lib/set/set.h
+#include "../lib/set/set.h"
 #include "../lib/counters/counters.h"
 
 
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
     
     char queryLine[100];
     // read-in loop
-    while ( fgets(queryLine, sizeof(inLine), stdin) != NULL){
+    while ( fgets(queryLine, sizeof(queryLine), stdin) != NULL){
         const int arraySize = 50;
         char* queryArray[arraySize];
         
@@ -78,8 +78,8 @@ int main(int argc, char* argv[])
         for (int i = 1; i < arrayIdx; i++){
             curr = queryArray[i];
             
-            if ( (strcmp(curr, "and") == 0) || (strcmp(curr, "or") == 0) && \
-                 (strcmp(prev, "and") == 0) || (strcmp(prev, "or") == 0) ) {
+            if ( ((strcmp(curr, "and") == 0) || (strcmp(curr, "or") == 0)) && \
+                 ((strcmp(prev, "and") == 0) || (strcmp(prev, "or") == 0)) ) {
                 
                 printf("Error: invalid query\n");
                 return 1;
