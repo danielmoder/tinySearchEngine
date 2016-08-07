@@ -51,7 +51,8 @@ int main(int argc, char* argv[])
                 } 
                 i++;
             }
-            queryArray[arrayIdx++] = word;
+            queryArray[arrayIdx] = word;
+            arrayIdx++;
         }
         
         for (arrayIdx; arrayIdx >= 0; arrayIdx--){
