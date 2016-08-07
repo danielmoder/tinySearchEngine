@@ -48,11 +48,12 @@ int main(int argc, char* argv[])
         while ( word != NULL){ // get all words in query
         
             int i = 0;
-            while ( (word[i] != '\0') && (word[i] != '\n') ){
-            
+            while (word[i] != '\0'){
                 word[i] = tolower(word[i]);
-                
-                if (word[i] < 'a' || word[i] > 'z'){
+                if (word[i] == '\n'){
+                    word[i] = '\0';
+                    break;
+                }else if (word[i] < 'a' || word[i] > 'z'){
                     printf("Error: invalid character (%c)\n", word[i]);
                     return 1;
                 } 
