@@ -5,7 +5,7 @@ Daniel Moder, Summer 2016
 */
 
 #include <stdio.h>
-#include "index.h"
+#include "../common/index.h"
 
 
 // Declare functions here:
