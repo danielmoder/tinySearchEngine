@@ -33,9 +33,10 @@ int main(int argc, char* argv[])
     while ( fgets(inLine, sizeof(inLine), stdin) != NULL){
         const int arraySize = 50;
         char* queryArray[arraySize];
-        int arrayIdx = 0;
+        int arrayIdx = 1;
         
         char* word = strtok(inLine, " ");
+        queryArray[0] = word;
         
         while ( (word = strtok(NULL, " ")) != NULL){ // get all words in query
         
@@ -53,7 +54,7 @@ int main(int argc, char* argv[])
             queryArray[arrayIdx++] = word;
         }
         
-        for (arrayIdx; arrayIdx > 0; arrayIdx--){
+        for (arrayIdx; arrayIdx >= 0; arrayIdx--){
             printf("backwords through array: %s \n", queryArray[arrayIdx]);
         }
         
