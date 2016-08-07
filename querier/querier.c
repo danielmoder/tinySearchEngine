@@ -71,23 +71,23 @@ int main(int argc, char* argv[])
         char* prev = queryArray[0];
         char* curr;
         
-        set_t* querySet = set_new(free);    // destructor will really be something like
+        //set_t* querySet = set_new(free);    // destructor will really be something like
                                             // set_iterate(counters_delete), free(set)
-                
+        
+        // preliminary run-through (check for aa/ao/oa/oo)
         for (int i = 1; i < arrayIdx; i++){
             curr = queryArray[i];
-            // Current word is "AND" or "OR"
-            //      1. invalid use of conditional operator
-            //      2. valid --> add to set
-            if ( (strcmp(curr, "and") == 0) || (strcmp(curr, "or") == 0) ){
+            
+            if ( (strcmp(curr, "and") == 0) || (strcmp(curr, "or") == 0) && \
+                 (strcmp(prev, "and") == 0) || (strcmp(prev, "or") == 0) ) {
                 
-                
-                
+                printf("Error: invalid query\n");
+                return 1;
             }
-            
-            
             prev = curr;
         }
+        
+        
 
         // parse        (set of 'and' sequence sets -- implied 'or' b/t sets)
         // validDocs    (documents that satisfy the query)
