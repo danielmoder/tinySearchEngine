@@ -25,10 +25,9 @@ int main(int argc, char* argv[])
 // ASSUMPTION: inLine cannot be greater than 100 characters
 //              (this would also solve the array size problem for tokened input)
     
-    char* inLine;
+    char inLine[100];
     // read-in loop
     while ( fgets(inLine, sizeof(inLine), stdin) != NULL){
-        printf("sizeof(inLine) = %d\n", sizeof(inLine));
         printf("%s\n", inLine);
     
     
