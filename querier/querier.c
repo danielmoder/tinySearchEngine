@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
         while ( (word = strtok(NULL, " ")) != NULL){ // get all words in query
         
             int i = 0;
-            while (word[i] != '\0'){
+            while ( (word[i] != '\0') || (word[i] != '\n') ){
             
                 word[i] = tolower(word[i]);
                 
