@@ -31,6 +31,10 @@ int main(int argc, char* argv[])
     char inLine[100];
     // read-in loop
     while ( fgets(inLine, sizeof(inLine), stdin) != NULL){
+        int arraySize = 50;
+        char* queryArray[arraySize] = malloc(sizeof(char*) * arraySize);
+        int arrayIdx = 0;
+        
         char* word = strtok(inLine, " ");
         
         while ( (word = strtok(NULL, " ")) != NULL){ // get all words in query
@@ -43,10 +47,14 @@ int main(int argc, char* argv[])
                 if (word[i] < 'a' || word[i] > 'z'){
                     printf("Error: invalid character (%c)\n", word[i]);
                     return 1;
-                }
+                } 
                 i++;
             }
-            printf("%s\n", word);
+            queryArray[arrayIdx++] = word;
+        }
+        
+        for (arrayIdx; arrayIdx > 0; arrayIdx--){
+            prinft("backwords through array: %s \n", queryArray[arrayIdx]);
         }
         
     
