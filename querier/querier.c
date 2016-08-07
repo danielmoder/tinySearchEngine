@@ -9,10 +9,17 @@ Daniel Moder, Summer 2016
 #include <ctype.h>
 
 #include "../common/index.h"
+#include "../lib/hashtable/hashtable.h"
+#include "../lib/set/set.h
+#include "../lib/counters/counters.h"
+
 
 
 // Declare functions here:
+int cleanQuery(char* queryLine, char** queryArray); 
+            // will return number of items in array
 
+set_t* parseQuery(char** queryArray, int numWords);
 
 //
 
@@ -28,15 +35,15 @@ int main(int argc, char* argv[])
 // ASSUMPTION: inLine cannot be greater than 100 characters
 //              (this would also solve the array size problem for tokened input)
     
-    char inLine[100];
+    char queryLine[100];
     // read-in loop
-    while ( fgets(inLine, sizeof(inLine), stdin) != NULL){
+    while ( fgets(queryLine, sizeof(inLine), stdin) != NULL){
         const int arraySize = 50;
         char* queryArray[arraySize];
-        int arrayIdx = 1;
         
-        char* word = strtok(inLine, " ");
-        queryArray[0] = word;
+// CLEAN ________________________________________
+        int arrayIdx = 0;
+        char* word = strtok(queryLine, " ");
         
         while ( word != NULL){ // get all words in query
         
@@ -56,9 +63,30 @@ int main(int argc, char* argv[])
             
             word = strtok(NULL, " ");
         }
+        // return (arrayIdx);
+// endCLEAN ________________________________________
+
+
+// PARSE ________________________________________
+        char* prev = queryArray[0];
+        char* curr;
         
-        for (int i = 0; i < arrayIdx; i++){
-            printf("through array: %s \n", queryArray[i]);
+        set_t* querySet = set_new(free);    // destructor will really be something like
+                                            // set_iterate(counters_delete), free(set)
+                
+        for (int i = 1; i < arrayIdx; i++){
+            curr = queryArray[i];
+            // Current word is "AND" or "OR"
+            //      1. invalid use of conditional operator
+            //      2. valid --> add to set
+            if ( (strcmp(curr, "and") == 0) || (strcmp(curr, "or") == 0) ){
+                
+                
+                
+            }
+            
+            
+            prev = curr;
         }
 
         // parse        (set of 'and' sequence sets -- implied 'or' b/t sets)
