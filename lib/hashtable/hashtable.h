@@ -6,6 +6,9 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include "jhash.h"
+#include "../set/set.h"
+
 typedef struct hashtable hashtable_t;
 
 hashtable_t* hashtable_new(const int numSlots, void (*destructor)(void*));
