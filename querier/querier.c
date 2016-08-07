@@ -33,28 +33,19 @@ int main(int argc, char* argv[])
     while ( fgets(inLine, sizeof(inLine), stdin) != NULL){
         char* word = strtok(inLine, " ");
         
-        printf("%s\n", word);
-        
-        word = strtok(NULL, " ");
-        printf("second word: %s\n", word);
-        
         while ( (word = strtok(NULL, " ")) != NULL){ // get all words in query
-            /*
+        
             int i = 0;
             while (word[i] != '\0'){
             
                 word[i] = tolower(word[i]);
                 
-                if ( (word[i] == " ") || (word[i] == "\t"){
-                    
-                }else if (word[i] < 'a' || word[i] > 'z'){
+                if (word[i] < 'a' || word[i] > 'z'){
                     printf("Error: invalid character %c\n", word[i]);
                     return 1;
                 }
-                
                 i++;
             }
-            */
             printf("%s\n", word);
         }
         
