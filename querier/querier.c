@@ -4,8 +4,11 @@ A search engine query program
 Daniel Moder, Summer 2016
 */
 
-// Declare functions here:
+#include "common.a"
+#include "cs50ds.a"
 
+
+// Declare functions here:
 
 
 //
