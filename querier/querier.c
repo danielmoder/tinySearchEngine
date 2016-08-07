@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
     
     char inLine[100];
     // read-in loop
-    while ( fgets(inLine, sizeof(inLine), 0) != NULL){
+    while ( fgets(inLine, sizeof(inLine), stdin) != NULL){
         printf("%s\n", inLine);
     
     
