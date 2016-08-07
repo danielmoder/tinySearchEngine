@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
     char inLine[100];
     // read-in loop
     while ( fgets(inLine, sizeof(inLine), stdin) != NULL){
-        int arraySize = 50;
+        const int arraySize = 50;
         char* queryArray[arraySize] = malloc(sizeof(char*) * arraySize);
         int arrayIdx = 0;
         
@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
         }
         
         for (arrayIdx; arrayIdx > 0; arrayIdx--){
-            prinft("backwords through array: %s \n", queryArray[arrayIdx]);
+            printf("backwords through array: %s \n", queryArray[arrayIdx]);
         }
         
     
