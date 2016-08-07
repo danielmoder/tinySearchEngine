@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
     char inLine[100];
     // read-in loop
     while ( fgets(inLine, sizeof(inLine), stdin) != NULL){
-        const int arraySize = 50
+        const int arraySize = 50;
         char* queryArray[arraySize];
         int arrayIdx = 0;
         
