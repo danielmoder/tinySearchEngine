@@ -119,6 +119,11 @@ int main(int argc, char* argv[])
             prev = curr;
         }
         printf("check-line'd \n");
+        printf("printing queryArray: \n");
+        
+        for(int i = 0; i < arrayIdx; i++){
+            printf("\t%s at slot %d \n", queryArray[i], i);
+        }
         
 // PARSE__________________________________________________________(index, query array, query index) -> orSet
         set_t* orSet = set_new(free);    
