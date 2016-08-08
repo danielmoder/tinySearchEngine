@@ -25,13 +25,15 @@ counters_t* score(set_t* parseTree);
 
 void andFunc(void *arg, const int key, int count);              // to be called in ** andSet_iterate **
 
-void queryFunc(void *parseTree, const char *key, void *data);   // to be called in ** orSet_iterate **
+void orFunc(void *parseTree, const char *key, void *data);   // to be called in ** orSet_iterate **
 
 
 //
 
 int main(int argc, char* argv[])
 {
+
+    printf("%d \n", INT_MAX);
     // Validate arguments
     // char* pageDirectory = argv[1];
     // char* indexFileName = argv[2];
@@ -157,13 +159,13 @@ counters_t* score(set_t* orSet)
 {
 /*
     counters_t* queryScore = counters_new(free);
-    set_iterate(orSet, queryFunc, queryScore);
+    set_iterate(orSet, orFunc, queryScore);
     return queryScore;
 */
 }
 
 // to be called in ** orSet_iterate ** ---- called on each andSet
-void queryFunc(void *arg, const char *key, void *andSet)  
+void orFunc(void *arg, const char *key, void *andSet)  
 {
 /* 
     counters_t* andScore = counters_new(free);
