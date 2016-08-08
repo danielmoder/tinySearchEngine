@@ -187,24 +187,24 @@ void addFunc(void *queryScore, const int key, int count)
 // Called on each counters_t object in andSet
 // Helper iterates through andScore + 
 // takes smallest b/t andScore[key] and ctr[key]
+
 void andFunc(void *andScore, const char *key, void* ctr)              
 {
-    counters_iterate(andScore, leastFunc, ctr);
+    counters_iterate(ctr, leastFunc, andScore);
 }
 
 // called on each counterNode in andScore, passed wordCtr
-void leastFunc(void *ctr, const int key, int count)
+void leastFunc(void *andScore, const int key, int count)
 {
-
     // Returns 0 if key DNE in ctr
-    int wordCount = counters_get(ctr, key);
+    int andCount = counters_get(andScore, key);
     
-    printf("in leastFunc... WC:%d andScore Count:%d\n", wordCount, count);
-    
-    if (wordCount < count){
-        count = wordCount;
+    if (count < andCount){
+        counters_set(andScore, key, count);
     }
 }
+
+
 
 // andScore{docIDs} = UNION of docIDs in andSet
 // andScore{counts} = INT_MAX (2147483647)
