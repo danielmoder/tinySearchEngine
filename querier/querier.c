@@ -131,7 +131,7 @@ int main(int argc, char* argv[])
         // set_iterate { (counters_delete); free(set); } to free all the andSets
         
         set_t* andSet = set_new((void(*)(void *))counters_delete);
-        set_insert(orSet, "", andSet);
+        set_insert(orSet, "start", andSet);
         
         
         word = NULL;
@@ -141,7 +141,7 @@ int main(int argc, char* argv[])
             if (strcmp(word, "or") == 0){
                 printf("or found \n");
                 andSet = set_new((void(*)(void *))counters_delete);
-                set_insert(orSet, "", andSet);
+                set_insert(orSet, word, andSet);
                 continue;
             } else if (strcmp(word, "and") == 0){
                 continue;
