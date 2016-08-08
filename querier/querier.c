@@ -25,7 +25,7 @@ counters_t* score(set_t* parseTree);
 
 void andFunc(void *arg, const int key, int count);              // to be called in ** andSet_iterate **
 
-void queryFunc(void *parseTree, const char *key, void *data);   // to be called in ** querySet_iterate **
+void queryFunc(void *parseTree, const char *key, void *data);   // to be called in ** orSet_iterate **
 
 
 //
@@ -114,13 +114,13 @@ int main(int argc, char* argv[])
         }
         
         
-// PARSE__________________________________________________________(index, query array, query index) -> querySet
-        set_t* querySet = set_new(free);    
+// PARSE__________________________________________________________(index, query array, query index) -> orSet
+        set_t* orSet = set_new(free);    
         // destructor will really be something like (?)
         // set_iterate { (counters_delete); free(set); }
         
         set_t* andSet = set_new((void(*)(void *))counters_delete);
-        set_insert(querySet, "", andSet);
+        set_insert(orSet, "", andSet);
         
         
         word = NULL;
@@ -142,7 +142,7 @@ int main(int argc, char* argv[])
             } 
         }
 
-// VALIDDOCS____________________________________________________________________ (querySet) -> 
+// VALIDDOCS____________________________________________________________________ (orSet) -> 
         // validDocs/rank    (documents that satisfy the query)
 
 
@@ -153,16 +153,16 @@ int main(int argc, char* argv[])
 
 }
 
-counters_t* score(set_t* querySet)
+counters_t* score(set_t* orSet)
 {
 /*
     counters_t* queryScore = counters_new(free);
-    set_iterate(querySet, queryFunc, queryScore);
+    set_iterate(orSet, queryFunc, queryScore);
     return queryScore;
 */
 }
 
-// to be called in ** querySet_iterate ** ---- called on each andSet
+// to be called in ** orSet_iterate ** ---- called on each andSet
 void queryFunc(void *arg, const char *key, void *andSet)  
 {
 /* 
