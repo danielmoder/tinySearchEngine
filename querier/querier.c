@@ -24,7 +24,7 @@ set_t* parseQuery(char** queryArray, int arrayIdx);
 
 counters_t* score(set_t* parseTree);
 
-void ctrFunc(void *arg, const in key, int count);           // called on counters
+void ctrFunc(void *arg, const int key, int count);           // called on counters
 
 void andFunc(void *arg, const char *key, void* ctr);        // to be called on each andSet
 
