@@ -195,8 +195,11 @@ void andFunc(void *andScore, const char *key, void* ctr)
 // called on each counterNode in andScore, passed wordCtr
 void leastFunc(void *ctr, const int key, int count)
 {
+
     // Returns 0 if key DNE in ctr
     int wordCount = counters_get(ctr, key);
+    
+    printf("in leastFunc... WC:%d andScore Count:%d\n", wordCount, count);
     
     if (wordCount < count){
         count = wordCount;
