@@ -114,10 +114,10 @@ int main(int argc, char* argv[])
         // set_iterate { (counters_delete); free(set); }
         
         set_t* andSet = set_new((void(*)(void *))counters_delete);
-        set_insert(querySet, andSet);
+        set_insert(querySet, "", andSet);
         
         
-        char* word = NULL;
+        word = NULL;
         
         for (int i = 0; i < arrayIdx; i++){
             word = queryArray[i];
