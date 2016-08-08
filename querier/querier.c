@@ -36,7 +36,7 @@ void orFunc(void *parseTree, const char *key, void *data);  // to be called in o
 int main(int argc, char* argv[])
 {
 
-    printf("%d \n", INT_MAX);
+    printf(" \n");
     // Validate arguments
     // char* pageDirectory = argv[1];
     // char* indexFileName = argv[2];
@@ -81,6 +81,7 @@ int main(int argc, char* argv[])
         if (arrayIdx == 0){
             continue;
         }
+        printf("cleaned \n");
 
 // CHECKLINE________________________________________
         char* prev = queryArray[0];
@@ -117,7 +118,7 @@ int main(int argc, char* argv[])
             }
             prev = curr;
         }
-        
+        printf("check-line'd \n");
         
 // PARSE__________________________________________________________(index, query array, query index) -> orSet
         set_t* orSet = set_new(free);    
@@ -147,14 +148,15 @@ int main(int argc, char* argv[])
                 set_insert(andSet, word, ctr);
             } 
         }
-
+        printf("parsed \n");
+    
 // VALIDDOCS____________________________________________________________________ (orSet) -> 
         // validDocs/rank    (documents that satisfy the query)
         
 
 
         // output       
-    
+        set_iterate(orSet, orFunc, NULL);
     }
 
 }
