@@ -190,6 +190,9 @@ void addFunc(void *queryScore, const int key, int count)
 
 void andFunc(void *andScore, const char *key, void* ctr)              
 {
+    // This doesn't work right. fix it.
+    // (not zeroing out vals that aren't there---not checking those vals)
+    
     counters_iterate(ctr, leastFunc, andScore);
 }
 
