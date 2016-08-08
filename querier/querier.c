@@ -67,8 +67,7 @@ int main(int argc, char* argv[])
                     break;
                 }else if (word[i] < 'a' || word[i] > 'z'){
                     printf("Error: invalid character (%c)\n", word[i]);
-                    arrayIdx = 0;
-                    continue;
+                    return 1;
                 } 
                 i++;
             }
@@ -140,6 +139,7 @@ int main(int argc, char* argv[])
         for (int i = 0; i < arrayIdx; i++){
             word = queryArray[i];
             if (strcmp(word, "or") == 0){
+                printf("or found \n");
                 andSet = set_new((void(*)(void *))counters_delete);
                 set_insert(orSet, "", andSet);
                 continue;
