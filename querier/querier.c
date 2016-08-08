@@ -17,20 +17,23 @@ Daniel Moder, Summer 2016
 
 
 // Declare functions here:
-int cleanQuery(char* queryLine, char** queryArray); 
-            // will return number of items in array
+int cleanQuery(char* queryLine, char** queryArray);
 
+// Builds (set(set(counters)))
+// `---> (query(andPhrases(wordCounters)))
 set_t* parseQuery(char** queryArray, int arrayIdx);
 
+// Score() + helper iteratorFuncs
 counters_t* score(set_t* parseTree);
 
+void orFunc(void *parseTree, const char *key, void *data);
+void andFunc(void *arg, const char *key, void* ctr);
+
 void maxCtrFunc(void *andScore, const char *key, void *ctr);
+void maxCtrHelper(void* andScore, const int key, int count);
 
-void ctrFunc(void *arg, const int key, int count);           // called on counters
-
-void andFunc(void *arg, const char *key, void* ctr);        // to be called on each andSet
-
-void orFunc(void *parseTree, const char *key, void *data);  // to be called in on orSet
+void addFunc(void *queryScore, const int key, int count);
+void leastFunc(void *ctr, const int key, int count);
 
 
 
@@ -150,64 +153,68 @@ int main(int argc, char* argv[])
             } 
         }
 
-// SCORE ____________________________________________________________________ (orSet) -> 
+// SCORE ____________________________________________________________________ 
+
         counters_t* queryScore = counters_new(free);
         set_iterate(orSet, orFunc, queryScore);
+        
+        counters_iterate(queryScore, qTestFunc, NULL);
     }
-
 }
 
-counters_t* score(set_t* orSet)
-{
-/*
-    counters_t* queryScore = counters_new(free);
-    set_iterate(orSet, orFunc, queryScore);
-    
-    
-    return queryScore;
-*/
-    return NULL;
-}
+// -------------------------------------------------------------------------------------------
 
 // called on each andSet
 void orFunc(void *queryScore, const char *key, void *andSet)  
 {
-    printf("next andSet iterating...\n");
-
-        
-    
     counters_t* andScore = counters_new(free);
-    set_iterate(andSet, maxCtrFunc, andScore);
-    set_iterate(andSet, andFunc, andScore);             // build andScore
+    set_iterate(andSet, maxCtrFunc, andScore);  // MAX andScore
+    set_iterate(andSet, andFunc, andScore);     // reduce andScore
 
-    counters_iterate(andScore, addFunc, queryScore);    // update queryScore
+    // update queryScore w/ each andPhrase's score as they are calculated
+    counters_iterate(andScore, addFunc, queryScore);
 }
 
-// called on each counters_t object
-void andFunc(void *arg, const char *key, void* ctr)              
-{
-    
-
-    printf("\tin andSet, counter '%s'..\n", key);
-    counters_iterate(ctr, ctrFunc, NULL);
-}
-
-//Called on each counterNode of the andScore to be added to orScore (queryScore)
+//Called on each counterNode of the andScore to be added to queryScore
 void addFunc(void *queryScore, const int key, int count)
 {
-    qScore = counters_get(queryScore, key);
-    counters_set(queryScore, key, qScore+count);
+    int qScore = counters_get(queryScore, key);
+    qScore += count;
+    counters_set(queryScore, key, qScore);
 }
 
-// Fill andScore with (UNION of docIDs, INT_MAX counts)
-//                      `-- will be chipped
+// Called on each counters_t object in andSet
+// Helper iterates through andScore + 
+// takes smallest b/t andScore[key] and ctr[key]
+void andFunc(void *andScore, const char *key, void* ctr)              
+{
+    counters_iterate(andScore, leastFunc, ctr);
+}
+
+// called on each counterNode in andScore, passed wordCtr
+void leastFunc(void *ctr, const int key, int count)
+{
+    // Returns 0 if key DNE in ctr
+    int wordCount = counters_get(ctr, key);
+    
+    if (wordCount < count){
+        count = wordCount;
+    }
+}
+
+// andScore{docIDs} = UNION of docIDs in andSet
+// andScore{counts} = INT_MAX (2147483647)
 void maxCtrFunc(void *andScore, const char* key, void* ctr)
 {
     counters_iterate(ctr, maxCtrHelper, andScore);
 }
 
-//Called on each counterNode of andSet counters
 void maxCtrHelper(void* andScore, const int key, int count)
 {
     counters_set(andScore, key, INT_MAX);
+}
+
+void qTestFunc(void* arg, const int key, int count)
+{
+    printf("docID %d: score of %d", key, count);
 }
