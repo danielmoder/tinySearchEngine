@@ -217,5 +217,5 @@ void maxCtrHelper(void* andScore, const int key, int count)
 
 void qTestFunc(void* arg, const int key, int count)
 {
-    printf("docID %d: score of %d", key, count);
+    printf("docID %d: score of %d\n", key, count);
 }
