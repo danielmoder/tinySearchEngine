@@ -7,6 +7,7 @@ Daniel Moder, Summer 2016
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <limits.h>
 
 #include "../common/index.h"
 #include "../lib/hashtable/hashtable.h"
@@ -162,6 +163,7 @@ counters_t* score(set_t* orSet)
     set_iterate(orSet, orFunc, queryScore);
     return queryScore;
 */
+    return NULL;
 }
 
 // to be called in ** orSet_iterate ** ---- called on each andSet
