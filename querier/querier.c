@@ -35,6 +35,7 @@ void maxCtrHelper(void* andScore, const int key, int count);
 void addFunc(void *queryScore, const int key, int count);
 void leastFunc(void *ctr, const int key, int count);
 
+void qTestFunc(void* arg, const int key, int count);
 
 
 //
@@ -155,7 +156,7 @@ int main(int argc, char* argv[])
 
 // SCORE ____________________________________________________________________ 
 
-        counters_t* queryScore = counters_new(free);
+        counters_t* queryScore = counters_new();
         set_iterate(orSet, orFunc, queryScore);
         
         counters_iterate(queryScore, qTestFunc, NULL);
@@ -167,7 +168,7 @@ int main(int argc, char* argv[])
 // called on each andSet
 void orFunc(void *queryScore, const char *key, void *andSet)  
 {
-    counters_t* andScore = counters_new(free);
+    counters_t* andScore = counters_new();
     set_iterate(andSet, maxCtrFunc, andScore);  // MAX andScore
     set_iterate(andSet, andFunc, andScore);     // reduce andScore
 
