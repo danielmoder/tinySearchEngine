@@ -24,11 +24,14 @@ set_t* parseQuery(char** queryArray, int arrayIdx);
 
 counters_t* score(set_t* parseTree);
 
+void maxCtrFunc(void *andScore, const char *key, void *ctr);
+
 void ctrFunc(void *arg, const int key, int count);           // called on counters
 
 void andFunc(void *arg, const char *key, void* ctr);        // to be called on each andSet
 
 void orFunc(void *parseTree, const char *key, void *data);  // to be called in on orSet
+
 
 
 //
@@ -148,8 +151,8 @@ int main(int argc, char* argv[])
         }
 
 // SCORE ____________________________________________________________________ (orSet) -> 
-        
-        set_iterate(orSet, orFunc, NULL);
+        counters_t* queryScore = counters_new(free);
+        set_iterate(orSet, orFunc, queryScore);
     }
 
 }
@@ -159,35 +162,52 @@ counters_t* score(set_t* orSet)
 /*
     counters_t* queryScore = counters_new(free);
     set_iterate(orSet, orFunc, queryScore);
+    
+    
     return queryScore;
 */
     return NULL;
 }
 
-// to be called in ** orSet_iterate ** ---- called on each andSet
-void orFunc(void *arg, const char *key, void *andSet)  
+// called on each andSet
+void orFunc(void *queryScore, const char *key, void *andSet)  
 {
-
     printf("next andSet iterating...\n");
-    set_iterate(andSet, andFunc, NULL);
-/* 
-    counters_t* andScore = counters_new(free);
-    set_iterate(andSet, andFunc, andScore);
+
+        
     
-*/
+    counters_t* andScore = counters_new(free);
+    set_iterate(andSet, maxCtrFunc, andScore);
+    set_iterate(andSet, andFunc, andScore);             // build andScore
+
+    counters_iterate(andScore, addFunc, queryScore);    // update queryScore
 }
 
-// to be called in ** andSet_iterate **
+// called on each counters_t object
 void andFunc(void *arg, const char *key, void* ctr)              
 {
+    
+
     printf("\tin andSet, counter '%s'..\n", key);
     counters_iterate(ctr, ctrFunc, NULL);
 }
 
-void ctrFunc(void *arg, const int key, int count)
+//Called on each counterNode of the andScore to be added to orScore (queryScore)
+void addFunc(void *queryScore, const int key, int count)
 {
-    printf("\t\t%d : %d \n", key, count);
-
+    qScore = counters_get(queryScore, key);
+    counters_set(queryScore, key, qScore+count);
 }
 
+// Fill andScore with (UNION of docIDs, INT_MAX counts)
+//                      `-- will be chipped
+void maxCtrFunc(void *andScore, const char* key, void* ctr)
+{
+    counters_iterate(ctr, maxCtrHelper, andScore);
+}
 
+//Called on each counterNode of andSet counters
+void maxCtrHelper(void* andScore, const int key, int count)
+{
+    counters_set(andScore, key, INT_MAX);
+}
