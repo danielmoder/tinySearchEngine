@@ -21,6 +21,12 @@ int cleanQuery(char* queryLine, char** queryArray);
 
 set_t* parseQuery(char** queryArray, int arrayIdx);
 
+counters_t* score(set_t* parseTree);
+
+void andFunc(void *arg, const int key, int count);              // to be called in ** andSet_iterate **
+
+void queryFunc(void *parseTree, const char *key, void *data);   // to be called in ** querySet_iterate **
+
 
 //
 
@@ -110,7 +116,7 @@ int main(int argc, char* argv[])
         
 // PARSE__________________________________________________________(index, query array, query index) -> querySet
         set_t* querySet = set_new(free);    
-        // destructor will really be something like
+        // destructor will really be something like (?)
         // set_iterate { (counters_delete); free(set); }
         
         set_t* andSet = set_new((void(*)(void *))counters_delete);
@@ -145,12 +151,35 @@ int main(int argc, char* argv[])
     
     }
 
-
-
-
-
-
-
 }
+
+counters_t* score(set_t* querySet)
+{
+/*
+    counters_t* queryScore = counters_new(free);
+    set_iterate(querySet, queryFunc, queryScore);
+    return queryScore;
+*/
+}
+
+// to be called in ** querySet_iterate ** ---- called on each andSet
+void queryFunc(void *arg, const char *key, void *andSet)  
+{
+/* 
+    counters_t* andScore = counters_new(free);
+    set_iterate(andSet, andFunc, andScore);
+    
+*/
+}
+
+// to be called in ** andSet_iterate **
+void andFunc(void *andScore, const int key, int count)              
+{
+/*
+    
+*/
+}
+
+
 
 
