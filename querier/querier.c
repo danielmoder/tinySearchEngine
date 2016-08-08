@@ -81,7 +81,6 @@ int main(int argc, char* argv[])
         if (arrayIdx == 0){
             continue;
         }
-        printf("cleaned \n");
 
 // CHECKLINE________________________________________
         char* prev = queryArray[0];
@@ -118,12 +117,6 @@ int main(int argc, char* argv[])
             }
             prev = curr;
         }
-        printf("check-line'd \n");
-        printf("printing queryArray: \n");
-        
-        for(int i = 0; i < arrayIdx; i++){
-            printf("\t%s at slot %d \n", queryArray[i], i);
-        }
         
 // PARSE__________________________________________________________(index, query array, query index) -> orSet
         set_t* orSet = set_new(free);    
@@ -139,7 +132,6 @@ int main(int argc, char* argv[])
         for (int i = 0; i < arrayIdx; i++){
             word = queryArray[i];
             if (strcmp(word, "or") == 0){
-                printf("or found \n");
                 andSet = set_new((void(*)(void *))counters_delete);
                 set_insert(orSet, word, andSet);
                 continue;
@@ -154,14 +146,9 @@ int main(int argc, char* argv[])
                 set_insert(andSet, word, ctr);
             } 
         }
-        printf("parsed \n");
-    
-// VALIDDOCS____________________________________________________________________ (orSet) -> 
-        // validDocs/rank    (documents that satisfy the query)
+
+// SCORE ____________________________________________________________________ (orSet) -> 
         
-
-
-        // output       
         set_iterate(orSet, orFunc, NULL);
     }
 
@@ -193,7 +180,7 @@ void orFunc(void *arg, const char *key, void *andSet)
 // to be called in ** andSet_iterate **
 void andFunc(void *arg, const char *key, void* ctr)              
 {
-    printf("\tin andSet %s..\n", key);
+    printf("\tin andSet, counter '%s'..\n", key);
     counters_iterate(ctr, ctrFunc, NULL);
 }
 
