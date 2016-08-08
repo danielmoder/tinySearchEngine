@@ -67,7 +67,8 @@ int main(int argc, char* argv[])
                     break;
                 }else if (word[i] < 'a' || word[i] > 'z'){
                     printf("Error: invalid character (%c)\n", word[i]);
-                    return 1;
+                    arrayIdx = 0;
+                    continue;
                 } 
                 i++;
             }
