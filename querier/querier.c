@@ -318,7 +318,7 @@ int sortFunc(const void *a, const void *b)
     
     int aScore = nodeA.score;
     int aDoc = nodeA.docID;
-    printf("%d %d sorting...\n", aScore, aDoc);
+    printf("%d %d sorting...\n", *aScore, *aDoc);
     int bScore = nodeB.score;
     
     if (aScore < bScore){
