@@ -301,7 +301,7 @@ void arrayFill(void* array, const int key, int count)
 {
     if (count > 0){
         int index = 0;
-        node_t** arrayP = (node_t**) array
+        node_t** arrayP = (node_t**) array;
         
         while (arrayP[index] != NULL){
             index++;
