@@ -292,7 +292,7 @@ void arrayFill(void* array, const int key, int count)
 {
     if (count > 0){
         printf("%d, %d\n", key, count);
-        array = (node_t**) array;
+        (node_t**) array = (node_t**) array;
         
         node_t* new = malloc(sizeof(node_t*));
         new->docID = key;
