@@ -313,8 +313,8 @@ void arrayFill(void* array, const int key, int count)
 
 int sortFunc(const void *a, const void *b)
 {
-    const node_t* nodeA = (const node_t*)a;
-    const node_t* nodeB = (const node_t*)b;
+    const node_t* nodeA = *(const node_t*)a;
+    const node_t* nodeB = *(const node_t*)b;
     
     int aScore = nodeA->score;
     int bScore = nodeB->score;
