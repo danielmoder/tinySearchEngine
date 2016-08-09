@@ -190,7 +190,7 @@ int main(int argc, char* argv[])
         qsort(results, matches, sizeof(node_t), sortFunc);
         
         char* directory = "../data/output";
-        results -= matches; 
+        results -= (sizeof(node_t) * matches);
         
         for (int i = 0; i < matches; i++){
             node_t current = results[i];
@@ -299,7 +299,7 @@ void arrayFill(void* array, const int key, int count)
         new->score = count;
         
         *(node_t*)array = *new;
-        array = array + 1;
+        array = array + sizeof(node_t);
     }
 }
 
