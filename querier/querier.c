@@ -292,11 +292,11 @@ void arrayFill(void* array, const int key, int count)
 {
     if (count > 0){
         printf("%d, %d\n", key, count);
-        node_t new = malloc(sizeof(node_t));
-        new.docID = key;
-        new.score = count;
+        node_t* new = malloc(sizeof(node_t*));
+        new->docID = key;
+        new->score = count;
         
-        *array = new;
+        *(node_t*)array = *new;
         array = array + sizeof(node_t);
     }
 }
