@@ -44,8 +44,6 @@ void matchCount(void* matches, const int key, int count);
 
 int main(int argc, char* argv[])
 {
-
-    printf(" \n");
     // Validate arguments
     // char* pageDirectory = argv[1];
     // char* indexFileName = argv[2];
@@ -60,7 +58,7 @@ int main(int argc, char* argv[])
     char* query;
     // read-in loop
     while ( fgets(queryLine, sizeof(queryLine), stdin) != NULL){
-        query = queryLine;
+        printf(queryLine);
         const int arraySize = 50;
         char* queryArray[arraySize];
         
