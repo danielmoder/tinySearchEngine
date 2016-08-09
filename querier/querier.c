@@ -183,11 +183,11 @@ int main(int argc, char* argv[])
         }
         
         node_t** results = malloc(sizeof(node_t*) * matches);
-        printf("address in results = %p\n", *results);
+        printf("address in results = %p\n", (void*)*results);
         printf("sizeof node_t* = %d\n", (int)sizeof(node_t*));
         
         counters_iterate(queryScore, arrayFill, results);
-        printf("address in results = %p\n", *results);
+        printf("address in results = %p\n", (void*)*results);
         
         results -= matches;
         
