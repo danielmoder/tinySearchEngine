@@ -249,7 +249,7 @@ void maxCtrHelper(void* andScore, const int key, int count)
 void matchCount(void* matches, const int key, int count)
 {
     if (count > 0){
-        (int) (long) matches++;
+        (int) (long) matches = (int) (long) matches + 1;
     }
 }
 
