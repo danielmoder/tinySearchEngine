@@ -55,14 +55,16 @@ int main(int argc, char* argv[])
 //              (this would also solve the array size problem for tokened input)
     
     char queryLine[100];
-    char* query;
     // read-in loop
     while ( fgets(queryLine, sizeof(queryLine), stdin) != NULL){
+        char* queryCopy = malloc(strlen(queryLine)+1);
+        strcpy(queryCopy, queryLine);
+        
         printf(queryLine);
         const int arraySize = 50;
         char* queryArray[arraySize];
         
-// CLEAN________________________________________
+// CLEAN________________________________________(queryLine, queryArray)
         int arrayIdx = 0;
         char* word = strtok(queryLine, " ");
         
@@ -162,7 +164,7 @@ int main(int argc, char* argv[])
         set_iterate(orSet, orFunc, queryScore);
 
 // OUTPUT ___________________________________________________________________
-        printf("Query: %s\n", query);
+        printf("Query: %s\n", queryCopy);
         
         counters_t* matches = counters_new();
         
