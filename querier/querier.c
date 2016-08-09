@@ -37,6 +37,7 @@ void addFunc(void *queryScore, const int key, int count);
 void leastFunc(void *ctr, const int key, int count);
 
 void qTestFunc(void* arg, const int key, int count);
+void matchCount(void* matches, const int key, int count);
 
 
 //
@@ -159,14 +160,32 @@ int main(int argc, char* argv[])
 
         counters_t* queryScore = counters_new();
         set_iterate(orSet, orFunc, queryScore);
+
+// OUTPUT ___________________________________________________________________
+        printf("Query: %s\n", queryLine);
         
-        counters_iterate(queryScore, qTestFunc, NULL);
+        int matches = 0;
+        counters_iterate(queryScore, matchCount, matches);
+        if (matches == 0){
+            printf("No documents matched\n");
+            continue;
+        }
+        
+        // taking "../data/output" as page directory
+        
+        
+        counters_iterate(queryScore, qTestFunc, index);
     }
 }
 
 // -------------------------------------------------------------------------------------------
 
-// called on each andSet
+
+
+
+
+// Called on each andSet
+// Accumulates queryScore as andScores are determined
 void orFunc(void *queryScore, const char *key, void *andSet)  
 {
     counters_t* andScore = counters_new();
@@ -177,7 +196,8 @@ void orFunc(void *queryScore, const char *key, void *andSet)
     counters_iterate(andScore, addFunc, queryScore);
 }
 
-//Called on each counterNode of the andScore to be added to queryScore
+// Called on each counterNode of the andScore to be added to queryScore
+// Adds documents' andScores to queryScore
 void addFunc(void *queryScore, const int key, int count)
 {
     int qScore = counters_get(queryScore, key);
@@ -185,25 +205,22 @@ void addFunc(void *queryScore, const int key, int count)
     counters_set(queryScore, key, qScore);
 }
 
-// Called on each counters_t object in andSet
-// Helper iterates through andScore + 
-// takes smallest b/t andScore[key] and ctr[key]
 
+// Called on each counters_t object in andSet (wordCounters)
+//      andHelp makes wordCounter domain match andScore domain
+//      leastFunc takes smaller b/t andScore[key] and ctr[key]
 void andFunc(void *andScore, const char *key, void* ctr)              
 {
     counters_iterate(andScore, andHelp, ctr);
     counters_iterate(ctr, leastFunc, andScore);
 }
 
-// Makes domain (docIDs) of wordCounters same as andScore
-// Sets to zero if not there previously
 void andHelp(void *ctr, const int key, int count)
 {
     int val = counters_get(ctr, key);
     counters_set(ctr, key, val);
 }
 
-// Iterate through wordCounter (filled domain), replace val in andScore if <
 void leastFunc(void *andScore, const int key, int count)
 {
     int andCount = counters_get(andScore, key);
@@ -213,20 +230,41 @@ void leastFunc(void *andScore, const int key, int count)
 }
 
 
-
-// andScore{docIDs} = UNION of docIDs in andSet
-// andScore{counts} = INT_MAX (2147483647)
+// Sets the contents of andScore as follows:
+//      domain(docIDs) = UNION of docIDs in andSet
+//      range(counts) = INT_MAX (2147483647)
 void maxCtrFunc(void *andScore, const char* key, void* ctr)
 {
     counters_iterate(ctr, maxCtrHelper, andScore);
 }
 
+// Helper to above
 void maxCtrHelper(void* andScore, const int key, int count)
 {
     counters_set(andScore, key, INT_MAX);
 }
 
-void qTestFunc(void* arg, const int key, int count)
+// Called on each node of queryScore
+// If score > 0 (match), increment matches
+void matchCount(void* matches, const int key, int count)
 {
-    printf("docID %d: score of %d\n", key, count);
+    if (count > 0){
+        matches++;
+    }
+}
+
+
+void qTestFunc(void* , const int key, int count)
+{
+    if (count > 0){
+        char filepath[64];
+        sprintf(filepath, "%s%s%d", "../data/output", "/", key);
+        
+        FILE* fp = fopen(filepath, "r");
+        if (fp != NULL){
+            char URL[64];
+            fgets(URL, strlen(URL), fp);
+            printf("docID %d: score of %d. URL = %s\n", key, count, URL);
+        }
+    }
 }
