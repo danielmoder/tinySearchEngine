@@ -317,8 +317,6 @@ int sortFunc(const void *a, const void *b)
     const node_t* nodeB = *(node_t * const *)b;
     
     int aScore = nodeA->score;
-    int aDoc = nodeA->docID;
-    printf("%d %d sorting...\n", aScore, aDoc);
     int bScore = nodeB->score;
     
     if (aScore < bScore){
