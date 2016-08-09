@@ -14,7 +14,11 @@ Daniel Moder, Summer 2016
 #include "../lib/set/set.h"
 #include "../lib/counters/counters.h"
 
-
+typedef struct node
+{
+    int docID;
+    int score;
+}node_t;
 
 // Declare functions here:
 int cleanQuery(char* queryLine, char** queryArray);
@@ -38,6 +42,8 @@ void leastFunc(void *ctr, const int key, int count);
 
 void qTestFunc(void* arg, const int key, int count);
 void matchCount(void* matches, const int key, int count);
+void arrayFill(void* array, const int key, int count);
+int sortFunc(const void *a, const void *b);
 
 
 //
@@ -164,19 +170,42 @@ int main(int argc, char* argv[])
 
 // OUTPUT ___________________________________________________________________
         printf("Query: %s\n", queryCopy);
+        free(queryCopy);
         
-        counters_t* matches = counters_new();
+        counters_t* matchesCounter = counters_new();
+        counters_iterate(queryScore, matchCount, matchesCounter);
+        int matches = counters_get(matchesCounter, 0);
         
-        counters_iterate(queryScore, matchCount, matches);
-        if ( counters_get(matches, 0) == 0){
+        if ( matches == 0){
             printf("No documents matched\n");
             continue;
         }
         
-        // taking "../data/output" as page directory
+        node_t* results = malloc(sizeof(node_t) * matches);
+        node_t* resultsCopy = results;
+        counters_iterate(queryScore, arrayFill, resultsCopy);
+        qsort(results, matches, sizeof(node_t), sortFunc);
         
         char* directory = "../data/output";
-        counters_iterate(queryScore, qTestFunc, directory);
+        
+        for (int i = 0; i < matches; i++){
+            int key = results[i]->docID;
+            int count = result[i]->score;
+            
+            char filepath[128];
+            sprintf(filepath, "%s%s%d", directory, "/", key);
+        
+            FILE* fp = fopen(filepath, "r");
+            if (fp != NULL){
+                char URL[128];
+                fgets(URL, 128, fp);
+                printf("docID %d: score of %d. URL = %s\n", key, count, URL);
+            }
+        }
+        
+        // taking "../data/output" as page directory
+        
+        //counters_iterate(queryScore, qTestFunc, directory);
     }
 }
 
@@ -248,24 +277,46 @@ void maxCtrHelper(void* andScore, const int key, int count)
 
 // Called on each node of queryScore
 // If score > 0 (match), increment matches
-void matchCount(void* matches, const int key, int count)
+void matchCount(void* matchesCounter, const int key, int count)
 {
     if (count > 0){
-        counters_add(matches, 0);
+        counters_add(matchesCounter, 0);
     }
 }
 
+// Called on each item of queryScore
+// fills array with (docID, score) nodes
+void arrayFill(void* array, const int key, int count)
+{
+    if (count > 0){
+        node_t* new = malloc(sizeof(node_t));
+        *array = new;
+        *array += sizeof(node_t);
+    }
+}
+
+int sortFunc(const void *a, const void *b)
+{
+    node_t nodeA = *(const node_t *)a;
+    node_t nodeB = *(const node_t *)b;
+    
+    if (nodeA->score < nodeB->score){
+        return 1;
+    } else if (nodeA->score < nodeB->score){
+        return -1;
+    } return 0;
+}
 
 void qTestFunc(void* directory, const int key, int count)
 {
     if (count > 0){
-        char filepath[64];
+        char filepath[128];
         sprintf(filepath, "%s%s%d", (char*)directory, "/", key);
         
         FILE* fp = fopen(filepath, "r");
         if (fp != NULL){
-            char URL[64];
-            fgets(URL, 64, fp);
+            char URL[128];
+            fgets(URL, 128, fp);
             printf("docID %d: score of %d. URL = %s\n", key, count, URL);
         }
     }
