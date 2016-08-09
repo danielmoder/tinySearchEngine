@@ -57,8 +57,10 @@ int main(int argc, char* argv[])
 //              (this would also solve the array size problem for tokened input)
     
     char queryLine[100];
+    char* query;
     // read-in loop
     while ( fgets(queryLine, sizeof(queryLine), stdin) != NULL){
+        query = queryLine;
         const int arraySize = 50;
         char* queryArray[arraySize];
         
@@ -162,10 +164,10 @@ int main(int argc, char* argv[])
         set_iterate(orSet, orFunc, queryScore);
 
 // OUTPUT ___________________________________________________________________
-        printf("Query: %s\n", queryLine);
+        printf("Query: %s\n", query);
         
-        int* matches = 0;
-        counters_iterate(queryScore, matchCount, matches);
+        int matches = 0;
+        counters_iterate(queryScore, matchCount, &matches);
         if (matches == 0){
             printf("No documents matched\n");
             continue;
@@ -249,7 +251,7 @@ void maxCtrHelper(void* andScore, const int key, int count)
 void matchCount(void* matches, const int key, int count)
 {
     if (count > 0){
-        matches = (char*)matches + 1;
+        matches++;
     }
 }
 
