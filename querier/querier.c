@@ -183,13 +183,12 @@ int main(int argc, char* argv[])
         }
         
         node_t** results = malloc(sizeof(node_t*) * matches);
-        printf("address in results = %p\n", (void*)*results);
-        printf("sizeof node_t* = %d\n", (int)sizeof(node_t*));
+        for (int i = 0; i < matches; i++){
+            results[i] = NULL;
+        }
         
         counters_iterate(queryScore, arrayFill, results);
         printf("address in results = %p\n", (void*)*results);
-        
-        results -= matches;
         
         qsort(results, matches, sizeof(node_t), sortFunc);
         
@@ -301,14 +300,16 @@ void matchCount(void* matchesCounter, const int key, int count)
 void arrayFill(void* array, const int key, int count)
 {
     if (count > 0){
-        printf("%d, %d\n", key, count);
+        int index = 0;
+        while (array[index] != NULL){
+            index++;
+        }
         
         node_t* new = malloc(sizeof(node_t*));
         new->docID = key;
         new->score = count;
         
-        array = &new;
-        array = (node_t**)array + 1;
+        array[i] = new;
     }
 }
 
