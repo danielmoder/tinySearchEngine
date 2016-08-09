@@ -183,7 +183,7 @@ int main(int argc, char* argv[])
         
         node_t** results = malloc(sizeof(node_t*) * matches);
         counters_iterate(queryScore, arrayFill, results);
-        results -= matches; 
+        results -= (matches - 1);
         
         qsort(results, matches, sizeof(node_t), sortFunc);
         
