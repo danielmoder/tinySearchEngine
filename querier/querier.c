@@ -28,6 +28,7 @@ counters_t* score(set_t* parseTree);
 
 void orFunc(void *parseTree, const char *key, void *data);
 void andFunc(void *arg, const char *key, void* ctr);
+void andHelp(void *ctr, const int key, int count);
 
 void maxCtrFunc(void *andScore, const char *key, void *ctr);
 void maxCtrHelper(void* andScore, const int key, int count);
@@ -190,18 +191,22 @@ void addFunc(void *queryScore, const int key, int count)
 
 void andFunc(void *andScore, const char *key, void* ctr)              
 {
-    // This doesn't work right. fix it.
-    // (not zeroing out vals that aren't there---not checking those vals)
-    
+    counters_iterate(andScore, andHelp, ctr);
     counters_iterate(ctr, leastFunc, andScore);
 }
 
-// called on each counterNode in andScore, passed wordCtr
+// Makes domain (docIDs) of wordCounters same as andScore
+// Sets to zero if not there previously
+void andHelp(void *ctr, const int key, int count)
+{
+    int val = counters_get(ctr, key);
+    counters_set(ctr, key, val);
+}
+
+// Iterate through wordCounter (filled domain), replace val in andScore if <
 void leastFunc(void *andScore, const int key, int count)
 {
-    // Returns 0 if key DNE in ctr
     int andCount = counters_get(andScore, key);
-    
     if (count < andCount){
         counters_set(andScore, key, count);
     }
