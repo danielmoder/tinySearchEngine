@@ -184,6 +184,9 @@ int main(int argc, char* argv[])
         node_t* results = malloc(sizeof(node_t) * matches);
         node_t* resultsCopy = results;
         counters_iterate(queryScore, arrayFill, resultsCopy);
+        
+        
+        
         qsort(results, matches, sizeof(node_t), sortFunc);
         
         char* directory = "../data/output";
@@ -191,7 +194,7 @@ int main(int argc, char* argv[])
         for (int i = 0; i < matches; i++){
             node_t current = results[i];
             int key = current.docID;
-            int count = current.score;
+            int score = current.score;
             
             char filepath[128];
             sprintf(filepath, "%s%s%d", directory, "/", key);
@@ -200,7 +203,7 @@ int main(int argc, char* argv[])
             if (fp != NULL){
                 char URL[128];
                 fgets(URL, 128, fp);
-                printf("docID %d: score of %d. URL = %s\n", key, count, URL);
+                printf("docID %d: score of %d. URL = %s\n", key, score, URL);
             }
         }
         
@@ -291,6 +294,9 @@ void arrayFill(void* array, const int key, int count)
 {
     if (count > 0){
         node_t* new = malloc(sizeof(node_t));
+        new->docID = key;
+        new->score = count;
+        
         *(node_t*)array = *new;
         array = array + 1;
     }
