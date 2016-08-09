@@ -296,7 +296,7 @@ void arrayFill(void* array, const int key, int count)
         new->docID = key;
         new->score = count;
         
-        *(node_t*)array = *new;
+        *(node_t*)array = new;
         array = array + sizeof(node_t);
     }
 }
