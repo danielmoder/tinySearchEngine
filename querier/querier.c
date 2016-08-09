@@ -313,8 +313,8 @@ void arrayFill(void* array, const int key, int count)
 
 int sortFunc(const void *a, const void *b)
 {
-    node_t* nodeA = (const node_t*)a;
-    node_t* nodeB = (const node_t*)b;
+    const node_t* nodeA = (const node_t*)a;
+    const node_t* nodeB = (const node_t*)b;
     
     int aScore = nodeA->score;
     int bScore = nodeB->score;
@@ -324,19 +324,4 @@ int sortFunc(const void *a, const void *b)
     } else if (aScore > bScore){
         return -1;
     } return 0;
-}
-
-void qTestFunc(void* directory, const int key, int count)
-{
-    if (count > 0){
-        char filepath[128];
-        sprintf(filepath, "%s%s%d", (char*)directory, "/", key);
-        
-        FILE* fp = fopen(filepath, "r");
-        if (fp != NULL){
-            char URL[128];
-            fgets(URL, 128, fp);
-            printf("docID %d: score of %d. URL = %s\n", key, count, URL);
-        }
-    }
 }
