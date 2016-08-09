@@ -175,6 +175,7 @@ int main(int argc, char* argv[])
         counters_t* matchesCounter = counters_new();
         counters_iterate(queryScore, matchCount, matchesCounter);
         int matches = counters_get(matchesCounter, 0);
+        printf("matches: %d\n", matches);
         
         if ( matches == 0){
             printf("No documents matched\n");
@@ -183,7 +184,8 @@ int main(int argc, char* argv[])
         
         node_t** results = malloc(sizeof(node_t*) * matches);
         counters_iterate(queryScore, arrayFill, results);
-        results -= (matches - 1);
+        printf("made it out alive from arrayFill iter\n");
+        results -= matches;
         
         qsort(results, matches, sizeof(node_t), sortFunc);
         
