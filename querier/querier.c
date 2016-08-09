@@ -192,7 +192,11 @@ int main(int argc, char* argv[])
         char* directory = "../data/output";
         
         for (int i = 0; i < matches; i++){
+            printf("trying to access *(results+%d)\n", i);
+            
             node_t* current = *(results + i);
+            
+            printf("trying to access internals of *(results+%d)\n", i);
             int key = current->docID;
             int score = current->score;
             
