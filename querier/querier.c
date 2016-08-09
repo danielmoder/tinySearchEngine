@@ -313,15 +313,15 @@ void arrayFill(void* array, const int key, int count)
 
 int sortFunc(const void *a, const void *b)
 {
-    node_t nodeA = *(const node_t*)a;
-    node_t nodeB = *(const node_t*)b;
+    node_t* nodeA = (const node_t*)a;
+    node_t* nodeB = (const node_t*)b;
     
-    int aScore = nodeA.score;
-    int bScore = nodeB.score;
+    int aScore = nodeA->score;
+    int bScore = nodeB->score;
     
     if (aScore < bScore){
         return 1;
-    } else if (aScore < bScore){
+    } else if (aScore > bScore){
         return -1;
     } return 0;
 }
