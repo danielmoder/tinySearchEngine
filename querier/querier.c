@@ -301,7 +301,7 @@ void arrayFill(void* array, const int key, int count)
 {
     if (count > 0){
         int index = 0;
-        while (array[index] != NULL){
+        while ((node_t**)array[index] != NULL){
             index++;
         }
         
@@ -309,7 +309,7 @@ void arrayFill(void* array, const int key, int count)
         new->docID = key;
         new->score = count;
         
-        array[i] = new;
+        array[index] = new;
     }
 }
 
