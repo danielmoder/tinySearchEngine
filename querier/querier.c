@@ -183,11 +183,11 @@ int main(int argc, char* argv[])
         
         node_t** results = malloc(sizeof(node_t*) * matches);
         counters_iterate(queryScore, arrayFill, results);
+        results -= matches; 
         
         qsort(results, matches, sizeof(node_t), sortFunc);
         
         char* directory = "../data/output";
-        results -= matches;
         
         for (int i = 0; i < matches; i++){
             node_t* current = *(results + i);
