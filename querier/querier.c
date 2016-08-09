@@ -164,8 +164,8 @@ int main(int argc, char* argv[])
 // OUTPUT ___________________________________________________________________
         printf("Query: %s\n", queryLine);
         
-        int matches = 0;
-        counters_iterate(queryScore, matchCount, (void*) (long) matches);
+        int* matches = 0;
+        counters_iterate(queryScore, matchCount, matches);
         if (matches == 0){
             printf("No documents matched\n");
             continue;
@@ -173,8 +173,8 @@ int main(int argc, char* argv[])
         
         // taking "../data/output" as page directory
         
-        
-        counters_iterate(queryScore, qTestFunc, index);
+        char** directory = "../data/output";
+        counters_iterate(queryScore, qTestFunc, directory);
     }
 }
 
@@ -249,16 +249,16 @@ void maxCtrHelper(void* andScore, const int key, int count)
 void matchCount(void* matches, const int key, int count)
 {
     if (count > 0){
-        (int) (long) matches = (int) (long) matches + 1;
+        *matches++;
     }
 }
 
 
-void qTestFunc(void* , const int key, int count)
+void qTestFunc(void* directory, const int key, int count)
 {
     if (count > 0){
         char filepath[64];
-        sprintf(filepath, "%s%s%d", "../data/output", "/", key);
+        sprintf(filepath, "%s%s%d", directory, "/", key);
         
         FILE* fp = fopen(filepath, "r");
         if (fp != NULL){
