@@ -166,9 +166,10 @@ int main(int argc, char* argv[])
 // OUTPUT ___________________________________________________________________
         printf("Query: %s\n", query);
         
-        int matches = 0;
-        counters_iterate(queryScore, matchCount, &matches);
-        if (matches == 0){
+        counters_t* matches = counters_new();
+        
+        counters_iterate(queryScore, matchCount, matches);
+        if ( counters_get(matches, 0) == 0){
             printf("No documents matched\n");
             continue;
         }
@@ -251,7 +252,7 @@ void maxCtrHelper(void* andScore, const int key, int count)
 void matchCount(void* matches, const int key, int count)
 {
     if (count > 0){
-        matches++;
+        counters_add(matches, 0);
     }
 }
 
