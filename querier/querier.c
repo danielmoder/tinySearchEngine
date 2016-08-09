@@ -190,8 +190,8 @@ int main(int argc, char* argv[])
         
         for (int i = 0; i < matches; i++){
             node_t current = results[i];
-            int key = current->docID;
-            int count = current->score;
+            int key = current.docID;
+            int count = current.score;
             
             char filepath[128];
             sprintf(filepath, "%s%s%d", directory, "/", key);
@@ -291,8 +291,8 @@ void arrayFill(void* array, const int key, int count)
 {
     if (count > 0){
         node_t* new = malloc(sizeof(node_t));
-        *(node_t*)array = new;
-        array += sizeof(node_t);
+        *(node_t*)array = *new;
+        (node_t*)array += sizeof(node_t);
     }
 }
 
@@ -301,8 +301,8 @@ int sortFunc(const void *a, const void *b)
     node_t nodeA = *(const node_t*)a;
     node_t nodeB = *(const node_t*)b;
     
-    int aScore = nodeA->score;
-    int bScore = nodeB->score;
+    int aScore = nodeA.score;
+    int bScore = nodeB.score;
     
     if (aScore < bScore){
         return 1;
