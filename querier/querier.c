@@ -175,8 +175,7 @@ int main(int argc, char* argv[])
         counters_t* matchesCounter = counters_new();
         counters_iterate(queryScore, matchCount, matchesCounter);
         int matches = counters_get(matchesCounter, 0);
-        printf("matches: %d\n", matches);
-        
+
         if ( matches == 0){
             printf("No documents matched\n");
             continue;
@@ -188,18 +187,15 @@ int main(int argc, char* argv[])
         }
         
         counters_iterate(queryScore, arrayFill, results);
-        printf("address in results = %p\n", (void*)*results);
-        
+
         qsort(results, matches, sizeof(node_t), sortFunc);
         
         char* directory = "../data/output";
         
         for (int i = 0; i < matches; i++){
-            printf("trying to access *(results+%d)\n", i);
-            
+
             node_t* current = *(results + i);
             
-            printf("trying to access internals of *(results+%d)\n", i);
             int key = current->docID;
             int score = current->score;
             
