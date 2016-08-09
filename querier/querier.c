@@ -60,7 +60,6 @@ int main(int argc, char* argv[])
         char* queryCopy = malloc(strlen(queryLine)+1);
         strcpy(queryCopy, queryLine);
         
-        printf(queryLine);
         const int arraySize = 50;
         char* queryArray[arraySize];
         
@@ -266,7 +265,7 @@ void qTestFunc(void* directory, const int key, int count)
         FILE* fp = fopen(filepath, "r");
         if (fp != NULL){
             char URL[64];
-            fgets(URL, strlen(URL), fp);
+            fgets(URL, 64, fp);
             printf("docID %d: score of %d. URL = %s\n", key, count, URL);
         }
     }
