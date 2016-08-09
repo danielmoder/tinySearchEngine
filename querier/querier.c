@@ -182,10 +182,7 @@ int main(int argc, char* argv[])
         }
         
         node_t* results = malloc(sizeof(node_t) * matches);
-        node_t* resultsCopy = results;
-        counters_iterate(queryScore, arrayFill, resultsCopy);
-        
-        
+        counters_iterate(queryScore, arrayFill, results);
         
         qsort(results, matches, sizeof(node_t), sortFunc);
         
@@ -294,6 +291,7 @@ void matchCount(void* matchesCounter, const int key, int count)
 void arrayFill(void* array, const int key, int count)
 {
     if (count > 0){
+        printf("%d, %d\n", key, count);
         node_t* new = malloc(sizeof(node_t));
         new->docID = key;
         new->score = count;
