@@ -188,7 +188,7 @@ int main(int argc, char* argv[])
         
         counters_iterate(queryScore, arrayFill, results);
 
-        qsort(results, matches, sizeof(node_t), sortFunc);
+        qsort(results, matches, sizeof(node_t*), sortFunc);
         
         char* directory = "../data/output";
         
