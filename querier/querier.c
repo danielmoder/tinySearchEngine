@@ -183,8 +183,12 @@ int main(int argc, char* argv[])
         }
         
         node_t** results = malloc(sizeof(node_t*) * matches);
+        printf("address in results = %p\n", results);
+        printf("sizeof node_t* = %d\n", sizeof(node_t*));
+        
         counters_iterate(queryScore, arrayFill, results);
-        printf("made it out alive from arrayFill iter\n");
+        printf("address in results = %p\n", results);
+        
         results -= matches;
         
         qsort(results, matches, sizeof(node_t), sortFunc);
