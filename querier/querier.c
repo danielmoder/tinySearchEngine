@@ -181,7 +181,7 @@ int main(int argc, char* argv[])
             continue;
         }
         
-        node_t* results = malloc(sizeof(node_t) * matches);
+        node_t results[matches] = malloc(sizeof(node_t) * matches);
         node_t* resultsCopy = results;
         counters_iterate(queryScore, arrayFill, resultsCopy);
         qsort(results, matches, sizeof(node_t), sortFunc);
@@ -292,7 +292,7 @@ void arrayFill(void* array, const int key, int count)
     if (count > 0){
         node_t* new = malloc(sizeof(node_t));
         *(node_t*)array = *new;
-        (node_t*)array += sizeof(node_t);
+        (node_t*)array = array + 1;
     }
 }
 
