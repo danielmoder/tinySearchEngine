@@ -202,7 +202,7 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
     set_t* orSet = set_new((void(*)(void *))set_delete);
     
     // set to represent first andPhrase
-    set_t* andSet = set_new((void(*)(void *))counters_delete);
+    set_t* andSet = set_new(NULL);
     set_insert(orSet, "start", andSet);
     
     char* word;
