@@ -281,10 +281,12 @@ void output(char* queryCopy, counters_t* queryScore)
             char URL[128];
             fgets(URL, 128, fp);
             printf("docID %d: score of %d. URL = %s\n", key, score, URL);
+            
+            fclose(fp);
         }
         free(current);
     }
-    fclose(fp);
+
     free(results);
     counters_delete(matchesCounter);
 }
