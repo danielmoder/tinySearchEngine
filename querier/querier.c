@@ -27,6 +27,9 @@ int cleanQuery(char* queryLine, char** queryArray);
 // `---> (query(andPhrases(wordCounters)))
 set_t* parseQuery(char** queryArray, int arrayIdx);
 
+
+
+
 // Score() + helper iteratorFuncs
 counters_t* score(set_t* parseTree);
 
@@ -46,8 +49,6 @@ void arrayFill(void* array, const int key, int count);
 int sortFunc(const void *a, const void *b);
 
 
-//
-
 int main(int argc, char* argv[])
 {
     // Validate arguments
@@ -63,6 +64,8 @@ int main(int argc, char* argv[])
     char queryLine[100];
     // read-in loop
     while ( fgets(queryLine, sizeof(queryLine), stdin) != NULL){
+    
+        // copy for output
         char* queryCopy = malloc(strlen(queryLine)+1);
         strcpy(queryCopy, queryLine);
         
@@ -70,6 +73,13 @@ int main(int argc, char* argv[])
         char* queryArray[arraySize];
         
 // CLEAN________________________________________(queryLine, queryArray)
+
+        int arrayIdx = cleanQuery(queryLine, queryArray);
+        if (arrayIdx == -1){
+            continue;
+        }
+        
+/*
         int arrayIdx = 0;
         char* word = strtok(queryLine, " ");
         
@@ -97,6 +107,7 @@ int main(int argc, char* argv[])
         if (arrayIdx == 0){
             continue;
         }
+*/
 
 // CHECKLINE________________________________________
         char* prev = queryArray[0];
@@ -217,6 +228,67 @@ int main(int argc, char* argv[])
 }
 
 // -------------------------------------------------------------------------------------------
+
+/*
+Function: normalize characters, determine validity of query
+Parameters: char* queryLine, user's line from stdin
+            char** queryArray, array to be filled word by word with query
+Returns: index of array upon success (# words + 1), -1 upon invalid input
+*/
+
+int cleanQuery(char* queryLine, char** queryArray)
+{
+    int arrayIdx = 0;
+    
+    // get word, space delimited
+    char* word = strtok(queryLine, " ");
+    
+    // loop until end of query
+    while ( word != NULL){
+        int i = 0;
+        
+        // loop until end of word
+        while (word[i] != '\0'){
+            word[i] = tolower(word[i]);
+            
+            // remove new line @ end of line, replace w null + end
+            if (word[i] == '\n'){
+                word[i] = '\0';
+                break;
+                
+            // if non-alpha character, failure
+            }else if (word[i] < 'a' || word[i] > 'z'){
+                printf("Error: invalid character (%c)\n", word[i]);
+                return -1;
+            } 
+            i++;
+        }
+        queryArray[arrayIdx] = word;
+        arrayIdx++;
+        
+        word = strtok(NULL, " ");
+    }
+    if (arrayIdx == 0){
+        return -1;
+    }
+    
+    return (arrayIdx);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
