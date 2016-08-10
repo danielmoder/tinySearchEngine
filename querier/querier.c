@@ -291,7 +291,7 @@ void output(char* queryCopy, counters_t* queryScore)
 // HELPER FUNCTIONS_____________________________________________________________
 
 // Called on each node in to-be-copied counters
-counters_t* ctrCopy(void* ctr, const int key, int count)
+void ctrCopy(void* ctr, const int key, int count)
 {
     counters_set(ctr, key, count);
 }
