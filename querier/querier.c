@@ -23,6 +23,9 @@ typedef struct node
 
 // Functions called in main():
 
+void show(void* arg, const char* key, void* data);
+
+
 int cleanQuery(char* queryLine, char** queryArray);
 bool checkLine(char** queryArray, int arrayIdx);
 set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index);
@@ -84,6 +87,7 @@ int main(int argc, char* argv[])
         }
         
         set_t* orSet = parseQuery(queryArray, arrayIdx, index);
+        set_iterate(orSet, show, NULL);
         
         counters_t* queryScore = counters_new();
         set_iterate(orSet, orFunc, queryScore);
@@ -404,3 +408,18 @@ int sortFunc(const void *a, const void *b)
         return -1;
     } return 0;
 }
+
+
+
+void show(void* arg, const char* key, void* data)
+{
+    printf("keyword = %s\n", key);
+}
+
+
+
+
+
+
+
+
