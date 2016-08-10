@@ -224,7 +224,7 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
         // signals end of one andPhrase, start of next
         if (strcmp(word, "or") == 0){
             andSet = set_new((void(*)(void *))counters_delete);
-            set_insert(orSet, (char*)setNum, andSet);
+            set_insert(orSet, (char*)(long)setNum, andSet);
             setNum++;
             continue;
         
