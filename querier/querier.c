@@ -21,20 +21,18 @@ typedef struct node
     int score;
 }node_t;
 
-// Declare functions here:
+// Functions called in main():
 
 int cleanQuery(char* queryLine, char** queryArray);
-
 bool checkLine(char** queryArray, int arrayIdx);
-
-// Builds (set(set(counters)))
-// `---> (query(andPhrases(wordCounters)))
 set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index);
-
-// Score() + helper iteratorFuncs
 counters_t* score(set_t* parseTree);
+void output(char* queryCopy, counters_t* queryScore);
+
+// Helper Functions:
 
 void orFunc(void *parseTree, const char *key, void *data);
+
 void andFunc(void *arg, const char *key, void* ctr);
 void andHelp(void *ctr, const int key, int count);
 
@@ -59,8 +57,7 @@ int main(int argc, char* argv[])
     // Load index from argv
     index_t* index = index_load("../indexer/indexFile");
 
-// ASSUMPTION: inLine cannot be greater than 100 characters
-//              (this would also solve the array size problem for tokened input)
+// ASSUMPTION: query cannot be greater than 99 characters
     
     char queryLine[100];
     // read-in loop
@@ -70,101 +67,27 @@ int main(int argc, char* argv[])
         char* queryCopy = malloc(strlen(queryLine)+1);
         strcpy(queryCopy, queryLine);
         
-        const int arraySize = 50;
+        // if all words were single chars, num Words would not exceed len/2
+        const int arraySize = (strlen(queryLine)/2);
         char* queryArray[arraySize];
         
-// CLEAN________________________________________(queryLine, queryArray)
-
         int arrayIdx = cleanQuery(queryLine, queryArray);
         
         if (arrayIdx == -1){
+            // clean up
             continue;
         } else if (! checkLine(queryArray, arrayIdx)){
+            // clean up
             continue;
         }
-
-
-// PARSE__________________________________________________________(index, query array, query index) -> orSet
-       set_t* orSet = parseQuery(queryArray, arrayIdx, index);
-/*       
-        set_t* orSet = set_new(free);    
-        // destructor will really be (?)
         
-        set_t* andSet = set_new((void(*)(void *))counters_delete);
-        set_insert(orSet, "start", andSet);
+        set_t* orSet = parseQuery(queryArray, arrayIdx, index);
         
-        
-        char* word = NULL;
-        
-        for (int i = 0; i < arrayIdx; i++){
-            word = queryArray[i];
-            if (strcmp(word, "or") == 0){
-                andSet = set_new((void(*)(void *))counters_delete);
-                set_insert(orSet, word, andSet);
-                continue;
-            } else if (strcmp(word, "and") == 0){
-                continue;
-            }
-            
-            // what if index does not have value for word?
-            // check if ctr == null in RANK (if so, = 0)
-            counters_t* ctr = index_find(index, word);
-            if (ctr != NULL){
-                set_insert(andSet, word, ctr);
-            } 
-        }
-        */
-
-// SCORE ____________________________________________________________________ 
-
         counters_t* queryScore = counters_new();
         set_iterate(orSet, orFunc, queryScore);
 
-// OUTPUT ___________________________________________________________________
-        printf("Query: %s\n", queryCopy);
-        free(queryCopy);
-        
-        counters_t* matchesCounter = counters_new();
-        counters_iterate(queryScore, matchCount, matchesCounter);
-        int matches = counters_get(matchesCounter, 0);
-
-        if ( matches == 0){
-            printf("No documents matched\n");
-            continue;
-        }
-        
-        node_t** results = malloc(sizeof(node_t*) * matches);
-        for (int i = 0; i < matches; i++){
-            results[i] = NULL;
-        }
-        
-        counters_iterate(queryScore, arrayFill, results);
-
-        qsort(results, matches, sizeof(node_t*), sortFunc);
-        
-        char* directory = "../data/output";
-        
-        for (int i = 0; i < matches; i++){
-
-            node_t* current = *(results + i);
-            
-            int key = current->docID;
-            int score = current->score;
-            
-            char filepath[128];
-            sprintf(filepath, "%s%s%d", directory, "/", key);
-        
-            FILE* fp = fopen(filepath, "r");
-            if (fp != NULL){
-                char URL[128];
-                fgets(URL, 128, fp);
-                printf("docID %d: score of %d. URL = %s\n", key, score, URL);
-            }
-        }
-        
-        // taking "../data/output" as page directory
-        
-        //counters_iterate(queryScore, qTestFunc, directory);
+        output(char* queryCopy, counters_t* queryScore);
+        // clean up this round
     }
 }
 
@@ -310,8 +233,49 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
 }
 
 
+void output(char* queryCopy, counters_t* queryScore)
+{
+    printf("Query: %s\n", queryCopy);
+    free(queryCopy);
+    
+    counters_t* matchesCounter = counters_new();
+    counters_iterate(queryScore, matchCount, matchesCounter);
+    int matches = counters_get(matchesCounter, 0);
 
+    if ( matches == 0){
+        printf("No documents matched\n");
+    }
+    
+    node_t** results = malloc(sizeof(node_t*) * matches);
+    for (int i = 0; i < matches; i++){
+        results[i] = NULL;
+    }
+    
+    counters_iterate(queryScore, arrayFill, results);
 
+    qsort(results, matches, sizeof(node_t*), sortFunc);
+    
+    char* directory = "../data/output";
+    
+    for (int i = 0; i < matches; i++){
+
+        node_t* current = *(results + i);
+        
+        int key = current->docID;
+        int score = current->score;
+        
+        char filepath[128];
+        sprintf(filepath, "%s%s%d", directory, "/", key);
+    
+        FILE* fp = fopen(filepath, "r");
+        if (fp != NULL){
+            char URL[128];
+            fgets(URL, 128, fp);
+            printf("docID %d: score of %d. URL = %s\n", key, score, URL);
+        }
+    }
+    // clean up
+}
 
 
 
