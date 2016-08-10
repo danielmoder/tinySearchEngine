@@ -4,7 +4,6 @@ A search engine query program
 Daniel Moder, Summer 2016
 */
 
-#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -225,7 +224,7 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
         // signals end of one andPhrase, start of next
         if (strcmp(word, "or") == 0){
             andSet = set_new((void(*)(void *))counters_delete);
-            set_insert(orSet, itoa(setNum), andSet);
+            set_insert(orSet, (char*)setNum, andSet);
             setNum++;
             continue;
         
