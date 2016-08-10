@@ -29,6 +29,9 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index);
 counters_t* score(set_t* parseTree);
 void output(char* queryCopy, counters_t* queryScore);
 
+//parse() helpers:
+counters_t* ctrCopy(void* ctr, const int key, int count);
+
 // score() helpers:
 void orFunc(void *parseTree, const char *key, void *data);
 void andFunc(void *arg, const char *key, void* ctr);
@@ -203,7 +206,7 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
 {
     // set to represent orPhrase (the whole query)
     // only free the sets, not counters (index will do that, as they are not copies)
-    set_t* orSet = set_new(set_delete);
+    set_t* orSet = set_new((void(*)(void *))set_delete);
     
     // set to represent first andPhrase
     set_t* andSet = set_new((void(*)(void *))counters_delete);
@@ -226,13 +229,15 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
         
         // will == NULL if word DNE in index
         counters_t* ctr = index_find(index, word);
-
+        counters_t* copy = counters_new();
+        
         if (ctr == NULL){
             printf("Warning: word '%s' not found in index\n", word);
-            ctr = counters_new();
-        } 
+        } else {
+            counters_iterate(ctr, ctrCopy, copy);
+        }
         
-        set_insert(andSet, word, ctr);
+        set_insert(andSet, word, copy);
     }
     return orSet;
 }
@@ -284,6 +289,13 @@ void output(char* queryCopy, counters_t* queryScore)
 }
 
 // HELPER FUNCTIONS_____________________________________________________________
+
+// Called on each node in to-be-copied counters
+counters_t* ctrCopy(void* ctr, const int key, int count)
+{
+    counters_set(ctr, key, count);
+}
+
 
 // Called on each andSet
 // Accumulates queryScore as andScores are calculated
