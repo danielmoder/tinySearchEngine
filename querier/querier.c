@@ -154,7 +154,7 @@ int main(int argc, char* argv[])
         set_insert(orSet, "start", andSet);
         
         
-        word = NULL;
+        char* word = NULL;
         
         for (int i = 0; i < arrayIdx; i++){
             word = queryArray[i];
