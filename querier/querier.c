@@ -30,7 +30,7 @@ counters_t* score(set_t* parseTree);
 void output(char* queryCopy, counters_t* queryScore);
 
 //parse() helpers:
-counters_t* ctrCopy(void* ctr, const int key, int count);
+void ctrCopy(void* ctr, const int key, int count);
 
 // score() helpers:
 void orFunc(void *parseTree, const char *key, void *data);
