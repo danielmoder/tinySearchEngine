@@ -24,7 +24,7 @@ typedef struct node
 // Declare functions here:
 int cleanQuery(char* queryLine, char** queryArray);
 
-
+bool checkLine(char** queryArray, int arrayIdx);
 
 // Builds (set(set(counters)))
 // `---> (query(andPhrases(wordCounters)))
@@ -78,6 +78,7 @@ int main(int argc, char* argv[])
 // CLEAN________________________________________(queryLine, queryArray)
 
         int arrayIdx = cleanQuery(queryLine, queryArray);
+        
         if (arrayIdx == -1){
             continue;
         }
@@ -85,7 +86,7 @@ int main(int argc, char* argv[])
 
 // CHECKLINE________________________________________(queryArray)
 
-        if (! checkLine(queryArray)){
+        if (! checkLine(queryArray, arrayIdx)){
             continue;
         }
 /*
@@ -260,7 +261,7 @@ Parameters: char** queryArray, the user input in an array
 Returns: true if valid, false if invalid
 */
 
-bool checkLine(char** queryArray)
+bool checkLine(char** queryArray, int arrayIdx)
 {
     char* first = queryArray[0];
     char* last = queryArray[(arrayIdx-1)];
