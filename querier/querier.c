@@ -222,17 +222,13 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
         
         // will == NULL if word DNE in index
         counters_t* ctr = index_find(index, word);
-        
-        counters_t* copy = counters_new();
-        
+
         if (ctr == NULL){
             printf("Warning: word '%s' not found in index\n", word);
-        } else {
-            copy->key = ctr->key;
-            copy->count = ctr->count;
-        }
+            ctr = counters_new();
+        } 
         
-        set_insert(andSet, word, copy);
+        set_insert(andSet, word, ctr);
     }
     return orSet;
 }
