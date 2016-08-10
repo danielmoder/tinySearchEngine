@@ -265,11 +265,11 @@ bool checkLine(char** queryArray)
     char* first = queryArray[0];
     char* last = queryArray[(arrayIdx-1)];
     
-    if (strcmp(prev, "and") == 0){
+    if (strcmp(first, "and") == 0){
         printf("Error: invalid query\n");
         return false;
     }
-    if (strcmp(prev, "or") == 0){
+    if (strcmp(first, "or") == 0){
         printf("Error: invalid query\n");
         return false;
     }
