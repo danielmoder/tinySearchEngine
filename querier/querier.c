@@ -29,20 +29,18 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index);
 counters_t* score(set_t* parseTree);
 void output(char* queryCopy, counters_t* queryScore);
 
-// Helper Functions:
-
+// score() helpers:
 void orFunc(void *parseTree, const char *key, void *data);
-
 void andFunc(void *arg, const char *key, void* ctr);
 void andHelp(void *ctr, const int key, int count);
 
 void maxCtrFunc(void *andScore, const char *key, void *ctr);
 void maxCtrHelper(void* andScore, const int key, int count);
 
-void addFunc(void *queryScore, const int key, int count);
-void leastFunc(void *ctr, const int key, int count);
+void addFunc(void *queryScore, const int key, int count);       // union
+void leastFunc(void *ctr, const int key, int count);            // intersection
 
-void qTestFunc(void* arg, const int key, int count);
+// output() helpers:
 void matchCount(void* matches, const int key, int count);
 void arrayFill(void* array, const int key, int count);
 int sortFunc(const void *a, const void *b);
@@ -63,7 +61,7 @@ int main(int argc, char* argv[])
     // read-in loop
     while ( fgets(queryLine, sizeof(queryLine), stdin) != NULL){
     
-        // copy for output
+        // copy query for output (original changed by strtok())
         char* queryCopy = malloc(strlen(queryLine)+1);
         strcpy(queryCopy, queryLine);
         
@@ -74,10 +72,10 @@ int main(int argc, char* argv[])
         int arrayIdx = cleanQuery(queryLine, queryArray);
         
         if (arrayIdx == -1){
-            // clean up
+            free(queryCopy);
             continue;
         } else if (! checkLine(queryArray, arrayIdx)){
-            // clean up
+            free(queryCopy);
             continue;
         }
         
@@ -85,10 +83,14 @@ int main(int argc, char* argv[])
         
         counters_t* queryScore = counters_new();
         set_iterate(orSet, orFunc, queryScore);
-
+        
         output(queryCopy, queryScore);
-        // clean up this round
+        
+        free(queryCopy);
+        set_delete(orSet);
+        counters_delete(queryScore);
     }
+    index_delete(index);
 }
 
 // -------------------------------------------------------------------------------------------
@@ -135,13 +137,12 @@ int cleanQuery(char* queryLine, char** queryArray)
     if (arrayIdx == 0){
         return -1;
     }
-    
     return (arrayIdx);
 }
 
 /*
 Function: check for leading and adjacent operator keywords
-Parameters: char** queryArray, the user input in an array
+Parameters: char** queryArray, array of words from user input
 Returns: true if valid, false if invalid
 */
 
@@ -198,7 +199,7 @@ Returns: set_t* representing the query parsed as described above
 set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
 {
     // set to represent orPhrase (the whole query)
-    set_t* orSet = set_new(free);
+    set_t* orSet = set_new((void(*)(void *))set_delete);
     
     // set to represent first andPhrase
     set_t* andSet = set_new((void(*)(void *))counters_delete);
@@ -236,8 +237,7 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
 void output(char* queryCopy, counters_t* queryScore)
 {
     printf("Query: %s\n", queryCopy);
-    free(queryCopy);
-    
+
     counters_t* matchesCounter = counters_new();
     counters_iterate(queryScore, matchCount, matchesCounter);
     int matches = counters_get(matchesCounter, 0);
@@ -273,28 +273,25 @@ void output(char* queryCopy, counters_t* queryScore)
             fgets(URL, 128, fp);
             printf("docID %d: score of %d. URL = %s\n", key, score, URL);
         }
+        free(current);
     }
-    // clean up
+    free(results);
 }
 
-
-
-
-
-
-
-
+// HELPER FUNCTIONS_____________________________________________________________
 
 // Called on each andSet
-// Accumulates queryScore as andScores are determined
+// Accumulates queryScore as andScores are calculated
 void orFunc(void *queryScore, const char *key, void *andSet)  
 {
     counters_t* andScore = counters_new();
+    
     set_iterate(andSet, maxCtrFunc, andScore);  // MAX andScore
     set_iterate(andSet, andFunc, andScore);     // reduce andScore
-
+    
     // update queryScore w/ each andPhrase's score as they are calculated
     counters_iterate(andScore, addFunc, queryScore);
+    counters_delete(andScore);
 }
 
 // Called on each counterNode of the andScore to be added to queryScore
