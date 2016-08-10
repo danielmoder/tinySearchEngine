@@ -284,6 +284,7 @@ void output(char* queryCopy, counters_t* queryScore)
         }
         free(current);
     }
+    fclose(fp);
     free(results);
     counters_delete(matchesCounter);
 }
