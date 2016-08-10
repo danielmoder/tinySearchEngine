@@ -22,16 +22,14 @@ typedef struct node
 }node_t;
 
 // Declare functions here:
+
 int cleanQuery(char* queryLine, char** queryArray);
 
 bool checkLine(char** queryArray, int arrayIdx);
 
 // Builds (set(set(counters)))
 // `---> (query(andPhrases(wordCounters)))
-set_t* parseQuery(char** queryArray, int arrayIdx);
-
-
-
+set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index);
 
 // Score() + helper iteratorFuncs
 counters_t* score(set_t* parseTree);
@@ -81,54 +79,16 @@ int main(int argc, char* argv[])
         
         if (arrayIdx == -1){
             continue;
+        } else if (! checkLine(queryArray, arrayIdx)){
+            continue;
         }
 
 
-// CHECKLINE________________________________________(queryArray)
-
-        if (! checkLine(queryArray, arrayIdx)){
-            continue;
-        }
-/*
-        char* prev = queryArray[0];
-        char* curr;
-
-        // check for leading/trailing and/or
-        char* last = queryArray[(arrayIdx-1)];
-        if (strcmp(prev, "and") == 0){
-            printf("Error: invalid query\n");
-            continue;
-        }
-        if (strcmp(prev, "or") == 0){
-            printf("Error: invalid query\n");
-            continue;
-        }
-        if (strcmp(last, "and") == 0){
-            printf("Error: invalid query\n");
-            continue;
-        }
-        if (strcmp(last, "or") == 0){
-            printf("Error: invalid query\n");
-            continue;
-        }
-        
-        // once over (check for aa/ao/oa/oo)
-        for (int i = 1; i < arrayIdx; i++){
-            curr = queryArray[i];
-            
-            if ( ((strcmp(curr, "and") == 0) || (strcmp(curr, "or") == 0)) &&
-                 ((strcmp(prev, "and") == 0) || (strcmp(prev, "or") == 0)) ) {
-                
-                printf("Error: invalid query\n");
-                continue;
-            }
-            prev = curr;
-        }
-        */
 // PARSE__________________________________________________________(index, query array, query index) -> orSet
+       set_t* orSet = parseQuery(queryArray, arrayIdx, index);
+/*       
         set_t* orSet = set_new(free);    
-        // destructor will really be something like (?)
-        // set_iterate { (counters_delete); free(set); } to free all the andSets
+        // destructor will really be (?)
         
         set_t* andSet = set_new((void(*)(void *))counters_delete);
         set_insert(orSet, "start", andSet);
@@ -153,6 +113,7 @@ int main(int argc, char* argv[])
                 set_insert(andSet, word, ctr);
             } 
         }
+        */
 
 // SCORE ____________________________________________________________________ 
 
@@ -302,8 +263,47 @@ bool checkLine(char** queryArray, int arrayIdx)
 }
 
 
+/*
+Function:
+Parameters:
+Returns:
+*/
 
+set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
+{
+    // set to represent orPhrase (the whole query)
+    set_t* orSet = set_new(free);
+    
+    // set to represent first andPhrase
+    set_t* andSet = set_new((void(*)(void *))counters_delete);
+    set_insert(orSet, "start", andSet);
+    
+    char* word;
+    for (int i = 0; i < arrayIdx; i++){
+        word = queryArray[i];
+        
+        // signals end of one andPhrase, start of next
+        if (strcmp(word, "or") == 0){
+            andSet = set_new((void(*)(void *))counters_delete);
+            set_insert(orSet, word, andSet);
+            continue;
+        
+        // 'and's are meaningless
+        } else if (strcmp(word, "and") == 0){
+            continue;
+        }
+        
+        // will == NULL if word DNE in index
+        counters_t* ctr = index_find(index, word);
 
+        if (ctr == NULL){
+            printf("Warning: word '%s' not found in index\n", word);
+            ctr = counters_new();
+        } 
+        
+        set_insert(andSet, word, ctr);
+    }
+}
 
 
 
