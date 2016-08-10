@@ -8,6 +8,7 @@ Daniel Moder, Summer 2016
 #include <string.h>
 #include <ctype.h>
 #include <limits.h>
+#include <stdbool.h>
 
 #include "../common/index.h"
 #include "../lib/hashtable/hashtable.h"
@@ -22,6 +23,8 @@ typedef struct node
 
 // Declare functions here:
 int cleanQuery(char* queryLine, char** queryArray);
+
+
 
 // Builds (set(set(counters)))
 // `---> (query(andPhrases(wordCounters)))
@@ -78,38 +81,14 @@ int main(int argc, char* argv[])
         if (arrayIdx == -1){
             continue;
         }
-        
-/*
-        int arrayIdx = 0;
-        char* word = strtok(queryLine, " ");
-        
-        while ( word != NULL){ // get all words in query
-        
-            int i = 0;
-            while (word[i] != '\0'){
-                word[i] = tolower(word[i]);
-                if (word[i] == '\n'){
-                    word[i] = '\0';
-                    break;
-                }else if (word[i] < 'a' || word[i] > 'z'){
-                    printf("Error: invalid character (%c)\n", word[i]);
-                    return 1;
-                } 
-                i++;
-            }
-            queryArray[arrayIdx] = word;
-            arrayIdx++;
-            
-            word = strtok(NULL, " ");
-        }
-        // return (arrayIdx);
-        
-        if (arrayIdx == 0){
+
+
+// CHECKLINE________________________________________(queryArray)
+
+        if (! checkLine(queryArray)){
             continue;
         }
-*/
-
-// CHECKLINE________________________________________
+/*
         char* prev = queryArray[0];
         char* curr;
 
@@ -132,7 +111,7 @@ int main(int argc, char* argv[])
             continue;
         }
         
-        // preliminary run-through (check for aa/ao/oa/oo)
+        // once over (check for aa/ao/oa/oo)
         for (int i = 1; i < arrayIdx; i++){
             curr = queryArray[i];
             
@@ -144,7 +123,7 @@ int main(int argc, char* argv[])
             }
             prev = curr;
         }
-        
+        */
 // PARSE__________________________________________________________(index, query array, query index) -> orSet
         set_t* orSet = set_new(free);    
         // destructor will really be something like (?)
@@ -275,8 +254,51 @@ int cleanQuery(char* queryLine, char** queryArray)
     return (arrayIdx);
 }
 
+/*
+Function: check for leading and adjacent operator keywords
+Parameters: char** queryArray, the user input in an array
+Returns: true if valid, false if invalid
+*/
 
-
+bool checkLine(char** queryArray)
+{
+    char* first = queryArray[0];
+    char* last = queryArray[(arrayIdx-1)];
+    
+    if (strcmp(prev, "and") == 0){
+        printf("Error: invalid query\n");
+        return false;
+    }
+    if (strcmp(prev, "or") == 0){
+        printf("Error: invalid query\n");
+        return false;
+    }
+    if (strcmp(last, "and") == 0){
+        printf("Error: invalid query\n");
+        return false;
+    }
+    if (strcmp(last, "or") == 0){
+        printf("Error: invalid query\n");
+        return false;
+    }
+    
+    char* prev = queryArray[0];
+    char* curr;
+    
+    // once-over, checking for aa/ao/oa/oo
+    for (int i = 1; i < arrayIdx; i++){
+        curr = queryArray[i];
+        
+        if ( ((strcmp(curr, "and") == 0) || (strcmp(curr, "or") == 0)) &&
+             ((strcmp(prev, "and") == 0) || (strcmp(prev, "or") == 0)) ) {
+            
+            printf("Error: invalid query\n");
+            return false;
+        }
+        prev = curr;
+    }
+    return true;
+}
 
 
 
