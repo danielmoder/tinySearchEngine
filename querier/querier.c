@@ -90,6 +90,9 @@ int main(int argc, char* argv[])
         set_delete(orSet);
         counters_delete(queryScore);
     }
+// ********************************
+// right now, the counters that are used in orSet are being freed with that
+// 
     index_delete(index);
 }
 
@@ -199,10 +202,11 @@ Returns: set_t* representing the query parsed as described above
 set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
 {
     // set to represent orPhrase (the whole query)
-    set_t* orSet = set_new((void(*)(void *))set_delete);
+    // only free the sets, not counters (index will do that, as they are not copies)
+    set_t* orSet = set_new(free);
     
     // set to represent first andPhrase
-    set_t* andSet = set_new((void(*)(void *))counters_delete);
+    set_t* andSet = set_new(free); // delete should never be called on andSets
     set_insert(orSet, "start", andSet);
     
     char* word;
