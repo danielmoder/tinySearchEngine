@@ -213,6 +213,7 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
     char* word;
     for (int i = 0; i < arrayIdx; i++){
         word = queryArray[i];
+        printf("%s at index %d\n", word, arrayIdx);
         
         // signals end of one andPhrase, start of next
         if (strcmp(word, "or") == 0){
