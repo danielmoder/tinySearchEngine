@@ -86,7 +86,7 @@ int main(int argc, char* argv[])
         counters_t* queryScore = counters_new();
         set_iterate(orSet, orFunc, queryScore);
 
-        output(char* queryCopy, counters_t* queryScore);
+        output(queryCopy, queryScore);
         // clean up this round
     }
 }
