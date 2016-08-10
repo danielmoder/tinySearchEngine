@@ -264,9 +264,12 @@ bool checkLine(char** queryArray, int arrayIdx)
 
 
 /*
-Function:
-Parameters:
-Returns:
+Function: parses queryArray into tree or orPhrases and andPhrases:
+    (OrP (AndP word1:ctrs word2:ctrs) (AndP word3:ctrs word4:ctrs))
+Parameters: char** queryArray, array of words from user input
+            int arrayIdx, index of first empty slot
+            index_t* index, index loaded from indexFile parameter
+Returns: set_t* representing the query parsed as described above
 */
 
 set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
@@ -303,6 +306,7 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
         
         set_insert(andSet, word, ctr);
     }
+    return orSet;
 }
 
 
