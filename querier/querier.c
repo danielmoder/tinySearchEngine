@@ -4,6 +4,7 @@ A search engine query program
 Daniel Moder, Summer 2016
 */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
