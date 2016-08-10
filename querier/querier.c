@@ -55,12 +55,14 @@ int main(int argc, char* argv[])
     // char* pageDirectory = argv[1];
     // char* indexFileName = argv[2];
     
-    // Load index from argv
+    // Load index from argv[2]
     index_t* index = index_load("../indexer/indexFile");
 
-// ASSUMPTION: query cannot be greater than 99 characters
+// ASSUMPTION: query cannot be greater than 199 characters
+// (no more will be read)
     
-    char queryLine[100];
+    char queryLine[200];
+    
     // read-in loop
     while ( fgets(queryLine, sizeof(queryLine), stdin) != NULL){
     
@@ -68,7 +70,6 @@ int main(int argc, char* argv[])
         char* queryCopy = malloc(strlen(queryLine)+1);
         strcpy(queryCopy, queryLine);
         
-        // if all words were single chars, num Words would not exceed len/2
         const int arraySize = (strlen(queryLine)/2);
         char* queryArray[arraySize];
         
@@ -93,9 +94,6 @@ int main(int argc, char* argv[])
         set_delete(orSet);
         counters_delete(queryScore);
     }
-// ********************************
-// right now, the counters that are used in orSet are being freed with
-// orSet delete AND index_delete
     index_delete(index);
 }
 
