@@ -4,7 +4,13 @@
 
 ---
 #### Functionality:
->   **querier.c** 
+>   **querier.c** takes a crawler directory and an index file as command-line 
+arguments, and queries from the user. It will return a list of the documents
+from the crawler directory that match the query.
+
+**Query syntax:**
+
+
 
 
 ---
@@ -15,7 +21,7 @@
 ---
 #### Usage examples
 `./querier ../data/output ../data/indexFile.txt`
-> `dartmouth college or computer science`
+> `> dartmouth college or computer science`
 
 ---
 #### Assumptions
@@ -25,6 +31,8 @@ same format. (see crawler for more info)
 (see indexer for more info)
 3. Query cannot be longer than 199 characters. Any characters beyond the 199th
 will be ignored.
+4. The query cannot contain non-alphabetic characters, cannot begin or end with
+'and'/'or', and cannot contain adjacent 'and'/'or's
 
 ---
 #### "Non-assumptions"
