@@ -15,8 +15,8 @@ The indexer shall:
 - build an inverted-index data structure mapping from words to (documentID, count) pairs, wherein each count represents the number of occurrences of the given word in the given document. Ignore words with fewer than three characters, and NormalizeWord before indexing.
     create a file indexFilename and write the index to that file, in the format described below.
 - The indexer shall validate its command-line arguments:
-`pageDirectory` is a directory produced by the crawler (see below), and
-`indexFilename` is the name of a writeable file.
+> `pageDirectory` is a directory produced by the crawler (see below), and
+> `indexFilename` is the name of a writeable file.
 
 The indexer may assume that:
 - pageDirectory has files named 0, 1, 2, 3, …, without gaps.
