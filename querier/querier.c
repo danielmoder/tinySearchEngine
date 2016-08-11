@@ -9,6 +9,7 @@ Daniel Moder, Summer 2016
 #include <ctype.h>
 #include <limits.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 #include "../common/index.h"
 #include "../lib/hashtable/hashtable.h"
@@ -60,7 +61,7 @@ int sortFunc(const void *a, const void *b);
 
 int main(int argc, char* argv[])
 {
-    if (! validateArgs(int argc, char* argv[])){
+    if (! validateArgs(argc, argv[])){
         return -1;
     }
 
