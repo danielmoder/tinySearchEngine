@@ -2,7 +2,7 @@
 
 *Daniel Moder, August 2016*
 
-Testing was done using `./test.sh`.
+Testing was done using `test.sh`.
 
 It inputs the following test queries to `querier`: 
 
@@ -20,4 +20,4 @@ It inputs the following test queries to `querier`:
 
 (from ~/data/testQueries.txt)
 
-
+Run this test using `./test.sh`.
