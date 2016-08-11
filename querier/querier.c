@@ -215,6 +215,8 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
     set_insert(orSet, "start", andSet);
     
     char* word;
+    char* key = "a";
+    const char* x = "x";
     
     for (int i = 0; i < arrayIdx; i++){
         word = queryArray[i];
@@ -223,7 +225,8 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
         // signals end of one andPhrase, start of next
         if (strcmp(word, "or") == 0){
             andSet = set_new((void(*)(void *))counters_delete);
-            set_insert(orSet, queryArray[i-1], andSet);
+            set_insert(orSet, key, andSet);
+            strcat(key,x);
             continue;
         
         // 'and's are meaningless
