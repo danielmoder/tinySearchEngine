@@ -20,6 +20,7 @@ otherwise, rank the resulting set of documents according to its score, as descri
 The querier shall validate its command-line arguments:
 
 > `pageDirectory` is a directory produced by the crawler, and
+> 
 > `indexFilename` is the name of a readable file.
 The querier may assume that the input directory and files follow the designated formats.
 
