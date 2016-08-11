@@ -4,12 +4,17 @@
 
 ---
 #### Functionality:
->   **querier.c** takes a crawler directory and an index file as command-line 
+> **querier.c** takes a crawler directory and an index file as command-line 
 arguments, and queries from the user. It will return a list of the documents
-from the crawler directory that match the query.
+from the crawler directory that match the query and scores assigned to them
+based on counts of matching words.
 
-**Query syntax:**
-
+> **Query syntax:**
+> The queries will be handled as a series of phrases separated by 'or'.
+Documents will be said to be "matching" for one of these phrases only if they 
+contain each word in the phrase. Documents that match at least one phrase, but
+not every phrase, will still match, but documents that match more phrases will
+have a higher score.
 
 
 
@@ -21,7 +26,7 @@ from the crawler directory that match the query.
 ---
 #### Usage examples
 `./querier ../data/output ../data/indexFile.txt`
-> `> dartmouth college or computer science`
+`> dartmouth college or computer science`
 
 ---
 #### Assumptions
