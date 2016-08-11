@@ -61,7 +61,7 @@ int sortFunc(const void *a, const void *b);
 
 int main(int argc, char* argv[])
 {
-    if (! validateArgs(argc, argv[])){
+    if (! validateArgs(argc, argv)){
         return -1;
     }
 
