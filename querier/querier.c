@@ -52,6 +52,9 @@ void arrayFill(void* array, const int key, int count);
 int sortFunc(const void *a, const void *b);
 
 
+// Global Vars:
+const int MAX_QUERY_LEN = 200;
+
 int main(int argc, char* argv[])
 {
     // Validate arguments
@@ -64,16 +67,16 @@ int main(int argc, char* argv[])
 // ASSUMPTION: query cannot be greater than 199 characters
 // (no more will be read)
     
-    char queryLine[200];
+    char queryLine[MAX_QUERY_LEN];
     
     // read-in loop
-    while ( fgets(queryLine, sizeof(queryLine), stdin) != NULL){
+    while ( fgets(queryLine, MAX_QUERY_LEN, stdin) != NULL){
     
         // copy query for output (original changed by strtok())
         char* queryCopy = malloc(strlen(queryLine)+1);
         strcpy(queryCopy, queryLine);
         
-        const int arraySize = (strlen(queryLine)/2);
+        const int arraySize = (MAX_QUERY_LEN/2);
         char* queryArray[arraySize];
         
         int arrayIdx = cleanQuery(queryLine, queryArray);
@@ -87,7 +90,10 @@ int main(int argc, char* argv[])
         }
         
         set_t* orSet = parseQuery(queryArray, arrayIdx, index);
+        
+        // FOR DEBUGGING ONLY
         set_iterate(orSet, show, NULL);
+        // ******************
         
         counters_t* queryScore = counters_new();
         set_iterate(orSet, orFunc, queryScore);
@@ -215,7 +221,7 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
     set_insert(orSet, "start", andSet);
     
     char* word;
-    char key[arrayIdx] = "";
+    char key[MAX_QUERY_LEN/5] = "";
     const char* x = "x";
     
     for (int i = 0; i < arrayIdx; i++){
@@ -250,7 +256,7 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
     return orSet;
 }
 
-
+// Will also take directory as parameter
 void output(char* queryCopy, counters_t* queryScore)
 {
     printf("Query: %s\n", queryCopy);
@@ -287,7 +293,7 @@ void output(char* queryCopy, counters_t* queryScore)
         FILE* fp = fopen(filepath, "r");
         if (fp != NULL){
             char URL[128];
-            fgets(URL, 128, fp);
+            fgets(URL, sizeof(URL), fp);
             printf("docID %d: score of %d. URL = %s\n", key, score, URL);
             
             fclose(fp);
