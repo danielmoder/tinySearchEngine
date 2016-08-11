@@ -290,7 +290,7 @@ void output(char* queryCopy, counters_t* queryScore, char* directory)
     int matches = counters_get(matchesCounter, 0);
 
     if ( matches == 0){
-        printf("No documents matched\n");
+        printf("No documents matched\n\n");
     }
     
     node_t** results = malloc(sizeof(node_t*) * matches);
