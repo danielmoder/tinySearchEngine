@@ -215,7 +215,7 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
     set_insert(orSet, "start", andSet);
     
     char* word;
-    char key[arrayIdx];
+    char key[arrayIdx] = "";
     const char* x = "x";
     
     for (int i = 0; i < arrayIdx; i++){
