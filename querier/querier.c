@@ -22,15 +22,18 @@ typedef struct node
 }node_t;
 
 // Functions called in main():
-
-void show(void* arg, const char* key, void* data);
-
+bool validateArgs(int argc, char* argv[]);
 
 int cleanQuery(char* queryLine, char** queryArray);
+
 bool checkLine(char** queryArray, int arrayIdx);
+
 set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index);
+
 counters_t* score(set_t* parseTree);
-void output(char* queryCopy, counters_t* queryScore);
+
+void output(char* queryCopy, counters_t* queryScore, char* directory);
+
 
 //parse() helpers:
 void ctrCopy(void* ctr, const int key, int count);
@@ -52,21 +55,25 @@ void arrayFill(void* array, const int key, int count);
 int sortFunc(const void *a, const void *b);
 
 
-// Global Vars:
+// Global var macros:
 #define MAX_QUERY_LEN 200
 
 int main(int argc, char* argv[])
 {
-    // Validate arguments
-    // char* pageDirectory = argv[1];
-    // char* indexFileName = argv[2];
+    if (! validateArgs(int argc, char* argv[])){
+        return -1;
+    }
+
+    char* pageDirectory = argv[1];
+    char* indexFileName = argv[2];
     
     // Load index from argv[2]
-    index_t* index = index_load("../indexer/indexFile");
+    index_t* index = index_load(indexFileName);
 
 // ASSUMPTION: query cannot be greater than 199 characters
 // (no more will be read)
-    
+// Other tidbit -- "warning" with misspelled/non-indexed words
+
     char queryLine[MAX_QUERY_LEN];
     
     // read-in loop
@@ -91,23 +98,40 @@ int main(int argc, char* argv[])
         
         set_t* orSet = parseQuery(queryArray, arrayIdx, index);
         
-        // FOR DEBUGGING ONLY
-        set_iterate(orSet, show, NULL);
-        // ******************
-        
         counters_t* queryScore = counters_new();
         set_iterate(orSet, orFunc, queryScore);
         
-        output(queryCopy, queryScore);
+        output(queryCopy, queryScore, pageDirectory);
         
         free(queryCopy);
         set_delete(orSet);
         counters_delete(queryScore);
     }
     index_delete(index);
+    return 0;
 }
 
 // -------------------------------------------------------------------------------------------
+
+bool validateArgs(int argc, char* argv[])
+{
+  if (argc != 3){
+    printf("Error: querier takes exactly 2 arguments\n");
+    return false;
+    
+  } else if ( access(argv[1], R_OK) == -1){
+    printf("Error: could not find readable directory: %s\n", argv[1]);
+    return false;
+    
+  } else if ( access(argv[2], R_OK) == -1){
+    printf("Error: could not find readable file: %s\n", argv[2]);
+    return false;
+
+  } else {
+    return true;
+  }
+}
+
 
 /*
 Function: normalize characters, determine validity of query
@@ -226,8 +250,7 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
     
     for (int i = 0; i < arrayIdx; i++){
         word = queryArray[i];
-        printf("%s at index %d\n", word, i);
-        
+
         // signals end of one andPhrase, start of next
         if (strcmp(word, "or") == 0){
             andSet = set_new((void(*)(void *))counters_delete);
@@ -257,7 +280,7 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
 }
 
 // Will also take directory as parameter
-void output(char* queryCopy, counters_t* queryScore)
+void output(char* queryCopy, counters_t* queryScore, char* directory)
 {
     printf("Query: %s\n", queryCopy);
 
@@ -278,7 +301,7 @@ void output(char* queryCopy, counters_t* queryScore)
 
     qsort(results, matches, sizeof(node_t*), sortFunc);
     
-    char* directory = "../data/output";
+    //char* directory = "../data/output";
     
     for (int i = 0; i < matches; i++){
 
