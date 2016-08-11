@@ -12,9 +12,9 @@ $(LIB): $(OBJS)
 # add other targets for the other .o files
 
 file.o: file.h
-index.o: index.h 
+index.o: index.h ../lib/hashtable/hashtable.h ../lib/hashtable/jhash.h ../lib/set/set.h
 web.o: web.h
-webpage.o: webpage.h
+webpage.o: webpage.h ../lib/memory/memory.h
 word.o: word.h
 
 # add cleanup commands for other subdirectories

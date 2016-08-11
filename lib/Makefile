@@ -10,7 +10,7 @@ B = bag
 M = memory
 
 
-OBJS = $M/memory.o $B/bag.o $C/counters.o $S/set.o $H/hashtable.o
+OBJS = $M/memory.o $B/bag.o $C/counters.o $S/set.o $H/hashtable.o $H/jhash.o
 LIB = cs50ds.a
 
 CFLAGS = -Wall -pedantic -std=c11 -ggdb -I$H -I$S -I$C -I$B -I$M
@@ -24,15 +24,17 @@ $(LIB): $(OBJS)
 
 
 memory.o: memory.h
-	cd memory; $(MAKE)
+	cd $M; $(MAKE)
 bag.o: bag.h
-	cd bag; $(MAKE) bag.o
+	cd $B; $(MAKE) bag.o
 set.o: set.h
-	cd set; $(MAKE) set.o
+	cd $S; $(MAKE) set.o
 counters.o: counters.h
-	cd counters; $(MAKE) counters.o
+	cd $C; $(MAKE) counters.o
 hashtable.o: hashtable.h jhash.h set.h
-	cd hashtable; $(MAKE) hashtable.o jhash.o set.o
+	cd $H; $(MAKE) hashtable.o
+jhash.o: jhash.h
+	cd $H; $(MAKE) jhash.o
 
 
 # add cleanup commands for other subdirectories
