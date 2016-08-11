@@ -68,12 +68,8 @@ int main(int argc, char* argv[])
     char* pageDirectory = argv[1];
     char* indexFileName = argv[2];
     
-    // Load index from argv[2]
+    // Load index from indexFile
     index_t* index = index_load(indexFileName);
-
-// ASSUMPTION: query cannot be greater than 199 characters
-// (no more will be read)
-// Other tidbit -- "warning" with misspelled/non-indexed words
 
     char queryLine[MAX_QUERY_LEN];
     
