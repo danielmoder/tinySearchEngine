@@ -1,7 +1,7 @@
 ### DESIGN.md for querier
 *Daniel Moder, August 2016*
 
-# Requirements Spec
+# Requirement Specs
 
 The querier shall:
 
@@ -22,8 +22,29 @@ The querier shall validate its command-line arguments:
 > `pageDirectory` is a directory produced by the crawler, and
 > 
 > `indexFilename` is the name of a readable file.
+
 The querier may assume that the input directory and files follow the designated formats.
 
 - `pageDirectory` has files named 1, 2, 3, …, without gaps.
 - The content of document files in pageDirectory follow the format as defined in the crawler specs; thus your code (to read a document file) need not have extensive error checking.
 - The content of the file named by indexFilename follows our Index file format; thus your code (to recreate an index structure by reading a file) need not have extensive error checking.
+
+# Design Specs
+The querier is the culmination of the other programs and data types in this
+project. The querier uses a directory full of text documents created and
+formatted by **crawler** for retrieving URLS, and an indexFile created by
+**indexer** to access the counts of each word in each document.
+
+
+
+# Testing Plan
+The following cases will be tested:
+- a leading/trailing 'and'/'or'
+- adjacent 'and'/'or's
+- non-alphabetic characters
+- nonsense words or words unlikely to be in the index
+- valid entries of varying length
+
+
+
+
