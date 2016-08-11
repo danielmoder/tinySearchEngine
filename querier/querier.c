@@ -59,6 +59,15 @@ int sortFunc(const void *a, const void *b);
 // Global var macros:
 #define MAX_QUERY_LEN 200
 
+
+/*
+Function: receive query from user and print the "most applicable" document URLS
+    based on the scoring algorithm in score()
+Parameters: pageDirectory, a directory of text files made by crawler
+            indexFileName, an indexFile made by indexer
+Return: 0 on success, -1 on failure
+*/
+
 int main(int argc, char* argv[])
 {
     if (! validateArgs(argc, argv)){
@@ -108,7 +117,15 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-// -------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+
+
+/*
+Function: verify that the 2 inputs to main() are a readable directory/file
+Parameters: pageDirectory, a directory of text files made by crawler
+            indexFileName, an indexFile made by indexer
+Return: true if valid arguments, false otherwise
+*/
 
 bool validateArgs(int argc, char* argv[])
 {
@@ -186,6 +203,7 @@ bool checkLine(char** queryArray, int arrayIdx)
     char* first = queryArray[0];
     char* last = queryArray[(arrayIdx-1)];
     
+    // check for leading/trailing 'and'/'or'
     if (strcmp(first, "and") == 0){
         printf("Error: invalid query\n");
         return false;
@@ -223,8 +241,8 @@ bool checkLine(char** queryArray, int arrayIdx)
 
 
 /*
-Function: parses queryArray into tree or orPhrases and andPhrases:
-    (OrP (AndP word1:ctrs word2:ctrs) (AndP word3:ctrs word4:ctrs))
+Function: parses queryArray into tree of orPhrases and andPhrases:
+    (OrP (AndP word1:ctrs word2:ctrs ...) (AndP word3:ctrs word4:ctrs ...) ...)
 Parameters: char** queryArray, array of words from user input
             int arrayIdx, index of first empty slot
             index_t* index, index loaded from indexFile parameter
@@ -276,7 +294,13 @@ set_t* parseQuery(char** queryArray, int arrayIdx, index_t* index)
     return orSet;
 }
 
-// Will also take directory as parameter
+/*
+Function: format output for the documents that match the query
+Parameters: char* queryCopy, a copy of the queryLine
+            counters_t* queryScore, the documents' query (overall) scores
+            char* directory, the path to the crawler directory
+Return: (void)
+*/
 void output(char* queryCopy, counters_t* queryScore, char* directory)
 {
     printf("Query: %s\n", queryCopy);
@@ -327,14 +351,20 @@ void output(char* queryCopy, counters_t* queryScore, char* directory)
 
 // HELPER FUNCTIONS_____________________________________________________________
 
-// Called on each node in to-be-copied counters
+
+// ___ parseQuery() ___
+
+// Called on each node in to-be-copied counters (from index to andSet)
+// This was done to allow for clean delete()ing of both index and sets
 void ctrCopy(void* ctr, const int key, int count)
 {
     counters_set(ctr, key, count);
 }
 
 
-// Called on each andSet
+// ___ score() ___
+
+// Called on each andSet during orSet iteration
 // Accumulates queryScore as andScores are calculated
 void orFunc(void *queryScore, const char *key, void *andSet)  
 {
@@ -348,19 +378,9 @@ void orFunc(void *queryScore, const char *key, void *andSet)
     counters_delete(andScore);
 }
 
-// Called on each counterNode of the andScore to be added to queryScore
-// Adds documents' andScores to queryScore
-void addFunc(void *queryScore, const int key, int count)
-{
-    int qScore = counters_get(queryScore, key);
-    qScore += count;
-    counters_set(queryScore, key, qScore);
-}
-
-
 // Called on each counters_t object in andSet (wordCounters)
-//      andHelp makes wordCounter domain match andScore domain
-//      leastFunc takes smaller b/t andScore[key] and ctr[key]
+//      andHelp() makes wordCounter domain match andScore domain
+//      leastFunc() takes smaller b/t andScore[key] and ctr[key]
 void andFunc(void *andScore, const char *key, void* ctr)              
 {
     counters_iterate(andScore, andHelp, ctr);
@@ -381,6 +401,14 @@ void leastFunc(void *andScore, const int key, int count)
     }
 }
 
+// Called on each counterNode of the andScore to be added to queryScore
+// Adds documents' andScores to queryScore
+void addFunc(void *queryScore, const int key, int count)
+{
+    int qScore = counters_get(queryScore, key);
+    qScore += count;
+    counters_set(queryScore, key, qScore);
+}
 
 // Sets the contents of andScore as follows:
 //      domain(docIDs) = UNION of docIDs in andSet
@@ -390,11 +418,13 @@ void maxCtrFunc(void *andScore, const char* key, void* ctr)
     counters_iterate(ctr, maxCtrHelper, andScore);
 }
 
-// Helper to above
 void maxCtrHelper(void* andScore, const int key, int count)
 {
     counters_set(andScore, key, INT_MAX);
 }
+
+
+// ___ output() ___
 
 // Called on each node of queryScore
 // If score > 0 (match), increment matches
@@ -406,7 +436,7 @@ void matchCount(void* matchesCounter, const int key, int count)
 }
 
 // Called on each item of queryScore
-// fills array with (docID, score) nodes
+// fills array with query-matching (docID, score) nodes (score > 0)
 void arrayFill(void* array, const int key, int count)
 {
     if (count > 0){
@@ -425,6 +455,7 @@ void arrayFill(void* array, const int key, int count)
     }
 }
 
+// Called in qsort(), compares score values of node_t* to be sorted
 int sortFunc(const void *a, const void *b)
 {
     const node_t* nodeA = *(node_t * const *)a;
@@ -439,18 +470,3 @@ int sortFunc(const void *a, const void *b)
         return -1;
     } return 0;
 }
-
-
-
-void show(void* arg, const char* key, void* data)
-{
-    printf("keyword = %s\n", key);
-}
-
-
-
-
-
-
-
-
