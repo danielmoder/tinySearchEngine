@@ -53,7 +53,7 @@ int sortFunc(const void *a, const void *b);
 
 
 // Global Vars:
-const int MAX_QUERY_LEN = 200;
+#define MAX_QUERY_LEN = 200;
 
 int main(int argc, char* argv[])
 {
