@@ -19,8 +19,8 @@ if no documents satisfy the query, print No documents match.
 otherwise, rank the resulting set of documents according to its score, as described below, and print the set of documents in decreasing rank order; for each, list the score, document ID and URL. (Obtain the URL by reading the first line of the relevant document file from the pageDirectory.)
 The querier shall validate its command-line arguments:
 
-1. `pageDirectory` is a directory produced by the crawler, and
-2. `indexFilename` is the name of a readable file.
+> `pageDirectory` is a directory produced by the crawler, and
+> `indexFilename` is the name of a readable file.
 The querier may assume that the input directory and files follow the designated formats.
 
 - `pageDirectory` has files named 1, 2, 3, …, without gaps.
