@@ -184,9 +184,8 @@ int main(int argc, char* argv[]){
 
     // Parse arguments
     if (argc != 4){
-        printf("Error: crawler must receive exactly three arguments:\n \
-1: seedURL\n 2: storage directory\n 3: max depth");
-
+        printf("Error: crawler must receive exactly three arguments:\n"
+                "1: seedURL\n 2: storage directory\n 3: max depth");
         return 1;
     }
     
@@ -202,6 +201,15 @@ int main(int argc, char* argv[]){
         printf("Error: cannot write to directory %s\n", directory);
         return 1;
     }
+    
+    char* filename = ("%s%s", directory, "/.crawler");
+    FILE* fp = NULL;
+    if ( (fp = fopen(filename, "w")) == NULL){
+            logr("FAILED", web->depth, web->url);
+        return;
+    }
+    fclose(fp);
+    
     
     int MAX_DEPTH = 3;
     char* depth = argv[3];
