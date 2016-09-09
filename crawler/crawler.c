@@ -151,8 +151,7 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		        break;
 		    }
 
-            //if ( !(hashtable_find(beenSearched, result)) && \
-    		        (IsInternalURL(result)) && (NormalizeURL(result) ) ) {
+            //if ( !(hashtable_find(beenSearched, result)) && (IsInternalURL(result)) && (NormalizeURL(result) ) ) {
     		if ( !(hashtable_find(beenSearched, result)) && \
     		        NormalizeURL(result) ) {
                 logr("Added", depth, result);
@@ -202,11 +201,13 @@ int main(int argc, char* argv[]){
         return 1;
     }
     
-    char* filename = ("%s%s", directory, "/.crawler");
+    char filename[strlen(directory)+10];
+    sprintf(filename, "%s/%s", directory, ".crawler");
+    
     FILE* fp = NULL;
     if ( (fp = fopen(filename, "w")) == NULL){
             logr("FAILED", web->depth, web->url);
-        return;
+        return 1;
     }
     fclose(fp);
     
