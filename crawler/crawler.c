@@ -2,7 +2,6 @@
 crawler.c       Daniel Moder        July, 2016
 This file contains source for a web crawler. It includes functions:
     logr: formats and prints messages to track progress
-    arraySearch
     toFile: writes HTML to a file in the specified directory
     webDelete: deletes a WebPage object
     crawl
@@ -33,25 +32,6 @@ inline static void logr(const char* word, const int depth, const char *url)
 {
   printf("- %2d %*s%9s: %s\n", depth, depth, "", word, url);
 }
-
-
-/*
-Function: Determines if a string is in an array of strings
-Parameters: char** array, the array to be searched
-            int index, the first free slot in the array
-            char* key, the string to be searched for
-Returns: true if the array contains the key, else false
-*/
-/*
-bool arraySearch (char** array, int index, char* key)
-{
-	for (int i = 0; i < index; i++){
-		if ((strcmp(array[i], key) == 0)){
-			return true;
-		}
-	}
-	return false;
-}*/
 
 
 /*
@@ -208,7 +188,8 @@ int main(int argc, char* argv[]){
 
     // Parse arguments
     if (argc != 4){
-        printf("Error: crawler must receive exactly three arguments\n");
+        printf("Error: crawler must receive exactly three arguments:\n \
+                1: seedURL\n 2: storage directory\n 3: max depth");
         return 1;
     }
     
