@@ -151,8 +151,10 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		        break;
 		    }
 
-            if ( !(hashtable_find(beenSearched, result)) && \
+            //if ( !(hashtable_find(beenSearched, result)) && \
     		        (IsInternalURL(result)) && (NormalizeURL(result) ) ) {
+    		if ( !(hashtable_find(beenSearched, result)) && \
+    		        NormalizeURL(result) ) {
                 logr("Added", depth, result);
                 
     			char* inLine = assertp(malloc(strlen(result) + 1), "url\n");
