@@ -79,7 +79,12 @@ void webDelete(WebPage* web)
     }
 }
 
-
+/*
+Function: make a new webpage object
+Parameters: char* url
+            int depth, current depth of crawl
+Returns: new webpage           
+*/
 
 WebPage* pageNew(char* url, int depth)
 {
@@ -94,8 +99,6 @@ WebPage* pageNew(char* url, int depth)
 }
 
 
-
-
 /*
 Function: crawl pages starting from seedURL to a specified depth, and write
             html to directory
@@ -105,7 +108,6 @@ Parameters: char* seedURL, the url from which to start the crawl
 Returns: 0 upon success, 1 if seedURL is not accessible 
 */
 
-
 int crawl(char* seedURL, char* directory, int maxDepth)
 {
 	// seedPage
@@ -113,7 +115,7 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 
     hashtable_t* beenSearched = hashtable_new(5, free);
     
-    // bag
+    // pages to be crawled
 	bag_t* bag = bag_new(free);
 	bag_insert(bag, rootPage);
 
@@ -131,8 +133,6 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		char* HTML = rootPage->html;
 		char* URL = rootPage->url;
 		int depth = rootPage->depth;
-		
-
 
 		toFile(directory, rootPage, fileID++);
 		logr("Saved", depth, URL);
@@ -151,7 +151,6 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 		        break;
 		    }
 
-            //if ( !(hashtable_find(beenSearched, result)) && (IsInternalURL(result)) && (NormalizeURL(result) ) ) {
     		if ( !(hashtable_find(beenSearched, result)) && \
     		        NormalizeURL(result) ) {
                 logr("Added", depth, result);
@@ -177,7 +176,13 @@ int crawl(char* seedURL, char* directory, int maxDepth)
 	return 0;
 }
 
-
+/*
+Function: Parse arguments, begin crawl
+Parameters: char* seedURL, url at which to begin crawl
+            char* directory, directory in which to store html files
+            int depth, max depth to crawl
+Returns: 0 upon success, 1 otherwise
+*/
 
 int main(int argc, char* argv[]){
 
@@ -189,7 +194,6 @@ int main(int argc, char* argv[]){
     }
     
     char* seedURL = argv[1];
-    //if ( !( (IsInternalURL(seedURL)) && (NormalizeURL(seedURL)) )){
     if (! NormalizeURL(seedURL)){
         printf("Error: invalid seedURL\n");
         return 1;
