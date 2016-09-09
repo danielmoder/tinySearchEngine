@@ -206,7 +206,6 @@ int main(int argc, char* argv[]){
     
     FILE* fp = NULL;
     if ( (fp = fopen(filename, "w")) == NULL){
-            logr("FAILED", web->depth, web->url);
         return 1;
     }
     fclose(fp);
