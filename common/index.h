@@ -5,7 +5,7 @@
  * each counter set represents the set of documents where that word 
  * appeared, and the number of occurrences of that word in each document.
  * 
- * Name, Summer 2016
+ * Daniel Moder, Summer 2016
  */
 
 #ifndef __INDEX_H
@@ -23,7 +23,7 @@
 
 /**************** global types ****************/
 
-// The index is actually a hashtable. 
+// index_t will be hashtable_t of counters (set of sets of counters)
 typedef hashtable_t index_t;
 
 /********** add function prototypes here *********/
