@@ -206,6 +206,7 @@ int main(int argc, char* argv[]){
     
     FILE* fp = NULL;
     if ( (fp = fopen(filename, "w")) == NULL){
+        printf("Error: .crawler file\n");
         return 1;
     }
     fclose(fp);
