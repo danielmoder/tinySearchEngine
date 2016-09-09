@@ -182,8 +182,9 @@ int main(int argc, char* argv[]){
 
     // Parse arguments
     if (argc != 4){
-        printf("Error: crawler must receive exactly three arguments:\n \
-        1: seedURL\n 2: storage directory\n 3: max depth");
+        printf("Error: crawler must receive exactly three arguments:\n\
+1: seedURL\n 2: storage directory\n 3: max depth");
+
         return 1;
     }
     
